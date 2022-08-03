@@ -1,0 +1,75 @@
+{
+	"id": "9A22F09F-1C13-ED11-BD6E-000D3AB1D9FF",
+	"createdAt": "2022-08-03T11:08:39.176Z",
+	"createdBy": "kristin.eliassen@neptune-software.com",
+	"git": {
+		"targetServers": [],
+		"remote": "https://github.com/neptune-software-marketplace/neptunesoftware-dxp-abb-adaptiveframeworktemplates",
+		"testServers": []
+	},
+	"name": "neptunesoftware-dxp-abb-adaptiveframeworktemplates",
+	"description": null,
+	"ver": "22.8.3.1111",
+	"enableCICD": true,
+	"apps": [
+		{
+			"id": "C68E1624-EC29-48BC-A7E0-109F9B54FD66",
+			"ver": "22.8.3.1310",
+			"application": "planet9_adaptive_edit",
+			"title": "Adaptive Edit",
+			"description": "Adaptive Edit"
+		},
+		{
+			"id": "77D5D812-F861-4044-BA75-3E7A268A4D14",
+			"ver": "22.8.3.1310",
+			"application": "planet9_adaptive_list",
+			"title": "Adaptive List ",
+			"description": "Adaptive List "
+		},
+		{
+			"id": "61A60E73-95F5-458B-9259-41F2C10659B2",
+			"ver": "22.8.3.1310",
+			"application": "planet9_adaptive_tile_chart",
+			"title": "Adaptive Tile Chart",
+			"description": "Adaptive Tile Chart"
+		},
+		{
+			"id": "D29E149B-2716-4C77-B026-4451881E54CD",
+			"ver": "22.8.3.1310",
+			"application": "planet9_adaptive_bi",
+			"title": "Analytic Slice&Dice",
+			"description": "Analytic Slice&Dice"
+		},
+		{
+			"id": "B2082507-49AB-4D0A-ACBA-60668CAE952B",
+			"ver": "22.8.3.1310",
+			"application": "planet9_adaptive_tile_table",
+			"title": "Adaptive Tile Table",
+			"description": "Adaptive Tile Table"
+		}
+	],
+	"api": [],
+	"odataMock": [],
+	"odataSource": [],
+	"dictionary": [],
+	"jsclass": [],
+	"jsscript_group": [],
+	"theme": [],
+	"pdf": [],
+	"rulesengine": [],
+	"reports": [],
+	"api_authentication": [],
+	"api_group": [],
+	"tile": [],
+	"category": [],
+	"launchpad": [],
+	"certificates": [],
+	"role": [],
+	"systems": [],
+	"doc": [],
+	"wf_notifications": [],
+	"wf_definition": [],
+	"department": [],
+	"script_scheduler": [],
+	"connector": []
+}
