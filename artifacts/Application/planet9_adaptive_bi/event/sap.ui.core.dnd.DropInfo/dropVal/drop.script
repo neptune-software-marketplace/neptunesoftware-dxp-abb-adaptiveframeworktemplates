@@ -1,0 +1,41 @@
+let oDraggedControl = oEvent.getParameter('draggedControl');
+let oDraggedContext = oDraggedControl.getBindingContext('DataSettings');
+
+if (!oDraggedContext) oDraggedContext = oDraggedControl.getBindingContext('DataVariant');
+if (!oDraggedContext) return;
+
+let oDraggedData = oDraggedContext.getObject();
+
+let oDroppedControl = oEvent.getParameter('droppedControl');
+let oDroppedContext = oDroppedControl.getBindingContext('DataVariant');
+
+if (!oDroppedContext) {
+    modelDataVariant.oData.val.push(oDraggedData);
+    pivotGrid.variantAfterDnD(oDraggedControl, oDraggedData);
+} else {
+    if (oDraggedControl.getParent() === tabVal) {
+        let oDroppedData = oDroppedContext.getObject();
+        let indexDrag = 0;
+        let indexDrop = 0;
+
+        modelDataVariant.oData.val.forEach(function (data, i) {
+            if (oDraggedData && data.name === oDraggedData.name) indexDrag = i;
+            if (oDroppedData && data.name === oDroppedData.name) indexDrop = i;
+        });
+
+        pivotGrid.arrayMove(modelDataVariant.oData.val, indexDrag, indexDrop);
+        pivotGrid.variantAfterDnD();
+
+    } else {
+        let oDroppedData = oDroppedContext.getObject();
+
+        let oDroppedTable = oDroppedControl.getParent();
+        let oDroppedItemIndex = oDroppedTable.indexOfItem(oDroppedControl);
+
+        let oDropPosition = oEvent.getParameter('dropPosition');
+        let indexDrop = oDroppedItemIndex + (oDropPosition === 'After' ? 1 : 0);
+
+        modelDataVariant.oData.val.splice(indexDrop, 0, oDraggedData)
+        pivotGrid.variantAfterDnD(oDraggedControl, oDraggedData);
+    }
+}

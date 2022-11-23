@@ -1,0 +1,187 @@
+{
+	"id": "3348b476-8705-4885-9d69-5dbac3e0bf37",
+	"createdAt": "2022-04-19T10:32:37.546Z",
+	"createdBy": "adeel@neptune-software.com",
+	"objects": [
+		{
+			"fieldNo": "4a58b1d2-84c8-4f0a-d48c-380e257c0e8e",
+			"fieldName": "oSplitterMain",
+			"fieldParent": 0,
+			"fieldType": "sap.ui.layout.Splitter",
+			"script": "",
+			"customComponent": false,
+			"request": [],
+			"response": [],
+			"attributes": [
+				{
+					"attribute": "orientation",
+					"grouping": "Properties",
+					"value": "Vertical",
+					"script": "",
+					"translation": []
+				},
+				{
+					"attribute": "height",
+					"grouping": "Properties",
+					"value": "100%",
+					"script": "",
+					"translation": []
+				}
+			],
+			"data": []
+		},
+		{
+			"fieldNo": 99999,
+			"data": [
+				{
+					"fieldNo": "af5567ee-6a2b-47d1-e75b-f786d1f63ed4",
+					"fieldName": "Texts",
+					"fieldParent": 99999,
+					"fieldType": "neptune.folder",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "059b99f5-295e-4423-ea5f-4f072467b267",
+							"fieldName": "toastSaved",
+							"fieldParent": "af5567ee-6a2b-47d1-e75b-f786d1f63ed4",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						}
+					]
+				},
+				{
+					"fieldNo": "326c943b-7679-4056-cc35-794ee3168f3f",
+					"fieldName": "Adaptive",
+					"fieldParent": 99999,
+					"fieldType": "neptune.folder",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "880c81ef-d15c-4d78-8598-a588ed9985a1",
+							"fieldName": "AppData",
+							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
+							"fieldType": "neptune.model",
+							"script": "",
+							"customComponent": false,
+							"bindingValue": "Generic Array",
+							"bindingType": "h",
+							"bindingSource": "P9",
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "cfb1fb41-3474-438f-c170-8c4bc02e243a",
+							"fieldName": "AppConfig",
+							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
+							"fieldType": "neptune.model",
+							"script": "",
+							"customComponent": false,
+							"bindingValue": "Generic Array",
+							"bindingType": "h",
+							"bindingSource": "P9",
+							"dataModel": {},
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "6e22e3b3-0bfc-4c70-b6ae-7bfe2383a87f",
+							"fieldName": "Metadata",
+							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/Metadata.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "a8b50bc8-1bdb-426b-b2cb-f8c3cc7c2af3",
+							"fieldName": "helpers",
+							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/helpers.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "8e3a9be1-3739-4a10-81a2-c8a635704485",
+							"fieldName": "Function",
+							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/Function.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"fieldNo": 99998,
+			"data": []
+		}
+	],
+	"componentInterface": [],
+	"ver": "22.11.23.1313",
+	"application": "planet9_adaptive_splitter",
+	"title": "Adaptive Splitter/Layout",
+	"description": "Adaptive Splitter/Layout",
+	"enableFileStorage": false,
+	"enableManifest": false,
+	"enableStylesheet": true,
+	"enableObfuscate": false,
+	"onlyRunLaunchpad": true,
+	"disabled": false,
+	"loadLaunchpadCode": null,
+	"loadApplicationCode": null,
+	"appType": "F",
+	"ui5_m": true,
+	"ui5_f": false,
+	"ui5_table": false,
+	"ui5_tnt": false,
+	"ui5_uxap": false,
+	"ui5_chart": false,
+	"ui5_theme": "sap_fiori_3",
+	"ui5_version": "",
+	"ui5_language": null,
+	"ui5_url": "",
+	"cus_theme": "",
+	"css": "file:///css.script",
+	"header": "",
+	"manifest": "",
+	"globalScript": "",
+	"deleted": false,
+	"libHighchart": false,
+	"libHighmap": false,
+	"publicAccess": false,
+	"ui5_bootstrap": false,
+	"ui5_ionic": false,
+	"useV2AppHandler": false,
+	"compilerTarget": 3,
+	"apis": [],
+	"package": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+}

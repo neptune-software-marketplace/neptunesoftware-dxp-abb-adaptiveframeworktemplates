@@ -1,0 +1,11 @@
+var sorters = [];
+var binding = tabData.getBinding("items");
+
+report.groupBy = modelpopHeader.oData.name;
+report.groupOrder = true;
+
+if (report.groupBy) sorters.push(new sap.ui.model.Sorter(report.groupBy, report.groupOrder, function (oContext) { return sap.n.Adaptive.grouping(modelAppConfig.oData, report.groupBy, oContext) }));
+
+binding.sort(sorters);
+
+popHeader.close();

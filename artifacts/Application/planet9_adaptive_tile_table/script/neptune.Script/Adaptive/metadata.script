@@ -1,0 +1,424 @@
+const metadata = {
+
+    properties: {
+
+        enableForm: true,
+        formUsage: 'INPUT',
+        enableTable: true,
+        tableUsage: 'OUTPUT',
+        titleForm: "Filter",
+        titleTable: "Table",
+        iconForm: "/public/icons/s_b_filt.gif",
+        iconTable: "/public/icons/s_wdvtlc.gif",
+
+        report: {
+
+            titleGeneral: { type: "Title", label: "General" },
+            title: { type: "Input", label: "Title" },
+
+            titleNavigation: { type: "Title", label: "Event" },
+            navigationCreate: { type: "Navigation", label: "Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
+            navigationItemPress: { type: "Navigation", label: "ItemPress" },
+
+            titleTable: { type: "Title", label: "Properties" },
+            paginationRows: { type: "Input", label: "Max Number of Items", default: 10 },
+            updateTime: { type: "Input", label: "Update Every (Min)", default: 0 },
+
+            titleButtonCreate: { type: "Title", label: "Button Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
+            iconButtonCreate: { type: "Icon", label: "Icon", default: "", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
+            textButtonCreate: { type: "Input", label: "Text", default: "Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
+            typeButtonCreate: {
+                type: "SingleSelect",
+                label: "Type",
+                default: "Emphasized",
+                visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }",
+                items: [
+                    { key: "Accept", text: "Accept" },
+                    { key: "Back", text: "Back" },
+                    { key: "Default", text: "Default" },
+                    { key: "Emphasized", text: "Emphasized" },
+                    { key: "Reject", text: "Reject" },
+                    { key: "Transparent", text: "Transparent" },
+                    { key: "Unstyled", text: "Unstyled" },
+                    { key: "Up", text: "Up" }
+                ]
+            },
+
+            titleButtonRun: { type: "Title", label: "Button Run", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
+            iconButtonRun: { type: "Icon", label: "Icon", default: "", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
+            textButtonRun: { type: "Input", label: "Text", default: "Update", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
+            typeButtonRun: {
+                type: "SingleSelect",
+                label: "Type",
+                default: "Emphasized",
+                visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }",
+                items: [
+                    { key: "Accept", text: "Accept" },
+                    { key: "Back", text: "Back" },
+                    { key: "Default", text: "Default" },
+                    { key: "Emphasized", text: "Emphasized" },
+                    { key: "Reject", text: "Reject" },
+                    { key: "Transparent", text: "Transparent" },
+                    { key: "Unstyled", text: "Unstyled" },
+                    { key: "Up", text: "Up" }
+                ]
+            },
+
+            // Translation Fields
+            searchLabel: { type: "Input", label: "Search Label", default: "Search", visible: false, translate: true },
+            searchPlaceholder: { type: "Input", label: "Search Placeholder", default: "", visible: false, translate: true },
+
+            titleProperties: { type: "Title", label: "Properties" },
+            enableRun: { type: "CheckBox", label: "Enable Run", default: false },
+            enableCreate: { type: "CheckBox", label: "Enable Create", default: false },
+            enableDelete: { type: "CheckBox", label: "Enable Delete", default: false },
+
+        },
+
+        form: {
+
+            titleSettings: { type: "Title", label: "Properties" },
+            enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
+            filterExpandable: { type: "CheckBox", label: "Filter Expandable", default: true },
+            headerExpanded: { type: "CheckBox", label: "Filter Expanded", default: true },
+            showFilter: { type: "CheckBox", label: "Show Filter", default: false },
+
+        },
+
+        table: {
+
+            titleGeneral: { type: "Title", label: "General" },
+            headerText: { type: "Input", label: "Header Text" },
+            footerText: { type: "Input", label: "Footer Text" },
+
+            titleTableGroup: { type: "Title", label: "Initial Grouping" },
+            initialGroupField: { type: "TableFieldLocal", label: "Field" },
+            initialGroupOrder: {
+                type: "SingleSelect",
+                label: "Order",
+                items: [
+                    { key: "", text: "" },
+                    { key: "ASC", text: "Ascending" },
+                    { key: "DESC", text: "Descending" }
+                ]
+            },
+
+            titleTableSort: { type: "Title", label: "Initial Sorting" },
+            initialSortField: { type: "TableFieldLocal", label: "Field" },
+            initialSortOrder: {
+                type: "SingleSelect",
+                label: "Order",
+                items: [
+                    { key: "", text: "" },
+                    { key: "ASC", text: "Ascending" },
+                    { key: "DESC", text: "Descending" }
+                ]
+            },
+
+            titlePostProcessingScript: { type: "Title", label: "Post Processing" },
+            postProcessingScript: { type: "Script", label: "Script" },
+
+            titleTable: { type: "Title", label: "Properties" },
+            showSeparators: {
+                type: 'SingleSelect',
+                label: 'Show Separators',
+                default: 'All',
+                items: [
+                    { key: "", text: "" },
+                    { key: "All", text: "All" },
+                    { key: "Inner", text: "Inner" },
+                    { key: "None", text: "None" }
+                ]
+            },
+            alternateRowColors: { type: "CheckBox", label: "Alternate Row Colors", default: false },
+            enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
+            fixedLayout: { type: "CheckBox", label: "Fixed Layout", default: true },
+            inset: { type: "CheckBox", label: "Inset", default: false },
+
+        }
+
+    },
+
+    fieldsSel: {
+
+        titleGeneral: { type: "Title", label: "General" },
+        text: { type: "Input", label: "Label" },
+        type: {
+            type: "SingleSelect",
+            label: "Type",
+            items: [
+                { key: "", text: "Input" },
+                { key: "CheckBox", text: "CheckBox" },
+                { key: "DateRange", text: "DateRange" },
+                { key: "MultiSelect", text: "MultiSelect" },
+                { key: "MultiSelectLookup", text: "MultiSelect Lookup" },
+                { key: "MultiSelectScript", text: "MultiSelect Script" },
+                { key: "SingleSelect", text: "SingleSelect" },
+                { key: "SingleSelectLookup", text: "SingleSelect Lookup" },
+                { key: "SingleSelectScript", text: "SingleSelect Script" },
+                { key: "Switch", text: "Switch" },
+            ]
+        },
+
+        titleLookup: { type: "Title", label: "Data Source", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
+        lookupTable: { type: "Table", label: "Table", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
+        lookupFieldKey: { type: "TableField", label: "Key Field", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
+        lookupFieldText: { type: "TableField", label: "Text Field", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
+        lookupFieldAdditional: { type: "TableField", label: "Additional Text Field", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
+        lookupShowOnlyText: { type: "CheckBox", label: "Hide Key Field", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
+
+        titleSelectScript: { type: "Title", label: "Data Source", visible: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true: false }" },
+        scriptSelect: { type: "Script", label: "Server Script", visible: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true: false }" },
+
+        titleDefault: { type: "Title", label: "Default Value" },
+        default: { type: "Input", label: "Fixed Value" },
+        sysvarValue: {
+            type: 'SingleSelect', label: 'System Variable', items: [
+                { key: "", text: "" },
+                { key: "UserName", text: "UserName" }
+            ]
+        },
+        scriptValue: { type: "Script", label: "Script Value" },
+
+        titleSettings: { type: "Title", label: "Properties" },
+        required: { type: "CheckBox", label: "Required", default: false },
+        visible: { type: "CheckBox", label: "Visible", default: true }
+
+
+    },
+
+    fieldsRun: {
+
+        titleGeneral: { type: "Title", label: "General" },
+        text: { type: "Input", label: "Label" },
+        type: {
+            type: "SingleSelect",
+            label: "Type",
+            items: [
+                { key: "", text: "Text" },
+                { key: "Link", text: "Link" },
+                { key: "CheckBox", text: "CheckBox" },
+                { key: "Icon", text: "Icon" },
+                { key: "Image", text: "Image" },
+                { key: "ObjectNumber", text: "Number" },
+                { key: "ObjectStatus", text: "Status" },
+                { key: "Switch", text: "Switch" },
+            ]
+        },
+        titleNavigation: { type: "Title", label: "Event", visible: "{= ${/type} === 'Link' ? true: false }" },
+        navigation: { type: "Navigation", label: "Press", visible: "{= ${/type} === 'Link' ? true: false }" },
+
+        // Value
+        titleValue: { type: "Title", label: "Value" },
+        valueType: {
+            type: "SingleSelect",
+            label: "Source",
+            items: [
+                { key: "", text: "Source Value" },
+                { key: "Fixed", text: "Fixed Value" },
+                { key: "Lookup", text: "Lookup" },
+                { key: "Rule", text: "Rules Engine" },
+                { key: "Script", text: "Script (from post processing)" },
+            ]
+        },
+        valueFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/valueType} === 'Fixed' ? true: false }" },
+        valueLookup: { type: "Lookup", label: "Lookup", visible: "{= ${/valueType} === 'Lookup' ? true: false }" },
+        valueRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/valueType} === 'Rule' ? true: false }" },
+
+        formatter: {
+            type: "SingleSelect",
+            label: "Formatter",
+            items: [
+                { key: "", text: "" },
+                { key: "date00", text: "Date Browser Format" },
+                { key: "date01", text: "Date (dd.mm.yyyy)" },
+                { key: "date02", text: "Date (mm-dd-yyyy)" },
+                { key: "date03", text: "Date (Month)" },
+                { key: "date04", text: "Date (Quarter)" },
+                { key: "date05", text: "Time (hh:mm)" },
+                { key: "sapdate01", text: "SAP Date (dd.mm.yyyy)" },
+                { key: "sapdate02", text: "SAP Date (mm-dd-yyyy)" },
+                { key: "zero", text: "Remove Leading Zero" },
+                { key: "uppercase", text: "Upper Case" },
+                { key: "lowercase", text: "Lower Case" },
+                { key: "number00", text: "Number Browser Format" },
+                { key: "number01", text: "Number Decimals 0" },
+                { key: "number02", text: "Number Decimals 1 Comma" },
+                { key: "number03", text: "Number Decimals 2 Comma" },
+                { key: "number04", text: "Number Decimals 3 Comma" },
+                { key: "number05", text: "Number Decimals 1 Point" },
+                { key: "number06", text: "Number Decimals 2 Point" },
+                { key: "number07", text: "Number Decimals 3 Point" },
+            ]
+        },
+
+        // ObjectStatus - Icon
+        titleStatusIcon: { type: "Title", label: "Value: Icon", visible: "{= ${/type} === 'ObjectStatus' ? true: false }" },
+        statusIconType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'ObjectStatus' ? true: false }",
+            items: [
+                { key: "", text: "" },
+                { key: "Binding", text: "Binding" },
+                { key: "Fixed", text: "Fixed Value" },
+                { key: "Lookup", text: "Lookup" },
+                { key: "Rule", text: "Rules Engine" },
+                { key: "Script", text: "Script (from post processing)" },
+            ]
+        },
+        statusIconFixed: { type: "Icon", label: "Fixed Value", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusIconType} === 'Fixed' ? true: false }" },
+        statusIconRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusIconType} === 'Rule' ? true: false }" },
+        statusIconBinding: { type: "TableFieldLocal", label: "Binding", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusIconType} === 'Binding' ? true: false }" },
+        statusIconLookup: { type: "Lookup", label: "Lookup Value", visible: "{= ${/type} === 'ObjectStatus' && ${/statusIconType} === 'Lookup'  ? true: false }" },
+
+        // ObjectStatus - Title
+        titleStatusTitle: { type: "Title", label: "Value: Title", visible: "{= ${/type} === 'ObjectStatus' ? true: false }" },
+        statusTitleType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'ObjectStatus' ? true: false }",
+            items: [
+                { key: "", text: "" },
+                { key: "Binding", text: "Binding" },
+                { key: "Fixed", text: "Fixed Value" },
+                { key: "Lookup", text: "Lookup" },
+                { key: "Rule", text: "Rules Engine" },
+                { key: "Script", text: "Script (from post processing)" },
+            ]
+        },
+        statusTitleFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Fixed'? true: false }" },
+        statusTitleRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Rule'? true: false }" },
+        statusTitleBinding: { type: "TableFieldLocal", label: "Binding", visible: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Binding'? true: false }" },
+        statusTitleLookup: { type: "Lookup", label: "Lookup Value", visible: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Lookup'? true: false }" },
+
+        // ObjectStatus - State
+        titleStatusState: { type: "Title", label: "Value: State", visible: "{= ${/type} === 'ObjectStatus' ? true: false }" },
+        statusStateType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'ObjectStatus' ? true: false }",
+            items: [
+                { key: "", text: "" },
+                { key: "Binding", text: "Binding" },
+                { key: "Fixed", text: "Fixed Value" },
+                { key: "Lookup", text: "Lookup" },
+                { key: "Rule", text: "Rules Engine" },
+                { key: "Script", text: "Script (from post processing)" },
+            ]
+        },
+        statusStateFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Fixed' ? true: false }" },
+        statusStateRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusStateType} === 'Rule'? true: false }" },
+        statusStateBinding: { type: "TableFieldLocal", label: "Binding", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusStateType} === 'Binding'? true: false }" },
+        statusStateLookup: { type: "Lookup", label: "Lookup Value", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusStateType} === 'Lookup'? true: false }" },
+
+
+        // ObjectNumber - Unit
+        titleNumberUnit: { type: "Title", label: "Value: Unit", visible: "{= ${/type} === 'ObjectNumber' ? true: false }" },
+        numberUnitType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'ObjectNumber' ? true: false }",
+            items: [
+                { key: "", text: "" },
+                { key: "Binding", text: "Binding" },
+                { key: "Fixed", text: "Fixed Value" },
+                { key: "Lookup", text: "Lookup" },
+                { key: "Rule", text: "Rules Engine" },
+                { key: "Script", text: "Script (from post processing)" },
+            ]
+        },
+        numberUnitFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Fixed'? true: false }" },
+        numberUnitRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Rule'? true: false }" },
+        numberUnitBinding: { type: "TableFieldLocal", label: "Binding", visible: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Binding'? true: false }" },
+        numberUnitLookup: { type: "Lookup", label: "Lookup Value", visible: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Lookup'? true: false }" },
+        numberUnitFormatter: {
+            type: "SingleSelect",
+            label: "Formatter",
+            visible: "{= ${/type} === 'ObjectNumber' ? true: false }",
+            items: [
+                { key: "", text: "" },
+                { key: "date00", text: "Date Browser Format" },
+                { key: "date01", text: "Date (dd.mm.yyyy)" },
+                { key: "date02", text: "Date (mm-dd-yyyy)" },
+                { key: "date03", text: "Date (Month)" },
+                { key: "date04", text: "Date (Quarter)" },
+                { key: "sapdate01", text: "SAP Date (dd.mm.yyyy)" },
+                { key: "sapdate02", text: "SAP Date (mm-dd-yyyy)" },
+                { key: "zero", text: "Remove Leading Zero" },
+                { key: "uppercase", text: "Upper Case" },
+                { key: "lowercase", text: "Lower Case" },
+                { key: "number00", text: "Number Browser Format" },
+                { key: "number01", text: "Number Decimals 0" },
+                { key: "number02", text: "Number Decimals 1 Comma" },
+                { key: "number03", text: "Number Decimals 2 Comma" },
+                { key: "number04", text: "Number Decimals 3 Comma" },
+                { key: "number05", text: "Number Decimals 1 Point" },
+                { key: "number06", text: "Number Decimals 2 Point" },
+                { key: "number07", text: "Number Decimals 3 Point" },
+                { key: "file", text: "File Size" },
+            ]
+        },
+
+        // ObjectNumber - State
+        titleNumberState: { type: "Title", label: "Value: State", visible: "{= ${/type} === 'ObjectNumber' ? true: false }" },
+        numberStateType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'ObjectNumber' ? true: false }",
+            items: [
+                { key: "", text: "" },
+                { key: "Binding", text: "Binding" },
+                { key: "Fixed", text: "Fixed Value" },
+                { key: "Lookup", text: "Lookup" },
+                { key: "Rule", text: "Rules Engine" },
+                { key: "Script", text: "Script (from post processing)" },
+            ]
+        },
+        numberStateFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Fixed'? true: false }" },
+        numberStateRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Rule'? true: false }" },
+        numberStateBinding: { type: "TableFieldLocal", label: "Binding", visible: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Binding'? true: false }" },
+        numberStateLookup: { type: "Lookup", label: "Lookup Value", visible: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Lookup'? true: false }" },
+
+        titleLayout: { type: "Title", label: "Layout" },
+        hAlign: {
+            type: "SingleSelect",
+            label: "Align",
+            items: [
+                { key: "", text: "" },
+                { key: "Begin", text: "Begin" },
+                { key: "Center", text: "Center" },
+                { key: "End", text: "End" },
+                { key: "Initial", text: "Initial" },
+                { key: "Left", text: "Left" },
+                { key: "Right", text: "Right" }
+            ]
+        },
+        minScreenWidth: {
+            type: "SingleSelect",
+            label: "MinScreenSize",
+            items: [
+                { key: "", text: "" },
+                { key: "Desktop", text: "Desktop" },
+                { key: "Large", text: "Large" },
+                { key: "Medium", text: "Medium" },
+                { key: "Phone", text: "Phone" },
+                { key: "Small", text: "Small" },
+                { key: "Tablet", text: "Tablet" },
+                { key: "XLarge", text: "XLarge" },
+                { key: "XSmall", text: "XSmall" },
+                { key: "XXLarge", text: "XXLarge" },
+                { key: "XXSmall", text: "XXSmall" },
+            ]
+        },
+        width: { type: "Input", label: "Width", placeholder: "Example 100px or 50%" },
+        wrapping: { type: "CheckBox", label: "Wrapping", default: false },
+
+        titleSettings: { type: "Title", label: "Properties" },
+        enableGroup: { type: "CheckBox", label: "Grouping", default: false },
+        enableFilter: { type: "CheckBox", label: "Search", default: false },
+        enableSort: { type: "CheckBox", label: "Sorting", default: false },
+        visible: { type: "CheckBox", label: "Visible", default: true }
+
+    }
+}

@@ -1,0 +1,24 @@
+.nepNoBorder .sapMPanelContent {
+    border-bottom: none !important;
+}
+
+.nepTileChart .highcharts-legend-item,
+.nepTileChart .highcharts-text-outline,
+.nepTileChart .highcharts-axis-labels,
+.nepTileChart .highcharts-label {
+    font-family: "72";
+    font-size: 11px !important;
+    font-weight: 700;
+}
+
+.nepTileChart .highcharts-title {
+    font-family: "72Black", "72";
+    font-size: 20px !important;
+    text-transform: none !important;
+}
+
+.nepTileChart .highcharts-subtitle {
+    font-family: "72Black", "72";
+    font-size: 16px !important;
+    text-transform: none !important;
+}

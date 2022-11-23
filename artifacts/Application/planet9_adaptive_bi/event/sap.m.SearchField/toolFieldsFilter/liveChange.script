@@ -1,0 +1,3 @@
+const binding = tabFields.getBinding("items");
+const filter = new sap.ui.model.Filter("text", "Contains", this.getValue());
+binding.filter([filter]);

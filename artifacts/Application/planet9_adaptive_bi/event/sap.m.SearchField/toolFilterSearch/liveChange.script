@@ -1,0 +1,5 @@
+const binding = tabFilter.getBinding('rows');
+const filter = new sap.ui.model.Filter('value', 'Contains', this.getValue());
+binding.filter([filter]);
+
+diaFilter.setTitle("Filter (" + binding.getLength() + ")");

@@ -1,0 +1,2 @@
+oPageHeaderVariant.setText(modelpageVariantSave.oData.name);
+report.variantSave();

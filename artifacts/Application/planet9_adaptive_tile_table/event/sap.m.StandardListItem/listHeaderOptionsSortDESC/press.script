@@ -1,0 +1,16 @@
+var sorters = [];
+var binding = tabData.getBinding("items");
+
+report.sortBy = modelpopHeader.oData.name;
+report.sortOrder = "DESC";
+
+if (report.groupBy) sorters.push(new sap.ui.model.Sorter(report.groupBy, report.groupOrder, true));
+
+if (modelAppConfig.oData.settings.properties.table.enablePagination) {
+    report.run();
+} else {
+    sorters.push(new sap.ui.model.Sorter(modelpopHeader.oData.name, true, false));
+}
+
+binding.sort(sorters);
+popHeader.close();

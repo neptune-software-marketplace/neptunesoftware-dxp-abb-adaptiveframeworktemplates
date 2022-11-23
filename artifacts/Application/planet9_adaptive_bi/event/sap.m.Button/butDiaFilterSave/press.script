@@ -1,0 +1,26 @@
+let includeData = [];
+let excludeData = [];
+
+modeltabFilter.oData.forEach(function (data) {
+    if (!data.selected) {
+        excludeData.push(data.value);
+    } else {
+        includeData.push(data.value);
+    }
+});
+
+if (excludeData.length) {
+    modelDataVariant.oData.exclusions[pivotGrid.filterID] = excludeData;
+    modelDataVariant.oData.inclusions[pivotGrid.filterID] = includeData;
+} else {
+    delete modelDataVariant.oData.exclusions[pivotGrid.filterID];
+    delete modelDataVariant.oData.inclusions[pivotGrid.filterID];
+}
+
+modelDataVariant.refresh();
+modelDataPivot.refresh();
+
+pivotGrid.updateConfig(modelDataVariant.oData);
+pivotGrid.applyFieldFilter();
+
+diaFilter.close();

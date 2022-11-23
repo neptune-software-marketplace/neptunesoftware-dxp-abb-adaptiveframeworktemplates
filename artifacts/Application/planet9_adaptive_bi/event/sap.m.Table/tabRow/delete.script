@@ -1,0 +1,11 @@
+const deleteItem = oEvent.getParameter('listItem');
+const context = deleteItem.getBindingContext('DataVariant');
+const data = context.getObject();
+
+ModelData.Delete(modelDataVariant.oData.row, 'name', data.name);
+modelDataVariant.refresh();
+
+ModelData.UpdateField(modelDataSettings.oData.fieldsReport, 'name', data.name, 'visible', true);
+pivotGrid.applyFieldFilter();
+
+pivotGrid.updateConfig(modelDataVariant.oData);

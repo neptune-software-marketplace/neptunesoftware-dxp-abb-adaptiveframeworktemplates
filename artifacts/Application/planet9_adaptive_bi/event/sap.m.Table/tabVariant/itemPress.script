@@ -1,0 +1,52 @@
+let selectedItem = tabVariant.getSelectedItem();
+
+if (selectedItem) {
+    let context = selectedItem.getBindingContext();
+    let data = context.getObject();
+
+    oPageHeaderVariant.setText(data.name);
+
+    // Format Selection
+    let variant = JSON.parse(JSON.stringify(data.content));
+    for (let key in variant.selection) {
+        const field = ModelData.FindFirst(modelappData.oData.fieldsSel, 'name', key);
+        if (field.type === 'DateRange') {
+            variant.selection[key] = new Date(variant.selection[key]);
+            variant.selection[`${key}_end`] = new Date(variant.selection[`${key}_end`]);
+        }
+    }
+
+    if (typeof variant.length === 'number') variant = {};
+
+    modelpanSelection.setData(variant.selection);
+    modelpanSelection.refresh();
+
+    let formatBoolean = function (data) {
+        for (let key in data) {
+            if (['enableFilter', 'filter', 'hidden', 'visible'].includes(key)) {
+                data[key] = data[key] === 'true';
+            }
+        }
+    }
+
+    // Format Variant Columns
+    variant.settings.column.forEach(function (data) {
+        formatBoolean(data);
+    });
+
+    variant.settings.row.forEach(function (data) {
+        formatBoolean(data);
+    });
+
+    variant.settings.val.forEach(function (data) {
+        formatBoolean(data);
+    });
+
+    modelDataVariant.setData(variant.settings);
+    pivotGrid.updateConfig(modelDataVariant.oData);
+    pivotGrid.applyFieldFilter();
+    modelDataVariant.refresh();
+
+    pivotGrid.runReport();
+    diaVariant.close();
+}

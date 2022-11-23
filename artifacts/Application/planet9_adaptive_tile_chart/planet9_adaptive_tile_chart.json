@@ -1,0 +1,261 @@
+{
+	"id": "61a60e73-95f5-458b-9259-41f2c10659b2",
+	"createdAt": "2022-02-04T15:46:44.660Z",
+	"createdBy": "luuk.wosten@neptune-software.com",
+	"objects": [
+		{
+			"fieldNo": "5d02ca1f-664d-4451-de25-aeb579e08484",
+			"fieldName": "boxTile",
+			"fieldParent": 0,
+			"fieldType": "sap.m.VBox",
+			"script": "",
+			"customComponent": false,
+			"request": [],
+			"response": [],
+			"attributes": [
+				{
+					"attribute": "width",
+					"grouping": "Properties",
+					"value": "100%",
+					"script": "",
+					"translation": []
+				},
+				{
+					"attribute": "height",
+					"grouping": "Properties",
+					"value": "100%",
+					"script": "",
+					"translation": []
+				}
+			],
+			"data": [
+				{
+					"fieldNo": "9c02b84d-2e01-4471-98eb-aafc7609cfdd",
+					"fieldName": "panFilter",
+					"fieldParent": "5d02ca1f-664d-4451-de25-aeb579e08484",
+					"fieldType": "sap.m.Panel",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [
+						{
+							"attribute": "visible",
+							"grouping": "Properties",
+							"value": "{AppConfig>/settings/properties/form/showFilter}",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "styleClassPadding",
+							"grouping": "Properties",
+							"value": "sapUiNoContentPadding",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "backgroundDesign",
+							"grouping": "Properties",
+							"value": "Solid",
+							"script": "",
+							"translation": []
+						}
+					],
+					"data": []
+				},
+				{
+					"fieldNo": "4382da7c-7fa5-4a3b-a488-697e41c95eb1",
+					"fieldName": "panChart",
+					"fieldParent": "5d02ca1f-664d-4451-de25-aeb579e08484",
+					"fieldType": "sap.m.Panel",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [
+						{
+							"attribute": "styleClassPadding",
+							"grouping": "Properties",
+							"value": "sapUiNoContentPadding",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "styleClass",
+							"grouping": "Properties",
+							"value": "nepNoBorder",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "height",
+							"grouping": "Properties",
+							"value": "100%",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "backgroundDesign",
+							"grouping": "Properties",
+							"value": "Transparent",
+							"script": "",
+							"translation": []
+						}
+					],
+					"data": [
+						{
+							"fieldNo": "d3c37c50-6db1-4296-9219-7d68c2757311",
+							"fieldName": "chartHTML",
+							"fieldParent": "4382da7c-7fa5-4a3b-a488-697e41c95eb1",
+							"fieldType": "sap.ui.core.HTML",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "afterRendering",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.ui.core.HTML/chartHTML/afterRendering.script",
+									"language": "javascript",
+									"translation": []
+								}
+							],
+							"data": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"fieldNo": 99999,
+			"data": [
+				{
+					"fieldNo": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+					"fieldName": "Adaptive",
+					"fieldParent": 99999,
+					"fieldType": "neptune.folder",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "9538462d-31af-41f6-b485-465a0b64b6a4",
+							"fieldName": "AppConfig",
+							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+							"fieldType": "neptune.model",
+							"script": "",
+							"customComponent": false,
+							"bindingValue": "Generic Array",
+							"bindingType": "h",
+							"bindingSource": "P9",
+							"dataModel": {},
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "9e2b250b-e03e-44f5-a57f-dbe049e6e316",
+							"fieldName": "AppData",
+							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+							"fieldType": "neptune.model",
+							"script": "",
+							"customComponent": false,
+							"bindingValue": "Generic Array",
+							"bindingType": "h",
+							"bindingSource": "P9",
+							"dataModel": {},
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "8d025544-f2c2-4e6d-dd32-abccecff2526",
+							"fieldName": "helpers",
+							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/helpers.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "800a40be-379c-4cb1-e080-75d3ae58bdb8",
+							"fieldName": "Metadata",
+							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/Metadata.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
+							"fieldNo": "ab6de925-f229-4718-b25d-83c69f386c39",
+							"fieldName": "report",
+							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/report.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"fieldNo": 99998,
+			"data": []
+		}
+	],
+	"componentInterface": [],
+	"ver": "22.11.23.1313",
+	"application": "planet9_adaptive_tile_chart",
+	"title": "Adaptive Tile Chart",
+	"description": "Adaptive Tile Chart",
+	"enableFileStorage": false,
+	"enableManifest": false,
+	"enableStylesheet": true,
+	"enableObfuscate": false,
+	"onlyRunLaunchpad": true,
+	"disabled": false,
+	"loadLaunchpadCode": null,
+	"loadApplicationCode": null,
+	"appType": "F",
+	"ui5_m": true,
+	"ui5_f": false,
+	"ui5_table": false,
+	"ui5_tnt": false,
+	"ui5_uxap": false,
+	"ui5_chart": false,
+	"ui5_theme": "sap_fiori_3",
+	"ui5_version": "",
+	"ui5_language": null,
+	"ui5_url": "",
+	"cus_theme": "",
+	"css": "file:///css.script",
+	"header": "",
+	"manifest": "",
+	"globalScript": "",
+	"deleted": false,
+	"libHighchart": false,
+	"libHighmap": false,
+	"publicAccess": false,
+	"ui5_bootstrap": false,
+	"ui5_ionic": false,
+	"useV2AppHandler": false,
+	"compilerTarget": 3,
+	"apis": [],
+	"package": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+}

@@ -1,0 +1,10 @@
+report.groupBy = modelpopHeader.oData.name;
+report.groupOrder = 'DESC';
+
+if (modelAppConfig.oData.settings.properties.table.enablePagination) {
+    report.run();
+} else {
+    report.handleSortingClient();
+}
+
+popHeader.close();

@@ -1,0 +1,4 @@
+navVariant.to(pageVariantList);
+
+let selectedItem = tabVariant.getSelectedItem();
+butVariantUpdate.setVisible(!!selectedItem);

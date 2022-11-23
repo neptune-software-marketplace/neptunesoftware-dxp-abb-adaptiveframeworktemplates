@@ -1,5 +1,5 @@
 {
-	"id": "9A22F09F-1C13-ED11-BD6E-000D3AB1D9FF",
+	"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff",
 	"createdAt": "2022-08-03T11:08:39.176Z",
 	"createdBy": "kristin.eliassen@neptune-software.com",
 	"git": {
@@ -13,44 +13,45 @@
 	"enableCICD": true,
 	"apps": [
 		{
-			"id": "C68E1624-EC29-48BC-A7E0-109F9B54FD66",
-			"ver": "22.8.3.1310",
-			"application": "planet9_adaptive_edit",
-			"title": "Adaptive Edit",
-			"description": "Adaptive Edit"
-		},
-		{
-			"id": "77D5D812-F861-4044-BA75-3E7A268A4D14",
-			"ver": "22.8.3.1310",
-			"application": "planet9_adaptive_list",
-			"title": "Adaptive List ",
-			"description": "Adaptive List "
-		},
-		{
-			"id": "61A60E73-95F5-458B-9259-41F2C10659B2",
-			"ver": "22.8.3.1310",
-			"application": "planet9_adaptive_tile_chart",
-			"title": "Adaptive Tile Chart",
-			"description": "Adaptive Tile Chart"
-		},
-		{
-			"id": "D29E149B-2716-4C77-B026-4451881E54CD",
-			"ver": "22.8.3.1310",
+			"id": "d29e149b-2716-4c77-b026-4451881e54cd",
 			"application": "planet9_adaptive_bi",
 			"title": "Analytic Slice&Dice",
 			"description": "Analytic Slice&Dice"
 		},
 		{
-			"id": "B2082507-49AB-4D0A-ACBA-60668CAE952B",
-			"ver": "22.8.3.1310",
+			"id": "c68e1624-ec29-48bc-a7e0-109f9b54fd66",
+			"application": "planet9_adaptive_edit",
+			"title": "Adaptive Edit",
+			"description": "Adaptive Edit"
+		},
+		{
+			"id": "b2082507-49ab-4d0a-acba-60668cae952b",
 			"application": "planet9_adaptive_tile_table",
 			"title": "Adaptive Tile Table",
 			"description": "Adaptive Tile Table"
+		},
+		{
+			"id": "77d5d812-f861-4044-ba75-3e7a268a4d14",
+			"application": "planet9_adaptive_list",
+			"title": "Adaptive List ",
+			"description": "Adaptive List "
+		},
+		{
+			"id": "61a60e73-95f5-458b-9259-41f2c10659b2",
+			"application": "planet9_adaptive_tile_chart",
+			"title": "Adaptive Tile Chart",
+			"description": "Adaptive Tile Chart"
+		},
+		{
+			"id": "3348b476-8705-4885-9d69-5dbac3e0bf37",
+			"application": "planet9_adaptive_splitter",
+			"title": "Adaptive Splitter/Layout",
+			"description": "Adaptive Splitter/Layout"
 		}
 	],
 	"api": [],
-	"odataMock": [],
 	"odataSource": [],
+	"odataMock": [],
 	"dictionary": [],
 	"jsclass": [],
 	"jsscript_group": [],
@@ -68,8 +69,9 @@
 	"systems": [],
 	"doc": [],
 	"wf_notifications": [],
-	"wf_definition": [],
 	"department": [],
 	"script_scheduler": [],
-	"connector": []
+	"wf_definition": [],
+	"connector": [],
+	"events": []
 }

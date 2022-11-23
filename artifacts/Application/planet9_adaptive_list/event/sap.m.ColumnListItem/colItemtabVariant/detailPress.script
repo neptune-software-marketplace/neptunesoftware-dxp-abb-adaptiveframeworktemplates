@@ -1,0 +1,6 @@
+let context = oEvent.oSource.getBindingContext();
+let data = context.getObject();
+modelpageVariantSave.setData(data);
+//butVariantDelete.setVisible(true);
+navVariant.to(pageVariantSave);
+

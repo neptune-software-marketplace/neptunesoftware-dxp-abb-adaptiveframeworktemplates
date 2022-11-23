@@ -1,0 +1,8 @@
+var sorters = [];
+var binding = tabData.getBinding("items");
+
+report.groupBy = null;
+
+binding.sort(sorters);
+
+popHeader.close();

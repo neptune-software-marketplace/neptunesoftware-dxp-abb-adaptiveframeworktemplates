@@ -1,0 +1,9 @@
+if (layoutSetup.getSize() === '0px') {
+    layoutSetup.setSize('300px');
+    layoutSetup.setResizable(true);
+} else {
+    layoutSetup.setSize('0px');
+    layoutSetup.setResizable(false);
+}
+
+pivotGrid.buildData(modelDataPivot.oData);

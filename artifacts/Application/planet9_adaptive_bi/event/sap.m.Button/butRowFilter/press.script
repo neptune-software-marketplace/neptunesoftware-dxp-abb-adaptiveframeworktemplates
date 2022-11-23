@@ -1,0 +1,6 @@
+const context = oEvent.oSource.getBindingContext('DataVariant');
+const data = context.getObject();
+
+pivotGrid.filterBuild(data.text);
+pivotGrid.filterID = data.text;
+diaFilter.open();

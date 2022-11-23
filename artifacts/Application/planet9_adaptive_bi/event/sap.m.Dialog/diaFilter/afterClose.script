@@ -1,0 +1,2 @@
+toolFilterSearch.setValue();
+toolFilterSearch.fireLiveChange();

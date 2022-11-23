@@ -1,0 +1,31 @@
+// element will only be available when we have initialized the pivotHTMLObject
+const el = getPivotGridEl();
+if (!el) {
+    pivotGrid.initPivotHTMLObject();
+    return;
+}
+
+// LOAD PIVOT LIBRARY, IF NOT LOADED
+if (pivotGrid.initialized) return;
+
+const sep = isCordova() ? '' : '/';
+
+const pivotCSS = document.createElement('link');
+pivotCSS.rel = 'stylesheet';
+pivotCSS.type = 'text/css'
+pivotCSS.href = `${sep}public/pivottable/pivot.min.css`;
+document.head.appendChild(pivotCSS);
+
+
+let modules = ["public/pivottable/highchart_renderers.js"];
+if (!Highcharts.seriesTypes.treemap) modules.push("public/highsuite/modules/treemap.js");
+// if (!Highcharts.seriesTypes.heatmap) modules.push("public/highsuite/modules/heatmap.js");
+
+const paths = modules.map(function (path) {
+    return pivotGrid.loadLibrary(`${sep}${path}`);
+});
+
+Promise.all(paths).then(function (_vals) {
+    window._pivotGrid.loaded = true;
+    pivotGrid.init();
+});

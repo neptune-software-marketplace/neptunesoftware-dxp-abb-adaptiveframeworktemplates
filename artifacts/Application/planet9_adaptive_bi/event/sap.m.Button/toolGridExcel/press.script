@@ -1,0 +1,58 @@
+const pvtTable = document.getElementById(pivotGridId).getElementsByClassName('pvtTable')[0];
+if (!pvtTable) return;
+
+// Data Formatting
+for (i = 1; i < pvtTable.rows.length; i++) {
+    let objCells = pvtTable.rows.item(i).cells;
+    for (let j = 0; j < objCells.length; j++) {
+        let content = objCells.item(j).innerHTML;
+
+        if (content.indexOf(',') > -1 || content.indexOf('.') > -1) {
+            content = content.replace(/,/g, '');
+            content = content.replace('.', ',');
+            objCells.item(j).innerHTML = content;
+        }
+    }
+}
+
+// Table Design
+let tableHTML = pvtTable.outerHTML;
+
+const thStyle = 'style="height: 35px; background: steelblue; color: white; font-weight: strong;"';
+tableHTML = tableHTML.replace(/<table/g, '<table border="1"');
+tableHTML = tableHTML.replace(/<th colspan/g, `<th ${thStyle}colspan`);
+
+tableHTML = tableHTML.replace(/class="pvtAxisLabel"/g, thStyle);
+tableHTML = tableHTML.replace(/class="pvtAxisLabel"/g, thStyle);
+tableHTML = tableHTML.replace(/class="pvtColLabel"/g, thStyle);
+tableHTML = tableHTML.replace(/class="pvtRowLabel"/g, thStyle);
+tableHTML = tableHTML.replace(/class="pvtTotalLabel pvtRowTotalLabel"/g, thStyle);
+tableHTML = tableHTML.replace(/class="pvtTotalLabel pvtColTotalLabel"/g, thStyle);
+
+const sumStyle = 'style="font-weight: 800;"';
+tableHTML = tableHTML.replace(/class="pvtGrandTotal"/g, sumStyle);
+tableHTML = tableHTML.replace(/class="pvtTotal colTotal"/g, sumStyle);
+tableHTML = tableHTML.replace(/class="pvtTotal rowTotal"/g, sumStyle);
+
+tableHTML = tableHTML.replace(/<th></g, `<th ${thStyle}><`);
+tableHTML = tableHTML.replace(/ /g, '%20');
+tableHTML = tableHTML.replace(/#/g, '');
+
+// Specify file name
+let filename = modelappData.oData.properties.report.title || 'Neptune Pivot Export';
+filename += '.xls';
+
+const downloadLink = document.createElement('a');
+document.body.appendChild(downloadLink);
+
+const dataType = 'application/vnd.ms-excel';
+if (navigator.msSaveOrOpenBlob) {
+    const blob = new Blob(['\ufeff', tableHTML], { type: dataType });
+    navigator.msSaveOrOpenBlob(blob, filename);
+} else {
+    downloadLink.href = `data:${dataType}, ${tableHTML}`;
+    downloadLink.download = filename;
+    downloadLink.click();
+}
+
+pivotGrid.buildPivot();

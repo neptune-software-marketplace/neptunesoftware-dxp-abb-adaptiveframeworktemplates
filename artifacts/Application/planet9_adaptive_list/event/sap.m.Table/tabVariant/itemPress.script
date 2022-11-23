@@ -1,0 +1,25 @@
+const selectedItem = tabVariant.getSelectedItem();
+if (selectedItem) {
+    const ctx = selectedItem.getBindingContext();
+    const data = ctx.getObject();
+
+    oPageHeaderVariant.setText(data.name);
+
+    const variant = JSON.parse(JSON.stringify(data.content));
+    for (let k in variant) {
+        const field = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsSel, 'name', k);
+
+        if (field.type === 'DateRange') {
+            variant[k] = new Date(variant[k]);
+            variant[k + '_end'] = new Date(variant[k + '_end']);
+        }
+    }
+
+    if (typeof variant.length === 'number') variant = {};
+
+    modelAppData.setData(variant);
+    modelAppData.refresh();
+
+    report.run();
+    diaVariant.close();
+}
