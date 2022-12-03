@@ -21,6 +21,13 @@
 					"translation": []
 				},
 				{
+					"attribute": "styleClass",
+					"grouping": "Properties",
+					"value": "nepNoRadius",
+					"script": "",
+					"translation": []
+				},
+				{
 					"attribute": "height",
 					"grouping": "Properties",
 					"value": "100%",
@@ -919,11 +926,11 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.11.23.1314",
+	"ver": "22.12.3.1249",
 	"application": "planet9_adaptive_tile_table",
 	"title": "Adaptive Tile Table",
 	"description": "Adaptive Tile Table",
-	"enableFileStorage": false,
+	"enableFileStorage": true,
 	"enableManifest": false,
 	"enableStylesheet": true,
 	"enableObfuscate": false,

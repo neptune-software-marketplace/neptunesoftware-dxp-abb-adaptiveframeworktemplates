@@ -996,15 +996,14 @@ const report = {
                         break;
 
                     case 'ObjectStatus':
-                        const k = f.name;
                         opts = {
                             text: getFieldBindingText(f),
                         };
 
                         if (f.statusInverted) opts.inverted = true;
-                        if (f.statusTitleType) opts.title = `{${k}_title}`;
-                        if (f.statusIconType) opts.icon = `{${k}_icon}`;
-                        if (f.statusStateType) opts.state = `{${k}_state}`;
+                        if (f.statusTitleType) opts.title = `{${f.name}_title}`;
+                        if (f.statusIconType) opts.icon = `{${f.name}_icon}`;
+                        if (f.statusStateType) opts.state = `{${f.name}_state}`;
 
                         newField = new sap.m.ObjectStatus(opts);
 
@@ -1026,6 +1025,35 @@ const report = {
                             wrapping: getFieldWrapping(f),
                             select: onChange,
                         })
+                        break;
+
+                    case 'Button':
+                        opts = {
+                            text: getFieldBindingText(f),
+                            type: f.buttonType,
+                            press: function (oEvent) {
+                                if (!f._navigation) return;
+
+                                const ctx = oEvent.oSource.getBindingContext();
+                                const colData = ctx.getObject();
+
+                                // Sidepanel Lookup Text 
+                                if (f._navigation.openAs === 'S') {
+                                    const k = f._navigation.dialogTitleField;
+                                    const { valueType } = ModelData.FindFirst(config.settings.fieldsRun, 'name', k);
+                                    f._navigation.dialogTitleFieldText = colData[valueType ? `${k}_value` : k];
+                                }
+
+                                // Add pressed fieldname
+                                events.objectPressed = f.name;
+
+                                sap.n.Adaptive.navigation(f._navigation, colData, events, newField.sId)
+                            }
+                        };
+
+                        if (f.buttonIconType) opts.icon = `{${f.name}_icon}`;
+
+                        newField = new sap.m.Button(opts);
                         break;
 
                     case 'Switch':

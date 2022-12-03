@@ -151,7 +151,32 @@ var report = {
     },
 
     create: function () {
-        sap.n.Adaptive.navigation(modelAppConfig.oData.settings.properties.report._navigationCreate, null, report.events);
+
+        // Pass mapped data 
+        let postData = null;
+        const s = modelAppConfig.oData.settings;
+        if (s.properties.report._navigationCreate) {
+            if (s.properties.report._navigationCreate.keyField) {
+                postData = { _defaultData: {} };
+
+                s.properties.report._navigationCreate.keyField.forEach(function (mapping) {
+
+                    if (mapping.value) postData._defaultData[mapping.fieldName] = mapping.value;
+
+                    if (mapping.key) {
+                        if (modelAppConfig.oData.settings && modelAppConfig.oData.settings.data && modelAppConfig.oData.settings.data[mapping.key]) {
+                            postData._defaultData[mapping.fieldName] = modelAppConfig.oData.settings.data[mapping.key];
+                        } else {
+                            postData._defaultData[mapping.fieldName] = modelAppData.oData[mapping.key];
+                        }
+                    }
+
+                });
+            }
+
+        }
+
+        sap.n.Adaptive.navigation(modelAppConfig.oData.settings.properties.report._navigationCreate, postData, report.events);
     },
 
     run: function () {
@@ -194,8 +219,15 @@ var report = {
                 modeltabData.setData(data);
             }
 
+            // IconTabBarFilter Counter - Used as Child
             let tabFilter = boxTile.getParent().getParent();
-            if (tabFilter && tabFilter.getMetadata()._sClassName === 'sap.m.IconTabFilter') tabFilter.setCount(modeltabData.oData.length);
+
+            if (tabFilter && tabFilter.getMetadata()._sClassName === 'sap.m.IconTabFilter') {
+                tabFilter.setCount(modeltabData.oData.length);
+            } else {
+                tabFilter = boxTile.getParent().getParent().getParent();
+                if (tabFilter && tabFilter.getMetadata()._sClassName === 'sap.m.IconTabFilter') tabFilter.setCount(modeltabData.oData.length);
+            }
 
             // Handle Group & Sorting
             if (report.groupBy) {

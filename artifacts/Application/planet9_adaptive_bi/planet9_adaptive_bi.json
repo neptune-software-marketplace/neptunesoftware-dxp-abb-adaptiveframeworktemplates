@@ -5647,11 +5647,11 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.11.23.1315",
+	"ver": "22.12.3.1251",
 	"application": "planet9_adaptive_bi",
 	"title": "Analytic Slice&Dice",
 	"description": "Analytic Slice&Dice",
-	"enableFileStorage": false,
+	"enableFileStorage": true,
 	"enableManifest": false,
 	"enableStylesheet": true,
 	"enableObfuscate": false,

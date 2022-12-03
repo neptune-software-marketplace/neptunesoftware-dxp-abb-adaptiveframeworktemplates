@@ -146,11 +146,11 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.11.23.1313",
+	"ver": "22.12.3.1250",
 	"application": "planet9_adaptive_splitter",
 	"title": "Adaptive Splitter/Layout",
 	"description": "Adaptive Splitter/Layout",
-	"enableFileStorage": false,
+	"enableFileStorage": true,
 	"enableManifest": false,
 	"enableStylesheet": true,
 	"enableObfuscate": false,

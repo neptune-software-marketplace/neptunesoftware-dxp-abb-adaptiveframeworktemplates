@@ -15,6 +15,9 @@ const vb = {
     typeMultiOrSingleSelectScript: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
     typeInput: "{= ${/type} === 'Input' || ! ${/type} ? true : false }",
     typeLink: "{= ${/type} === 'Link' ? true : false }",
+    typeButton: "{= ${/type} === 'Button' ? true : false }",
+
+    typeEvents: "{= ${/type} === 'Link' || ${/type} === 'Button'? true : false }",
 
     buttonTypes: ['Accept', 'Attention', 'Critical', 'Back', 'Default', 'Emphasized', 'Ghost', 'Neutral', 'Reject', 'Transparent', 'Unstyled', 'Up'],
 
@@ -286,13 +289,13 @@ const metadata = {
         type: {
             type: 'SingleSelect',
             label: 'Type',
-            items: valuesToKeyText(['|Text', 'Link', 'CheckBox', 'DatePicker', 'DateTimePicker', 'Icon', 'Input', 'Image', 'MultiSelectLookup', 'MultiSelectScript', 'ObjectNumber', 'ObjectStatus', 'SingleSelectLookup', 'SingleSelectScript', 'Switch'])
+            items: valuesToKeyText(['|Text', 'Button', 'Link', 'CheckBox', 'DatePicker', 'DateTimePicker', 'Icon', 'Input', 'Image', 'MultiSelectLookup', 'MultiSelectScript', 'ObjectNumber', 'ObjectStatus', 'SingleSelectLookup', 'SingleSelectScript', 'Switch'])
         },
 
         statusInverted: { type: 'CheckBox', label: 'Inverted', visible: vb.typeObjectStatus },
 
-        titleNavigation: { type: 'Title', label: 'Event', visible: vb.typeLink },
-        navigation: { type: 'Navigation', label: 'Press', visible: vb.typeLink },
+        titleNavigation: { type: 'Title', label: 'Event', visible: vb.typeEvents },
+        navigation: { type: 'Navigation', label: 'Press', visible: vb.typeEvents },
 
         // Value
         titleValue: { type: 'Title', label: 'Value' },
@@ -350,6 +353,28 @@ const metadata = {
 
         titleSelectScript: { type: 'Title', label: 'Data Source', visible: vb.typeMultiOrSingleSelectScript },
         scriptSelect: { type: 'Script', label: 'Server Script', visible: vb.typeMultiOrSingleSelectScript },
+
+        // Button
+        buttonType: { type: 'SingleSelect', label: 'Type', default: 'Transparent', visible: vb.typeButton, items: valuesToKeyText(vb.buttonTypes) },
+
+        titleButtonIcon: { type: 'Title', label: 'Value: Icon', visible: vb.typeButton },
+        buttonIconType: {
+            type: 'SingleSelect',
+            label: 'Source',
+            visible: vb.typeButton,
+            items: distinctValuesToKeyText([
+                ['', ''],
+                ['Binding', 'Binding'],
+                ['Fixed', 'Fixed Value'],
+                ['Lookup', 'Lookup'],
+                ['Rule', 'Rules Engine'],
+                ['Script', 'Script (from post processing)'],
+            ])
+        },
+        buttonIconFixed: { type: 'Icon', label: 'Fixed Value', visible: "{= ${/type} === 'Button' && ${/buttonIconType} === 'Fixed' ? true : false }" },
+        buttonIconRule: { type: 'Rule', label: 'Rules Engine', visible: "{= ${/type} === 'Button' && ${/buttonIconType} === 'Rule' ? true : false }" },
+        buttonIconBinding: { type: 'TableFieldLocal', label: 'Binding', visible: "{= ${/type} === 'Button' && ${/buttonIconType} === 'Binding' ? true : false }" },
+        buttonIconLookup: { type: 'Lookup', label: 'Lookup Value', visible: "{= ${/type} === 'Button' && ${/buttonIconType} === 'Lookup' ? true : false }" },
 
         // Link - Href
         titleLinkHref: { type: 'Title', label: 'Value: URL', visible: vb.typeLink },

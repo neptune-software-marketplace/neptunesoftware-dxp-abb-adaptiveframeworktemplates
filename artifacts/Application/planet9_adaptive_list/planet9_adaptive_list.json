@@ -4158,11 +4158,11 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.11.23.1314",
+	"ver": "22.12.3.1250",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
-	"enableFileStorage": false,
+	"enableFileStorage": true,
 	"enableManifest": false,
 	"enableStylesheet": true,
 	"enableObfuscate": false,
