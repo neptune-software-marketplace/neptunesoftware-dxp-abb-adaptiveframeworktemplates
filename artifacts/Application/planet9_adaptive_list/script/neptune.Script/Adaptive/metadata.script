@@ -1092,6 +1092,15 @@ const metadata = {
                 { key: "XXSmall", text: "240px" },
             ],
         },
+
+        demandPopin: { type: "CheckBox", label: "Demand Popin" },
+        popinDisplay: {
+            type: "SingleSelect", label: "Popin Display", default: "Block", items: [
+                { key: "Block", text: "Block" },
+                { key: "Inline", text: "Inline" }
+            ],
+        },
+
         placeholder: { type: "Input", label: "Placeholder", visible: vb.placeholder },
         dateTimePickerMinutesStep: {
             type: "Input",

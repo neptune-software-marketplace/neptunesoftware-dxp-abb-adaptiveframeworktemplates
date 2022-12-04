@@ -739,7 +739,7 @@ const report = {
                         return sap.n.Adaptive.run(modelAppConfig.oData, item, "Save");
                     })
                 )
-                    .catch(function (_) {})
+                    .catch(function (_) { })
                     .finally(function (_) {
                         importData(data.slice(COUNT));
                     });
@@ -951,7 +951,7 @@ const report = {
 
             try {
                 table.destroyColumns();
-            } catch (e) {}
+            } catch (e) { }
 
             let col = new sap.m.ColumnListItem({ selected: "{_sel}" });
 
@@ -1003,6 +1003,8 @@ const report = {
 
                 if (f.hAlign) ColumnHeader.setHAlign(f.hAlign);
                 if (f.vAlign) ColumnHeader.setVAlign(f.vAlign);
+                if (f.demandPopin) ColumnHeader.setDemandPopin(f.demandPopin);
+                if (f.popinDisplay) ColumnHeader.setPopinDisplay(f.popinDisplay);
 
                 // Enable Sum
                 if (f.enableSum && f.type === "ObjectNumber") {
