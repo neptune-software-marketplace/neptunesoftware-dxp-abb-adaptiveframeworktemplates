@@ -11,6 +11,8 @@ const vb = {
     tableEnableAction1: "{= ${appData>/settings/properties/table/enableAction1} ? true : false }",
     tableEnableAction2: "{= ${appData>/settings/properties/table/enableAction2} ? true : false }",
     tableEnableAction3: "{= ${appData>/settings/properties/table/enableAction3} ? true : false }",
+    tableEnableAction4: "{= ${appData>/settings/properties/table/enableAction4} ? true : false }",
+    tableEnableAction5: "{= ${appData>/settings/properties/table/enableAction5} ? true : false }",
 
     typeMultiOrSingleSelectLookup:
         "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
@@ -41,6 +43,7 @@ const vb = {
     typeLookup: "{= ${/valueType} === 'Lookup' ? true : false }",
     typeRule: "{= ${/valueType} === 'Rule' ? true : false }",
 
+    typeStepInput: "{= ${/type} === 'StepInput' ? true : false }",
     typeObjectAllowIcon: "{= ${/type} === 'ObjectStatus' || ${/type} === 'Button'? true : false }",
     typeObjectStatus: "{= ${/type} === 'ObjectStatus' ? true : false }",
     typeObjectNumber: "{= ${/type} === 'ObjectNumber' ? true : false }",
@@ -388,6 +391,24 @@ const metadata = {
             titlePostProcessingScript: { type: "Title", label: "Post Processing" },
             postProcessingScript: { type: "Script", label: "Script" },
 
+            // Properties
+            titleTable: { type: "Title", label: "Properties" },
+            showSeparators: {
+                type: "SingleSelect",
+                label: "Show Separators",
+                default: "All",
+                items: valuesToKeyText(["All", "Inner", "None"]),
+            },
+            alternateRowColors: { type: "CheckBox", label: "Alternate Row Colors", default: false },
+            fixedLayout: { type: "CheckBox", label: "Fixed Layout", default: false },
+            inset: { type: "CheckBox", label: "Inset", default: false },
+            enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
+            enableAction1: { type: "CheckBox", label: "Enable Row Action 1", default: false },
+            enableAction2: { type: "CheckBox", label: "Enable Row Action 2", default: false },
+            enableAction3: { type: "CheckBox", label: "Enable Row Action 3", default: false },
+            enableAction4: { type: "CheckBox", label: "Enable Row Action 4", default: false },
+            enableAction5: { type: "CheckBox", label: "Enable Row Action 5", default: false },
+
             // Row Action 1
             titleAction1: { type: "Title", label: "Row Action 1", visible: vb.tableEnableAction1 },
             action1Text: {
@@ -487,20 +508,71 @@ const metadata = {
             },
             action3Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction3 },
 
-            titleTable: { type: "Title", label: "Properties" },
-            showSeparators: {
-                type: "SingleSelect",
-                label: "Show Separators",
-                default: "All",
-                items: valuesToKeyText(["All", "Inner", "None"]),
+            // Row Action 4
+            titleAction4: { type: "Title", label: "Row Action 4", visible: vb.tableEnableAction4 },
+            action4Text: {
+                type: "Input",
+                label: "Text",
+                default: "",
+                visible: vb.tableEnableAction4,
             },
-            alternateRowColors: { type: "CheckBox", label: "Alternate Row Colors", default: false },
-            enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
-            enableAction1: { type: "CheckBox", label: "Enable Row Action 1", default: false },
-            enableAction2: { type: "CheckBox", label: "Enable Row Action 2", default: false },
-            enableAction3: { type: "CheckBox", label: "Enable Row Action 3", default: false },
-            fixedLayout: { type: "CheckBox", label: "Fixed Layout", default: false },
-            inset: { type: "CheckBox", label: "Inset", default: false },
+            action4Icon: { type: "Icon", label: "Icon", visible: vb.tableEnableAction4 },
+            action4Width: {
+                type: "Input",
+                label: "Width",
+                placeholder: "Example 100px or 50%",
+                visible: vb.tableEnableAction4,
+            },
+            action4Type: {
+                type: "SingleSelect",
+                label: "Type",
+                default: "Transparent",
+                visible: vb.tableEnableAction4,
+                items: valuesToKeyText([
+                    "Accept",
+                    "Back",
+                    "Default",
+                    "Emphasized",
+                    "Reject",
+                    "Transparent",
+                    "Unstyled",
+                    "Up",
+                ]),
+            },
+            action4Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction4 },
+
+            // Row Action 5
+            titleAction5: { type: "Title", label: "Row Action 5", visible: vb.tableEnableAction5 },
+            action5Text: {
+                type: "Input",
+                label: "Text",
+                default: "",
+                visible: vb.tableEnableAction5,
+            },
+            action5Icon: { type: "Icon", label: "Icon", visible: vb.tableEnableAction5 },
+            action5Width: {
+                type: "Input",
+                label: "Width",
+                placeholder: "Example 100px or 50%",
+                visible: vb.tableEnableAction5,
+            },
+            action5Type: {
+                type: "SingleSelect",
+                label: "Type",
+                default: "Transparent",
+                visible: vb.tableEnableAction5,
+                items: valuesToKeyText([
+                    "Accept",
+                    "Back",
+                    "Default",
+                    "Emphasized",
+                    "Reject",
+                    "Transparent",
+                    "Unstyled",
+                    "Up",
+                ]),
+            },
+            action5Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction5 },
         },
     },
 
@@ -605,10 +677,30 @@ const metadata = {
                 "SingleSelectLookup",
                 "SingleSelectScript",
                 "Switch",
+                "StepInput",
             ]),
         },
 
         statusInverted: { type: "CheckBox", label: "Inverted", visible: vb.typeObjectStatus },
+
+        stepInputMin: {
+            type: "Input",
+            label: "Min",
+            visible: vb.typeStepInput,
+            placeholder: "Min value",
+        },
+        stepInputMax: {
+            type: "Input",
+            label: "Max",
+            visible: vb.typeStepInput,
+            placeholder: "Max value",
+        },
+        stepInputStep: {
+            type: "Input",
+            label: "Step",
+            visible: vb.typeStepInput,
+            placeholder: "1",
+        },
 
         buttonType: {
             type: "SingleSelect",

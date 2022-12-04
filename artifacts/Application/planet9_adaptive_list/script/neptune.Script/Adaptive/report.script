@@ -13,7 +13,7 @@ const report = {
     pagination: {
         take: 100,
         index: 0,
-        count: 0
+        count: 0,
     },
 
     events: {
@@ -41,12 +41,12 @@ const report = {
         },
         onTableChange: function (data) {
             report.save(data);
-        }
+        },
     },
 
     start: function () {
         if (!sap.n || !sap.n.Adaptive) {
-            console.error('Neptune Adaptive Framework not found');
+            console.error("Neptune Adaptive Framework not found");
             return;
         }
 
@@ -54,7 +54,6 @@ const report = {
     },
 
     init: function (config, runtime) {
-
         // Check current config
         if (report.initId === config.id) {
             if (!config.settings.properties.report.autoRunFocus && runtime) return;
@@ -96,25 +95,37 @@ const report = {
         }
 
         if (config.settings.properties.report.avatarBackgroundColor) {
-            oPageHeaderIcon.setBackgroundColor(config.settings.properties.report.avatarBackgroundColor);
+            oPageHeaderIcon.setBackgroundColor(
+                config.settings.properties.report.avatarBackgroundColor
+            );
         } else {
             oPageHeaderIcon.setBackgroundColor();
         }
 
-        // Table Mode 
-        if (!config.settings.properties.report.enableDelete && !config.settings.properties.report.enableMultiSelect) report.tabObject.setMode('None');
-        if (config.settings.properties.report.enableDelete && !config.settings.properties.report.enableMultiSelect) report.tabObject.setMode('Delete');
-        if (config.settings.properties.report.enableMultiSelect) report.tabObject.setMode('MultiSelect');
+        // Table Mode
+        if (
+            !config.settings.properties.report.enableDelete &&
+            !config.settings.properties.report.enableMultiSelect
+        )
+            report.tabObject.setMode("None");
+        if (
+            config.settings.properties.report.enableDelete &&
+            !config.settings.properties.report.enableMultiSelect
+        )
+            report.tabObject.setMode("Delete");
+        if (config.settings.properties.report.enableMultiSelect)
+            report.tabObject.setMode("MultiSelect");
 
         report.sortBy = t.initialSortField || null;
-        report.sortOrder = t.initialSortOrder || 'ASC';
+        report.sortOrder = t.initialSortOrder || "ASC";
         report.groupBy = t.initialGroupField || null;
-        report.groupOrder = t.initialGroupOrder || 'ASC';
+        report.groupOrder = t.initialGroupOrder || "ASC";
         report.tabObject.getModel().setData();
 
-        // Language 
+        // Language
         if (runtime) {
-            if (AppCache && AppCache.userInfo && AppCache.userInfo.language) config.language = AppCache.userInfo.language;
+            if (AppCache && AppCache.userInfo && AppCache.userInfo.language)
+                config.language = AppCache.userInfo.language;
         } else {
             const language = getAdaptiveEditorPreviewLanguage();
             if (language) {
@@ -135,100 +146,134 @@ const report = {
         }
 
         // Translation - Properties
-        oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty('report', 'title', config));
-        oPageHeaderSubTitle.setText(sap.n.Adaptive.translateProperty('report', 'subTitle', config));
-        oPageHeaderVariant.setText(sap.n.Adaptive.translateProperty('report', 'subTitle', config));
-        oPageExport.setText(sap.n.Adaptive.translateProperty('report', 'textButtonExport', config));
-        oPageImport.setText(sap.n.Adaptive.translateProperty('report', 'textButtonImport', config));
-        oPageMultiSelect.setText(sap.n.Adaptive.translateProperty('report', 'textButtonMultiSelect', config));
-        oPageCreate.setText(sap.n.Adaptive.translateProperty('report', 'textButtonCreate', config));
-        oPageUpdate.setText(sap.n.Adaptive.translateProperty('report', 'textButtonRun', config));
-        oPageClose.setText(sap.n.Adaptive.translateProperty('report', 'textButtonClose', config));
-        toolDataClose.setText(sap.n.Adaptive.translateProperty('report', 'textButtonClose', config));
+        oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
+        oPageHeaderSubTitle.setText(sap.n.Adaptive.translateProperty("report", "subTitle", config));
+        oPageHeaderVariant.setText(sap.n.Adaptive.translateProperty("report", "subTitle", config));
+        oPageExport.setText(sap.n.Adaptive.translateProperty("report", "textButtonExport", config));
+        oPageImport.setText(sap.n.Adaptive.translateProperty("report", "textButtonImport", config));
+        oPageMultiSelect.setText(
+            sap.n.Adaptive.translateProperty("report", "textButtonMultiSelect", config)
+        );
+        oPageCreate.setText(sap.n.Adaptive.translateProperty("report", "textButtonCreate", config));
+        oPageUpdate.setText(sap.n.Adaptive.translateProperty("report", "textButtonRun", config));
+        oPageClose.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
+        toolDataClose.setText(
+            sap.n.Adaptive.translateProperty("report", "textButtonClose", config)
+        );
 
-        report.tabObject.setHeaderText(sap.n.Adaptive.translateProperty('table', 'headerText', config));
-        report.tabObject.setFooterText(sap.n.Adaptive.translateProperty('table', 'footerText', config));
-        report.tabObject.setNoDataText(sap.n.Adaptive.translateProperty('table', 'noDataText', config));
+        report.tabObject.setHeaderText(
+            sap.n.Adaptive.translateProperty("table", "headerText", config)
+        );
+        report.tabObject.setFooterText(
+            sap.n.Adaptive.translateProperty("table", "footerText", config)
+        );
+        report.tabObject.setNoDataText(
+            sap.n.Adaptive.translateProperty("table", "noDataText", config)
+        );
 
-        // Variant 
+        // Variant
         if (config.settings.properties.report.enableVariant) report.variantList();
 
         // Init
-        sap.n.Adaptive.init(modelAppConfig.oData).then(function (data) {
+        sap.n.Adaptive.init(modelAppConfig.oData)
+            .then(function (data) {
+                // Open Dialog
+                if (
+                    oApp.getParent() &&
+                    oApp.getParent().getParent() &&
+                    oApp.getParent().getParent().open
+                ) {
+                    oApp.getParent().getParent().open();
+                }
 
-            // Open Dialog
-            if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().open) {
-                oApp.getParent().getParent().open();
-            }
+                const s = modelAppConfig.oData.settings;
 
-            const s = modelAppConfig.oData.settings;
+                if (runtime) {
+                    s.fieldsSel = data.fieldsSelection;
+                    s.fieldsRun = data.fieldsReport;
 
-            if (runtime) {
-                s.fieldsSel = data.fieldsSelection;
-                s.fieldsRun = data.fieldsReport;
+                    if (s.fieldsSel) s.fieldsSel.sort(sort_by("fieldPos"));
+                    if (s.fieldsRun) s.fieldsRun.sort(sort_by("fieldPos"));
+                } else {
+                    s.fieldsSel.forEach(function (selField) {
+                        let selFieldRun = ModelData.FindFirst(
+                            data.fieldsSelection,
+                            "name",
+                            selField.name
+                        );
+                        if (selFieldRun && selFieldRun.items) selField.items = selFieldRun.items;
+                        if (selFieldRun && selFieldRun.default)
+                            selField.default = selFieldRun.default;
+                    });
 
-                if (s.fieldsSel) s.fieldsSel.sort(sort_by('fieldPos'));
-                if (s.fieldsRun) s.fieldsRun.sort(sort_by('fieldPos'));
-            } else {
-                s.fieldsSel.forEach(function (selField) {
-                    let selFieldRun = ModelData.FindFirst(data.fieldsSelection, 'name', selField.name);
-                    if (selFieldRun && selFieldRun.items) selField.items = selFieldRun.items;
-                    if (selFieldRun && selFieldRun.default) selField.default = selFieldRun.default;
-                });
+                    s.fieldsRun.forEach(function (runField) {
+                        let selFieldRun = ModelData.FindFirst(
+                            data.fieldsReport,
+                            "name",
+                            runField.name
+                        );
+                        if (selFieldRun && selFieldRun.items) runField.items = selFieldRun.items;
+                        if (selFieldRun && selFieldRun.default)
+                            runField.default = selFieldRun.default;
+                    });
+                }
 
-                s.fieldsRun.forEach(function (runField) {
-                    let selFieldRun = ModelData.FindFirst(data.fieldsReport, 'name', runField.name);
-                    if (selFieldRun && selFieldRun.items) runField.items = selFieldRun.items;
-                    if (selFieldRun && selFieldRun.default) runField.default = selFieldRun.default;
-                });
-            }
+                // Key Fields for GET Record
+                if (s.navigation && s.navigation.keyField && s.navigation.keyField.length) {
+                    s.navigation.keyField.forEach(function (mapping) {
+                        if (mapping.value) modelAppData.oData[mapping.fieldName] = mapping.value;
+                        if (mapping.key)
+                            modelAppData.oData[mapping.fieldName] = s.data[mapping.key];
+                    });
+                }
 
-            // Key Fields for GET Record 
-            if (s.navigation && s.navigation.keyField && s.navigation.keyField.length) {
-                s.navigation.keyField.forEach(function (mapping) {
-                    if (mapping.value) modelAppData.oData[mapping.fieldName] = mapping.value;
-                    if (mapping.key) modelAppData.oData[mapping.fieldName] = s.data[mapping.key];
-                });
-            }
+                // Display Search Filter
+                let showSearchField = true;
+                if (s.properties.table.enablePagination) {
+                    showSearchField = false;
+                } else {
+                    const searchFields = ModelData.Find(s.fieldsRun, "enableFilter", true);
+                    if (!searchFields.length) showSearchField = false;
+                }
 
-            // Display Search Filter
-            let showSearchField = true;
-            if (s.properties.table.enablePagination) {
-                showSearchField = false;
-            } else {
-                const searchFields = ModelData.Find(s.fieldsRun, 'enableFilter', true);
-                if (!searchFields.length) showSearchField = false;
-            }
-
-            // Show/Hide Header
-            if (!showSearchField) {
-                let selFields = ModelData.Find(s.fieldsSel, 'visible', true);
-                if (!selFields.length) {
-                    oPageHeader.setVisible(false);
-                    panFilterChild.setVisible(false);
+                // Show/Hide Header
+                if (!showSearchField) {
+                    let selFields = ModelData.Find(s.fieldsSel, "visible", true);
+                    if (!selFields.length) {
+                        oPageHeader.setVisible(false);
+                        panFilterChild.setVisible(false);
+                    } else {
+                        oPageHeader.setVisible(true);
+                    }
                 } else {
                     oPageHeader.setVisible(true);
                 }
-            } else {
-                oPageHeader.setVisible(true);
-            }
 
-            // Build Filter
-            if (oPageHeader.getVisible()) report.buildTableFilter(report.filterObject, report.tabObject, modelAppConfig.oData, modelAppData.oData, showSearchField, report.run);
+                // Build Filter
+                if (oPageHeader.getVisible())
+                    report.buildTableFilter(
+                        report.filterObject,
+                        report.tabObject,
+                        modelAppConfig.oData,
+                        modelAppData.oData,
+                        showSearchField,
+                        report.run
+                    );
 
-            // Build Table Columns
-            report.buildTableColumns(report.tabObject, modelAppConfig.oData, report.events);
+                // Build Table Columns
+                report.buildTableColumns(report.tabObject, modelAppConfig.oData, report.events);
 
-            // Auto Run
-            if (s.properties.report.autoRun) report.run();
-
-        }).catch(function (data) {
-            if (data.responseJSON && data.responseJSON.status) sap.m.MessageToast.show(data.responseJSON.status);
-        });
+                // Auto Run
+                if (s.properties.report.autoRun) report.run();
+            })
+            .catch(function (data) {
+                if (data.responseJSON && data.responseJSON.status)
+                    sap.m.MessageToast.show(data.responseJSON.status);
+            });
     },
 
     handlePagination() {
-        let maxIndex = (report.pagination.count / report.pagination.take);
+        let maxIndex = report.pagination.count / report.pagination.take;
         maxIndex = Math.ceil(maxIndex);
 
         if (report.pagination.count <= report.pagination.take) maxIndex = 1;
@@ -245,7 +290,7 @@ const report = {
             toolPaginationPrev.setEnabled(false);
         }
 
-        if ((report.pagination.index + 1) >= maxIndex) {
+        if (report.pagination.index + 1 >= maxIndex) {
             toolPaginationNext.setEnabled(false);
             toolPaginationLast.setEnabled(false);
         }
@@ -254,17 +299,18 @@ const report = {
 
         let numItems = 0;
         let maxItems = 6;
-        let startItem = report.pagination.index - (maxItems / 2);
+        let startItem = report.pagination.index - maxItems / 2;
 
         if (startItem < 0) startItem = 0;
 
         for (i = startItem; i < maxIndex; i++) {
-            if (numItems <= maxItems) toolPaginationPages.addItem(new sap.m.SegmentedButtonItem({ text: i + 1, key: i }));
+            if (numItems <= maxItems)
+                toolPaginationPages.addItem(new sap.m.SegmentedButtonItem({ text: i + 1, key: i }));
             numItems++;
         }
 
         toolPaginationPages.setSelectedKey(report.pagination.index);
-        toolPaginationTitle.setNumber((report.pagination.index + 1) + '/' + maxIndex);
+        toolPaginationTitle.setNumber(report.pagination.index + 1 + "/" + maxIndex);
     },
 
     sel: function () {
@@ -277,7 +323,6 @@ const report = {
     },
 
     run: function (keepIndex) {
-
         const d = modelAppData.oData;
         const { fieldsRun, properties } = modelAppConfig.oData.settings;
 
@@ -292,7 +337,7 @@ const report = {
             const { pagination, groupBy, sortBy } = report;
             d._pagination = {
                 take: pagination.take,
-                skip: pagination.take * pagination.index
+                skip: pagination.take * pagination.index,
             };
 
             d._order = {};
@@ -307,27 +352,24 @@ const report = {
         modelAppConfig.oData.settings.fieldsSel.forEach(function (selField) {
             const { type, name } = selField;
 
-            if (['CheckBox', 'Switch'].includes(type)) {
-                if (!d[name]) delete d[name]
+            if (["CheckBox", "Switch"].includes(type)) {
+                if (!d[name]) delete d[name];
             }
 
-            if (['MultiSelect', 'MultiSelectLookup', 'MultiSelectScript'].includes(type)) {
-                if (d[name] && !d[name].length) delete d[selField.name]
+            if (["MultiSelect", "MultiSelectLookup", "MultiSelectScript"].includes(type)) {
+                if (d[name] && !d[name].length) delete d[selField.name];
             }
 
             if (d[name] === "") delete d[name];
-
         });
 
         report.tabObject.setBusy(true);
 
-        sap.n.Adaptive
-            .run(modelAppConfig.oData, d, 'List')
+        sap.n.Adaptive.run(modelAppConfig.oData, d, "List")
             .then(function (data) {
-
                 // Required
-                if (data.status && data.status === 'required') {
-                    sap.m.MessageToast.show('Please fill in all required fields');
+                if (data.status && data.status === "required") {
+                    sap.m.MessageToast.show("Please fill in all required fields");
                     return;
                 }
 
@@ -341,25 +383,27 @@ const report = {
                     return;
                 }
 
-                // Error 
+                // Error
                 if (data.status && data.status === "ERROR") {
                     console.log(data);
-                    sap.m.MessageBox.information("Error fetching data. Please see console.log for further information");
+                    sap.m.MessageBox.information(
+                        "Error fetching data. Please see console.log for further information"
+                    );
                     return;
                 }
 
                 // set to the correct data source
-                const reportData = data.hasOwnProperty('result') ? data.result : data;
+                const reportData = data.hasOwnProperty("result") ? data.result : data;
 
                 // AfterRun Formatting of Data
                 modelAppConfig.oData.settings.fieldsRun.forEach(function (runField) {
                     const { type, name } = runField;
 
                     // format data if fields are of the following type
-                    if (['MultiSelectLookup', 'MultiSelectScript'].includes(type)) {
+                    if (["MultiSelectLookup", "MultiSelectScript"].includes(type)) {
                         reportData.forEach(function (data) {
                             if (data && data[name]) {
-                                const dataArray = data[name].split(',');
+                                const dataArray = data[name].split(",");
                                 if (dataArray.length > 0) data[name] = dataArray;
                             }
                         });
@@ -373,7 +417,7 @@ const report = {
                         if (!o.hasOwnProperty(k)) continue;
                         copy[k] = o[k];
 
-                        if (!k.endsWith('_value')) {
+                        if (!k.endsWith("_value")) {
                             copy[`${k}_value`] = o[k];
                         }
                     }
@@ -382,7 +426,7 @@ const report = {
                 });
                 report.tabObject.getModel().setData(reportDataCopy);
 
-                if (data.hasOwnProperty('result')) {
+                if (data.hasOwnProperty("result")) {
                     oPageHeaderNumber.setNumber(`(${data.count})`);
                     report.pagination.count = data.count;
                     report.handlePagination();
@@ -393,7 +437,7 @@ const report = {
                 // IconTabBarFilter Counter - Used as Child
                 let tabFilter = oApp.getParent().getParent();
 
-                if (tabFilter && tabFilter.getMetadata()._sClassName === 'sap.m.IconTabFilter') {
+                if (tabFilter && tabFilter.getMetadata()._sClassName === "sap.m.IconTabFilter") {
                     if (data.count) {
                         tabFilter.setCount(data.count);
                     } else {
@@ -404,8 +448,12 @@ const report = {
                 // Sorting Client Side
                 report.handleSortingClient();
 
-                // Sum 
-                const sumFields = ModelData.Find(modelAppConfig.oData.settings.fieldsRun, ['enableSum', 'type'], [true, 'ObjectNumber']);
+                // Sum
+                const sumFields = ModelData.Find(
+                    modelAppConfig.oData.settings.fieldsRun,
+                    ["enableSum", "type"],
+                    [true, "ObjectNumber"]
+                );
 
                 if (sumFields.length) {
                     const props = modelAppConfig.oData.settings.properties;
@@ -423,8 +471,8 @@ const report = {
                             props.table._sum[name] += parseFloat(data[name]);
                             if (sumField.objectNumberUnit && !props.table._sum[`${name}_unit`]) {
                                 let unitField = sumField.objectNumberUnit;
-                                unitField = unitField.replace('{', '');
-                                unitField = unitField.replace('}', '');
+                                unitField = unitField.replace("{", "");
+                                unitField = unitField.replace("}", "");
                                 props.table._sum[`${name}_unit`] = data[unitField];
                             }
                         });
@@ -442,9 +490,12 @@ const report = {
 
                     modelAppConfig.refresh();
                 }
-            }).catch(function ({ responseJSON }) {
-                if (responseJSON && responseJSON.status) sap.m.MessageToast.show(responseJSON.status);
-            }).finally(function () {
+            })
+            .catch(function ({ responseJSON }) {
+                if (responseJSON && responseJSON.status)
+                    sap.m.MessageToast.show(responseJSON.status);
+            })
+            .finally(function () {
                 modelAppData.refresh(true);
                 report.tabObject.setBusy(false);
             });
@@ -452,32 +503,40 @@ const report = {
 
     handleSortingClient: function () {
         let sorters = [];
-        let binding = report.tabObject.getBinding('items');
+        let binding = report.tabObject.getBinding("items");
 
-        // Handle Group 
+        // Handle Group
         if (report.groupBy) {
             let ui5GroupOrder = null;
 
-            if (report.groupOrder === 'ASC' || report.groupOrder === 'DESC') {
-                ui5GroupOrder = (report.groupOrder === 'ASC' ? false : true);
+            if (report.groupOrder === "ASC" || report.groupOrder === "DESC") {
+                ui5GroupOrder = report.groupOrder === "ASC" ? false : true;
             } else {
                 ui5GroupOrder = report.groupOrder;
             }
 
-            sorters.push(new sap.ui.model.Sorter(report.groupBy, ui5GroupOrder, function (oContext) { return sap.n.Adaptive.grouping(modelAppConfig.oData, report.groupBy, oContext) }));
+            sorters.push(
+                new sap.ui.model.Sorter(report.groupBy, ui5GroupOrder, function (oContext) {
+                    return sap.n.Adaptive.grouping(modelAppConfig.oData, report.groupBy, oContext);
+                })
+            );
         }
 
         // Handle Sorting
         if (report.sortBy && !modelAppConfig.oData.settings.properties.table.enablePagination) {
             let ui5SortOrder = null;
-            if (report.sortOrder === 'ASC' || report.sortOrder === 'DESC') {
-                ui5SortOrder = (report.sortOrder === 'ASC' ? false : true);
+            if (report.sortOrder === "ASC" || report.sortOrder === "DESC") {
+                ui5SortOrder = report.sortOrder === "ASC" ? false : true;
             } else {
                 ui5SortOrder = report.sortOrder;
             }
 
-            let sortField = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, 'name', report.sortBy);
-            let sortBy = (sortField.valueType ? sortField.name + '_value' : sortField.name);
+            let sortField = ModelData.FindFirst(
+                modelAppConfig.oData.settings.fieldsRun,
+                "name",
+                report.sortBy
+            );
+            let sortBy = sortField.valueType ? sortField.name + "_value" : sortField.name;
 
             sorters.push(new sap.ui.model.Sorter(sortBy, ui5SortOrder, false));
         }
@@ -486,26 +545,26 @@ const report = {
     },
 
     delete: function (data) {
-        sap.m.MessageBox.show('Do you want to delete this entry ? ', {
-            title: 'Delete',
+        sap.m.MessageBox.show("Do you want to delete this entry ? ", {
+            title: "Delete",
             icon: sap.m.MessageBox.Icon.ERROR,
             actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.CANCEL],
             onClose: function (oAction) {
-                if (oAction === 'YES') {
+                if (oAction === "YES") {
                     const { id } = data;
-                    sap.n.Adaptive
-                        .run(modelAppConfig.oData, { id, data }, 'Delete')
-                        .then(function (data) {
-                            report.run();
-                            sap.n.Shell.closeSidepanelTab(id);
-                        });
+                    sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (
+                        data
+                    ) {
+                        report.run();
+                        sap.n.Shell.closeSidepanelTab(id);
+                    });
                 }
-            }
+            },
         });
     },
 
     create: function () {
-        // Pass mapped data 
+        // Pass mapped data
         let postData = null;
         const s = modelAppConfig.oData.settings;
         if (s.properties.report._navigationCreate) {
@@ -513,21 +572,29 @@ const report = {
                 postData = { _defaultData: {} };
 
                 s.properties.report._navigationCreate.keyField.forEach(function (mapping) {
-
                     if (mapping.value) postData._defaultData[mapping.fieldName] = mapping.value;
 
                     if (mapping.key) {
-                        if (modelAppConfig.oData.settings && modelAppConfig.oData.settings.data && modelAppConfig.oData.settings.data[mapping.key]) {
-                            postData._defaultData[mapping.fieldName] = modelAppConfig.oData.settings.data[mapping.key];
+                        if (
+                            modelAppConfig.oData.settings &&
+                            modelAppConfig.oData.settings.data &&
+                            modelAppConfig.oData.settings.data[mapping.key]
+                        ) {
+                            postData._defaultData[mapping.fieldName] =
+                                modelAppConfig.oData.settings.data[mapping.key];
                         } else {
-                            postData._defaultData[mapping.fieldName] = modelAppData.oData[mapping.key];
+                            postData._defaultData[mapping.fieldName] =
+                                modelAppData.oData[mapping.key];
                         }
                     }
-
                 });
             }
 
-            sap.n.Adaptive.navigation(s.properties.report._navigationCreate, postData, report.events);
+            sap.n.Adaptive.navigation(
+                s.properties.report._navigationCreate,
+                postData,
+                report.events
+            );
         } else {
             let tabModel = report.tabObject.getModel();
             if (!tabModel.oData) tabModel.oData = [];
@@ -538,13 +605,20 @@ const report = {
 
     close: function () {
         const s = modelAppConfig.oData.settings;
-        if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close) {
+        if (
+            oApp.getParent() &&
+            oApp.getParent().getParent() &&
+            oApp.getParent().getParent().close
+        ) {
             oApp.getParent().getParent().close();
         } else if (s.events && s.events.onChildBack) {
             s.events.onChildBack();
         } else if (
-            sap.n.Shell && sap.n.Shell.closeTile &&
-            sap.n.Launchpad && sap.n.Launchpad.currentTile && sap.n.Launchpad.currentTile.id
+            sap.n.Shell &&
+            sap.n.Shell.closeTile &&
+            sap.n.Launchpad &&
+            sap.n.Launchpad.currentTile &&
+            sap.n.Launchpad.currentTile.id
         ) {
             sap.n.Shell.closeTile(sap.n.Launchpad.currentTile);
         }
@@ -558,7 +632,11 @@ const report = {
             if (data._sel) dataSelected.push(data);
         });
 
-        sap.n.Adaptive.navigation(modelAppConfig.oData.settings.properties.report._navigationMultiSelect, dataSelected, report.events);
+        sap.n.Adaptive.navigation(
+            modelAppConfig.oData.settings.properties.report._navigationMultiSelect,
+            dataSelected,
+            report.events
+        );
     },
 
     export: function () {
@@ -568,18 +646,21 @@ const report = {
         if (modelAppConfig.oData.settings.properties.table.enablePagination) {
             delete modelAppData.oData._pagination;
 
-            sap.n.Adaptive.run(modelAppConfig.oData, modelAppData.oData, 'List').then(function (data) {
-                if (data.result) {
-                    modelExportData.setData(data.result);
-                } else {
-                    modelExportData.setData(data);
-                }
+            sap.n.Adaptive.run(modelAppConfig.oData, modelAppData.oData, "List")
+                .then(function (data) {
+                    if (data.result) {
+                        modelExportData.setData(data.result);
+                    } else {
+                        modelExportData.setData(data);
+                    }
 
-                report.exportDownload();
-            }).catch(function (data) {
-                if (data.responseJSON && data.responseJSON.status) sap.m.MessageToast.show(data.responseJSON.status);
-                report.tabObject.setBusy(false);
-            });
+                    report.exportDownload();
+                })
+                .catch(function (data) {
+                    if (data.responseJSON && data.responseJSON.status)
+                        sap.m.MessageToast.show(data.responseJSON.status);
+                    report.tabObject.setBusy(false);
+                });
         } else {
             modelExportData.setData(report.tabObject.getModel().oData);
             report.exportDownload();
@@ -590,9 +671,9 @@ const report = {
         let columns = [];
         const s = modelAppConfig.oData.settings;
 
-        columns.push({ name: 'id', template: { content: { path: 'id' } } });
+        columns.push({ name: "id", template: { content: { path: "id" } } });
         s.fieldsRun.forEach(function (field) {
-            let fieldName = (field.valueType ? field.name + '_value' : field.name)
+            let fieldName = field.valueType ? field.name + "_value" : field.name;
 
             if (field.formatter) {
                 columns.push({
@@ -601,38 +682,41 @@ const report = {
                         content: {
                             parts: [fieldName],
                             formatter: function (fieldName) {
-                                if (typeof (fieldName) === 'undefined' || fieldName === null) return;
+                                if (typeof fieldName === "undefined" || fieldName === null) return;
                                 return sap.n.Adaptive.formatter(fieldName, field.formatter);
-                            }
-                        }
-                    }
+                            },
+                        },
+                    },
                 });
             } else {
                 columns.push({
                     name: field.text,
                     template: {
                         content: {
-                            path: fieldName
-                        }
-                    }
+                            path: fieldName,
+                        },
+                    },
                 });
             }
         });
 
         let oExport = new sap.ui.core.util.Export({
-            exportType: new sap.ui.core.util.ExportTypeCSV({ separatorChar: ';' }),
+            exportType: new sap.ui.core.util.ExportTypeCSV({ separatorChar: ";" }),
             models: modelExportData,
-            rows: { path: '/' },
-            columns: columns
+            rows: { path: "/" },
+            columns: columns,
         });
 
-        oExport.generate().done(function (sContent) {
-            let fileName = s.properties.report.title;
-            if (s.properties.report.subTitle) fileName += '_' + s.properties.report.subTitle;
-            oExport.saveFile(fileName);
-        }).always(function () {
-            this.destroy();
-        });
+        oExport
+            .generate()
+            .done(function (sContent) {
+                let fileName = s.properties.report.title;
+                if (s.properties.report.subTitle) fileName += "_" + s.properties.report.subTitle;
+                oExport.saveFile(fileName);
+            })
+            .always(function () {
+                this.destroy();
+            });
 
         report.tabObject.setBusy(false);
     },
@@ -641,28 +725,29 @@ const report = {
         try {
             function importData(data) {
                 if (data.length === 0) {
-                    sap.m.MessageToast.show('Imported Successfully');
+                    sap.m.MessageToast.show("Imported Successfully");
                     oApp.setBusy(false);
                     report.run();
 
-                    document.getElementById('adaptiveListImport').value = '';
+                    document.getElementById("adaptiveListImport").value = "";
                     return;
                 }
 
                 const COUNT = 500;
                 Promise.all(
                     data.slice(0, COUNT).map(function (item) {
-                        return sap.n.Adaptive.run(modelAppConfig.oData, item, 'Save');
+                        return sap.n.Adaptive.run(modelAppConfig.oData, item, "Save");
                     })
-                ).catch(function (_) {
-                }).finally(function (_) {
-                    importData(data.slice(COUNT));
-                });
+                )
+                    .catch(function (_) {})
+                    .finally(function (_) {
+                        importData(data.slice(COUNT));
+                    });
             }
 
             const reader = new FileReader();
             reader.onload = function (event) {
-                const base64Encoded = event.target.result.split(',')[1];
+                const base64Encoded = event.target.result.split(",")[1];
                 const csv = Base64.decode(base64Encoded);
                 const data = report.convertCSVtoJSON(csv);
                 importData(data);
@@ -671,7 +756,7 @@ const report = {
         } catch (e) {
             oApp.setBusy(false);
             console.log(e);
-            document.getElementById('adaptiveListImport').value = '';
+            document.getElementById("adaptiveListImport").value = "";
         }
     },
 
@@ -711,17 +796,21 @@ const report = {
     convertCSVtoJSON: function (csv) {
         try {
             let result = [];
-            let lines = csv.split('\n');
-            let headersRaw = lines[0].split(';');
-            let headers = ['id'];
+            let lines = csv.split("\n");
+            let headersRaw = lines[0].split(";");
+            let headers = ["id"];
             let exclude = [];
 
             // Convert from Name to fieldName
             for (let i = 1; i < headersRaw.length; i++) {
                 let headerLabel = headersRaw[i];
-                headerLabel = headerLabel.replace(/(\r\n|\n|\r)/gm, '');
+                headerLabel = headerLabel.replace(/(\r\n|\n|\r)/gm, "");
 
-                let fieldRun = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, 'text', headerLabel);
+                let fieldRun = ModelData.FindFirst(
+                    modelAppConfig.oData.settings.fieldsRun,
+                    "text",
+                    headerLabel
+                );
                 if (fieldRun) {
                     if (fieldRun.valueType) exclude.push(i);
                     headers.push(fieldRun.name);
@@ -734,12 +823,13 @@ const report = {
             for (let i = 1; i < lines.length; i++) {
                 if (lines[i].length) {
                     let obj = {};
-                    let currentline = lines[i].split(';');
+                    let currentline = lines[i].split(";");
 
                     for (let j = 0; j < currentline.length; j++) {
                         if (!exclude.includes(j)) {
                             let currentField = currentline[j];
-                            if (currentField) obj[headers[j]] = currentField.replace(/(\r\n|\n|\r)/gm, '')
+                            if (currentField)
+                                obj[headers[j]] = currentField.replace(/(\r\n|\n|\r)/gm, "");
                         }
                     }
                     result.push(obj);
@@ -749,7 +839,7 @@ const report = {
             return result;
         } catch (e) {
             console.log(e);
-            document.getElementById('adaptiveListImport').value = '';
+            document.getElementById("adaptiveListImport").value = "";
         }
     },
 
@@ -757,13 +847,11 @@ const report = {
         function getStatusMessage(status) {
             const d = modelAppConfig.oData;
             if (
-                (
-                    status.includes('UNIQUE constraint failed') ||
-                    status.includes('duplicate key value')
-                ) &&
+                (status.includes("UNIQUE constraint failed") ||
+                    status.includes("duplicate key value")) &&
                 d.settings.properties.report.textUnique
             ) {
-                return sap.n.Adaptive.translateProperty('report', 'textUnique', d);
+                return sap.n.Adaptive.translateProperty("report", "textUnique", d);
             }
 
             return status;
@@ -772,27 +860,29 @@ const report = {
         const config = modelAppConfig.oData;
 
         // ensure all required fields are attached
-        config.settings.fieldsSel.filter(function (f) {
-            return f.required;
-        }).forEach(function (f) {
-            const k = f.name;
-            const k2 = `${f.name}_value`;
+        config.settings.fieldsSel
+            .filter(function (f) {
+                return f.required;
+            })
+            .forEach(function (f) {
+                const k = f.name;
+                const k2 = `${f.name}_value`;
 
-            if (!data[k] && modelAppData.oData[k]) {
-                data[k] = data[k2] = modelAppData.oData[k];
-            }
+                if (!data[k] && modelAppData.oData[k]) {
+                    data[k] = data[k2] = modelAppData.oData[k];
+                }
 
-            if (!data[k2] && modelAppData.oData[k2]) {
-                data[k] = data[k2] = modelAppData.oData[k2];
-            }
-        });
+                if (!data[k2] && modelAppData.oData[k2]) {
+                    data[k] = data[k2] = modelAppData.oData[k2];
+                }
+            });
 
         const autoUpdate = !data.id ? true : false;
-        sap.n.Adaptive
-            .run(config, data, 'Save')
+        sap.n.Adaptive.run(config, data, "Save")
             .then(function (_data) {
                 if (autoUpdate) report.run();
-            }).catch(function (res) {
+            })
+            .catch(function (res) {
                 const j = res.responseJSON;
                 if (j && j.status) {
                     sap.m.MessageToast.show(getStatusMessage(j.status));
@@ -804,12 +894,12 @@ const report = {
         jsonRequest({
             url: `${AppCache.Url}/api/functions/Variant/List`,
             data: JSON.stringify({
-                objectType: 'Adaptive',
+                objectType: "Adaptive",
                 objectKey: report.initId,
             }),
             success: function (data) {
                 if (selectedItem) {
-                    let item = ModelData.FindFirst(data, 'id', selectedItem);
+                    let item = ModelData.FindFirst(data, "id", selectedItem);
                     if (item) item.selected = true;
                 }
 
@@ -822,11 +912,11 @@ const report = {
     variantSave: function () {
         let data = {
             objectKey: report.initId,
-            objectType: 'Adaptive',
+            objectType: "Adaptive",
             name: modelpageVariantSave.oData.name,
             ispublic: informVariantpublic.getSelected(),
-            content: modelAppData.oData
-        }
+            content: modelAppData.oData,
+        };
 
         if (modelpageVariantSave.oData.id) data.id = modelpageVariantSave.oData.id;
 
@@ -845,7 +935,7 @@ const report = {
             url: `${AppCache.Url}/api/functions/Variant/Delete`,
             data: JSON.stringify({ id }),
             success: function (_data) {
-                ModelData.Delete(tabVariant, 'id', id);
+                ModelData.Delete(tabVariant, "id", id);
             },
         });
     },
@@ -854,24 +944,26 @@ const report = {
         try {
             const props = config.settings.properties;
             if (props.table.enableCompact) {
-                table.addStyleClass('sapUiSizeCompact');
+                table.addStyleClass("sapUiSizeCompact");
             } else {
-                table.removeStyleClass('sapUiSizeCompact');
+                table.removeStyleClass("sapUiSizeCompact");
             }
 
-            try { table.destroyColumns(); }
-            catch (e) { }
+            try {
+                table.destroyColumns();
+            } catch (e) {}
 
-            let col = new sap.m.ColumnListItem({ selected: '{_sel}' });
+            let col = new sap.m.ColumnListItem({ selected: "{_sel}" });
 
             // Handle Item Press
             if (config.settings.events && config.settings.events.valueRequest) {
-                col.setType('Active');
+                col.setType("Active");
                 col.attachPress(function (evt) {
                     let ctx = evt.oSource.getBindingContext();
                     let colData = ctx.getObject();
 
-                    let fieldValue = colData[config.settings.events.valueRequestKey] || colData["id"];
+                    let fieldValue =
+                        colData[config.settings.events.valueRequestKey] || colData["id"];
                     let fieldComp = sap.ui.getCore().byId(config.settings.events.valueRequestField);
                     if (fieldValue && fieldComp) fieldComp.setValue(fieldValue);
 
@@ -880,13 +972,15 @@ const report = {
             } else {
                 const nav = props.report._navigationItemPress;
                 if (nav) {
-                    col.setType('Active');
+                    col.setType("Active");
                     col.attachPress(function (evt) {
                         let ctx = evt.oSource.getBindingContext();
                         let colData = ctx.getObject();
 
                         if (nav.dialogTitleField) {
-                            nav.dialogTitleFieldText = colData[nav.dialogTitleField + '_value'] || colData[nav.dialogTitleField];
+                            nav.dialogTitleFieldText =
+                                colData[nav.dialogTitleField + "_value"] ||
+                                colData[nav.dialogTitleField];
                         }
 
                         sap.n.Adaptive.navigation(nav, colData, events, table.sId);
@@ -910,9 +1004,9 @@ const report = {
                 if (f.hAlign) ColumnHeader.setHAlign(f.hAlign);
                 if (f.vAlign) ColumnHeader.setVAlign(f.vAlign);
 
-                // Enable Sum 
-                if (f.enableSum && f.type === 'ObjectNumber') {
-                    const prefix = 'AppConfig>/settings/properties/table/_sum/';
+                // Enable Sum
+                if (f.enableSum && f.type === "ObjectNumber") {
+                    const prefix = "AppConfig>/settings/properties/table/_sum/";
                     let sumField = new sap.m.ObjectNumber({
                         number: `{${prefix}${f.name}}`,
                         unit: `{${prefix}${f.name}_unit}`,
@@ -921,16 +1015,21 @@ const report = {
                 }
 
                 const HBox = new sap.m.HBox();
-                HBox.addItem(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(f, config), wrapping: true }));
+                HBox.addItem(
+                    new sap.m.Label({
+                        text: sap.n.Adaptive.translateFieldLabel(f, config),
+                        wrapping: true,
+                    })
+                );
 
                 if (f.enableSort || f.enableGroup) {
                     let ColumnButton = new sap.ui.core.Icon({
-                        src: 'sap-icon://slim-arrow-down',
+                        src: "sap-icon://slim-arrow-down",
                         press: function (_oEvent) {
                             if (events.onHeaderClick) events.onHeaderClick(f, this);
-                        }
+                        },
                     });
-                    ColumnButton.addStyleClass('sapUiTinyMarginBegin');
+                    ColumnButton.addStyleClass("sapUiTinyMarginBegin");
                     HBox.addItem(ColumnButton);
                 }
 
@@ -938,11 +1037,11 @@ const report = {
                 table.addColumn(ColumnHeader);
 
                 let newField = null;
-                let formatterProp = f.type === 'ObjectNumber' ? 'number' : 'text';
+                let formatterProp = f.type === "ObjectNumber" ? "number" : "text";
                 let opts;
 
                 switch (f.type) {
-                    case 'Link':
+                    case "Link":
                         opts = {
                             text: getFieldBindingText(f),
                             wrapping: getFieldWrapping(f),
@@ -952,29 +1051,39 @@ const report = {
                                 const ctx = oEvent.oSource.getBindingContext();
                                 const colData = ctx.getObject();
 
-                                // Sidepanel Lookup Text 
-                                if (f._navigation.openAs === 'S') {
+                                // Sidepanel Lookup Text
+                                if (f._navigation.openAs === "S") {
                                     const k = f._navigation.dialogTitleField;
-                                    const { valueType } = ModelData.FindFirst(config.settings.fieldsRun, 'name', k);
-                                    f._navigation.dialogTitleFieldText = colData[valueType ? `${k}_value` : k];
+                                    const { valueType } = ModelData.FindFirst(
+                                        config.settings.fieldsRun,
+                                        "name",
+                                        k
+                                    );
+                                    f._navigation.dialogTitleFieldText =
+                                        colData[valueType ? `${k}_value` : k];
                                 }
 
                                 // Add pressed fieldname
                                 events.objectPressed = f.name;
 
-                                sap.n.Adaptive.navigation(f._navigation, colData, events, newField.sId)
-                            }
-                        }
+                                sap.n.Adaptive.navigation(
+                                    f._navigation,
+                                    colData,
+                                    events,
+                                    newField.sId
+                                );
+                            },
+                        };
 
                         if (f.linkHrefType) {
                             opts.href = `{${f.name}_href}`;
-                            opts.target = '_blank';
+                            opts.target = "_blank";
                         }
 
                         newField = new sap.m.Link(opts);
                         break;
 
-                    case 'ObjectNumber':
+                    case "ObjectNumber":
                         opts = {
                             number: getFieldBindingText(f),
                         };
@@ -985,17 +1094,21 @@ const report = {
                         newField = new sap.m.ObjectNumber(opts);
 
                         if (f.numberUnitType && f.numberUnitFormatter) {
-                            newField.bindProperty('unit', {
+                            newField.bindProperty("unit", {
                                 parts: [`${f.name}_unit`],
                                 formatter: function (fieldName) {
-                                    if (typeof (fieldName) === 'undefined' || fieldName === null) return;
-                                    return sap.n.Adaptive.formatter(fieldName, f.numberUnitFormatter);
-                                }
+                                    if (typeof fieldName === "undefined" || fieldName === null)
+                                        return;
+                                    return sap.n.Adaptive.formatter(
+                                        fieldName,
+                                        f.numberUnitFormatter
+                                    );
+                                },
                             });
                         }
                         break;
 
-                    case 'ObjectStatus':
+                    case "ObjectStatus":
                         opts = {
                             text: getFieldBindingText(f),
                         };
@@ -1008,26 +1121,26 @@ const report = {
                         newField = new sap.m.ObjectStatus(opts);
 
                         if (f.statusTitleType && f.statusTitleFormatter) {
-                            newField.bindProperty('title', {
+                            newField.bindProperty("title", {
                                 parts: [`${f.name}_title`],
                                 formatter: function (name) {
-                                    if (typeof (name) === 'undefined' || name === null) return;
+                                    if (typeof name === "undefined" || name === null) return;
                                     return sap.n.Adaptive.formatter(name, f.statusTitleFormatter);
-                                }
+                                },
                             });
                         }
                         break;
 
-                    case 'CheckBox':
+                    case "CheckBox":
                         newField = new sap.m.CheckBox({
                             selected: getFieldBindingText(f),
                             editable: isFieldEditable(f),
                             wrapping: getFieldWrapping(f),
                             select: onChange,
-                        })
+                        });
                         break;
 
-                    case 'Button':
+                    case "Button":
                         opts = {
                             text: getFieldBindingText(f),
                             type: f.buttonType,
@@ -1037,18 +1150,28 @@ const report = {
                                 const ctx = oEvent.oSource.getBindingContext();
                                 const colData = ctx.getObject();
 
-                                // Sidepanel Lookup Text 
-                                if (f._navigation.openAs === 'S') {
+                                // Sidepanel Lookup Text
+                                if (f._navigation.openAs === "S") {
                                     const k = f._navigation.dialogTitleField;
-                                    const { valueType } = ModelData.FindFirst(config.settings.fieldsRun, 'name', k);
-                                    f._navigation.dialogTitleFieldText = colData[valueType ? `${k}_value` : k];
+                                    const { valueType } = ModelData.FindFirst(
+                                        config.settings.fieldsRun,
+                                        "name",
+                                        k
+                                    );
+                                    f._navigation.dialogTitleFieldText =
+                                        colData[valueType ? `${k}_value` : k];
                                 }
 
                                 // Add pressed fieldname
                                 events.objectPressed = f.name;
 
-                                sap.n.Adaptive.navigation(f._navigation, colData, events, newField.sId)
-                            }
+                                sap.n.Adaptive.navigation(
+                                    f._navigation,
+                                    colData,
+                                    events,
+                                    newField.sId
+                                );
+                            },
                         };
 
                         if (f.buttonIconType) opts.icon = `{${f.name}_icon}`;
@@ -1056,28 +1179,41 @@ const report = {
                         newField = new sap.m.Button(opts);
                         break;
 
-                    case 'Switch':
+                    case "Switch":
                         newField = new sap.m.Switch({
                             state: getFieldBindingText(f),
                             enabled: isFieldEditable(f),
                             change: onChange,
-                        })
+                        });
                         break;
 
-                    case 'Image':
+                    case "Image":
                         newField = new sap.m.Image({
                             src: getFieldBindingText(f),
-                            height: '32px'
-                        })
+                            height: "32px",
+                        });
                         break;
 
-                    case 'Icon':
+                    case "StepInput":
+                        let options = {
+                            value: getFieldBindingText(f),
+                            placeholder: getFieldPlaceholder(f),
+                        };
+
+                        if (f.stepInputMin) options.min = parseInt(f.stepInputMin);
+                        if (f.stepInputMax) options.max = parseInt(f.stepInputMax);
+                        if (f.stepInputStep) options.step = parseInt(f.stepInputStep);
+
+                        newField = new sap.m.StepInput(options);
+                        break;
+
+                    case "Icon":
                         newField = new sap.ui.core.Icon({
                             src: getFieldBindingText(f),
-                        })
+                        });
                         break;
 
-                    case 'Input':
+                    case "Input":
                         newField = new sap.m.Input({
                             value: getFieldBindingText(f),
                             editable: isFieldEditable(f),
@@ -1087,7 +1223,7 @@ const report = {
                         });
                         break;
 
-                    case 'DatePicker':
+                    case "DatePicker":
                         newField = new sap.m.DatePicker({
                             visible: f.visible,
                             editable: isFieldEditable(f),
@@ -1097,13 +1233,13 @@ const report = {
                             change: onChange,
                         });
 
-                        newField.bindProperty('dateValue', {
+                        newField.bindProperty("dateValue", {
                             parts: [f.name],
                             formatter: getDateFormatter(f.name),
                         });
                         break;
 
-                    case 'DateTimePicker':
+                    case "DateTimePicker":
                         newField = new sap.m.DateTimePicker({
                             visible: f.visible,
                             editable: isFieldEditable(f),
@@ -1114,16 +1250,16 @@ const report = {
                             change: onChange,
                         });
 
-                        newField.bindProperty('dateValue', {
+                        newField.bindProperty("dateValue", {
                             parts: [f.name],
                             formatter: getDateFormatter(f.name),
                         });
                         break;
 
-                    case 'SingleSelectLookup':
-                    case 'SingleSelectScript':
+                    case "SingleSelectLookup":
+                    case "SingleSelectScript":
                         newField = new sap.m.ComboBox({
-                            width: '100%',
+                            width: "100%",
                             visible: f.visible,
                             editable: isFieldEditable(f),
                             placeholder: getFieldPlaceholder(f),
@@ -1132,10 +1268,9 @@ const report = {
                             selectionChange: onChange,
                         });
 
+                        if (f.items) f.items.sort(sort_by("text"));
 
-                        if (f.items) f.items.sort(sort_by('text'));
-
-                        newField.addItem(new sap.ui.core.Item({ key: '', text: '', }));
+                        newField.addItem(new sap.ui.core.Item({ key: "", text: "" }));
                         f.items.forEach(function (item) {
                             newField.addItem(
                                 new sap.ui.core.ListItem({
@@ -1147,10 +1282,10 @@ const report = {
                         });
                         break;
 
-                    case 'MultiSelectLookup':
-                    case 'MultiSelectScript':
+                    case "MultiSelectLookup":
+                    case "MultiSelectScript":
                         newField = new sap.m.MultiComboBox({
-                            width: '100%',
+                            width: "100%",
                             visible: f.visible,
                             selectedKeys: getFieldBindingText(f),
                             placeholder: getFieldPlaceholder(f),
@@ -1158,10 +1293,16 @@ const report = {
                             selectionChange: onChange,
                         });
 
-                        if (f.items) f.items.sort(sort_by('text'));
+                        if (f.items) f.items.sort(sort_by("text"));
 
                         f.items.forEach(function (item) {
-                            newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                            newField.addItem(
+                                new sap.ui.core.ListItem({
+                                    key: item.key,
+                                    text: item.text,
+                                    additionalText: item.additionalText,
+                                })
+                            );
                         });
                         break;
 
@@ -1169,21 +1310,21 @@ const report = {
                         newField = new sap.m.Text({
                             text: getFieldBindingText(f),
                             wrapping: getFieldWrapping(f),
-                        })
+                        });
                         break;
                 }
 
                 col.addCell(newField);
 
-                // Formatter 
+                // Formatter
                 if (f.formatter) {
-                    let fieldName = (f.valueType ? f.name + '_value' : f.name);
+                    let fieldName = f.valueType ? f.name + "_value" : f.name;
                     newField.bindProperty(formatterProp, {
                         parts: [fieldName],
                         formatter: function (fieldName) {
-                            if (typeof (fieldName) === 'undefined' || fieldName === null) return;
+                            if (typeof fieldName === "undefined" || fieldName === null) return;
                             return sap.n.Adaptive.formatter(fieldName, f.formatter);
-                        }
+                        },
                     });
                 }
             });
@@ -1192,7 +1333,7 @@ const report = {
             const t = config.settings.properties.table;
             if (t.enableAction1) {
                 let ColumnHeader = new sap.m.Column({
-                    width: t.action1Width || '',
+                    width: t.action1Width || "",
                 });
                 table.addColumn(ColumnHeader);
 
@@ -1207,11 +1348,13 @@ const report = {
                         let columnData = context.getObject();
 
                         if (t._action1Nav.dialogTitleField) {
-                            t._action1Nav.dialogTitleFieldText = columnData[t._action1Nav.dialogTitleField + '_value'] || columnData[t._action1Nav.dialogTitleField];
+                            t._action1Nav.dialogTitleFieldText =
+                                columnData[t._action1Nav.dialogTitleField + "_value"] ||
+                                columnData[t._action1Nav.dialogTitleField];
                         }
 
                         sap.n.Adaptive.navigation(t._action1Nav, columnData, events, table.sId);
-                    }
+                    },
                 });
 
                 col.addCell(newField);
@@ -1220,7 +1363,7 @@ const report = {
             // Row Action 2
             if (t.enableAction2) {
                 let ColumnHeader = new sap.m.Column({
-                    width: t.action2Width || '',
+                    width: t.action2Width || "",
                 });
 
                 table.addColumn(ColumnHeader);
@@ -1228,18 +1371,20 @@ const report = {
                     text: t.action2Text,
                     icon: t.action2Icon,
                     type: t.action2Type,
-                    width: t.action2Width || '',
+                    width: t.action2Width || "",
                     press: function (oEvent) {
                         if (!t._action2Nav) return;
 
                         let context = oEvent.oSource.getBindingContext();
                         let columnData = context.getObject();
                         if (t._action2Nav.dialogTitleField) {
-                            t._action2Nav.dialogTitleFieldText = columnData[t._action2Nav.dialogTitleField + '_value'] || columnData[t._action2Nav.dialogTitleField];
+                            t._action2Nav.dialogTitleFieldText =
+                                columnData[t._action2Nav.dialogTitleField + "_value"] ||
+                                columnData[t._action2Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action2Nav, columnData, events, table.sId)
-                    }
+                        sap.n.Adaptive.navigation(t._action2Nav, columnData, events, table.sId);
+                    },
                 });
 
                 col.addCell(newField);
@@ -1248,7 +1393,7 @@ const report = {
             // Row Action 3
             if (t.enableAction3) {
                 let ColumnHeader = new sap.m.Column({
-                    width: t.action3Width || '',
+                    width: t.action3Width || "",
                 });
 
                 table.addColumn(ColumnHeader);
@@ -1256,7 +1401,7 @@ const report = {
                     text: t.action3Text,
                     icon: t.action3Icon,
                     type: t.action3Type,
-                    width: t.action3Width || '',
+                    width: t.action3Width || "",
                     press: function (oEvent) {
                         if (!t._action3Nav) return;
 
@@ -1264,33 +1409,95 @@ const report = {
                         let columnData = context.getObject();
 
                         if (t._action3Nav.dialogTitleField) {
-                            t._action3Nav.dialogTitleFieldText = columnData[t._action3Nav.dialogTitleField + '_value'] || columnData[t._action3Nav.dialogTitleField];
+                            t._action3Nav.dialogTitleFieldText =
+                                columnData[t._action3Nav.dialogTitleField + "_value"] ||
+                                columnData[t._action3Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action3Nav, columnData, events, table.sId)
-                    }
+                        sap.n.Adaptive.navigation(t._action3Nav, columnData, events, table.sId);
+                    },
+                });
+
+                col.addCell(newField);
+            }
+
+            // Row Action 4
+            if (t.enableAction4) {
+                let ColumnHeader = new sap.m.Column({
+                    width: t.action4Width || "",
+                });
+
+                table.addColumn(ColumnHeader);
+                let newField = new sap.m.Button({
+                    text: t.action4Text,
+                    icon: t.action4Icon,
+                    type: t.action4Type,
+                    width: t.action4Width || "",
+                    press: function (oEvent) {
+                        if (!t._action4Nav) return;
+
+                        let context = oEvent.oSource.getBindingContext();
+                        let columnData = context.getObject();
+
+                        if (t._action4Nav.dialogTitleField) {
+                            t._action4Nav.dialogTitleFieldText =
+                                columnData[t._action4Nav.dialogTitleField + "_value"] ||
+                                columnData[t._action4Nav.dialogTitleField];
+                        }
+
+                        sap.n.Adaptive.navigation(t._action4Nav, columnData, events, table.sId);
+                    },
+                });
+
+                col.addCell(newField);
+            }
+
+            // Row Action 5
+            if (t.enableAction5) {
+                let ColumnHeader = new sap.m.Column({
+                    width: t.action5Width || "",
+                });
+
+                table.addColumn(ColumnHeader);
+                let newField = new sap.m.Button({
+                    text: t.action5Text,
+                    icon: t.action5Icon,
+                    type: t.action5Type,
+                    width: t.action5Width || "",
+                    press: function (oEvent) {
+                        if (!t._action5Nav) return;
+
+                        let context = oEvent.oSource.getBindingContext();
+                        let columnData = context.getObject();
+
+                        if (t._action5Nav.dialogTitleField) {
+                            t._action5Nav.dialogTitleFieldText =
+                                columnData[t._action5Nav.dialogTitleField + "_value"] ||
+                                columnData[t._action5Nav.dialogTitleField];
+                        }
+
+                        sap.n.Adaptive.navigation(t._action5Nav, columnData, events, table.sId);
+                    },
                 });
 
                 col.addCell(newField);
             }
 
             // Table - Aggregation
-            table.bindAggregation('items', { path: '/', template: col, templateShareable: false });
+            table.bindAggregation("items", { path: "/", template: col, templateShareable: false });
         } catch (e) {
             console.log(e);
         }
     },
 
     buildTableFilter: function (parent, table, config, appdata, enableSearch, run) {
-
         try {
-
             parent.destroyContent();
 
             if (!config) return;
 
-            var numFields = ModelData.Find(config.settings.fieldsSel, "visible", true)
-            var numFilters = (numFields) ? numFields.length : 1;
+            var numFields = ModelData.Find(config.settings.fieldsSel, "visible", true);
+            var numFilters = numFields ? numFields.length : 1;
             if (enableSearch) numFilters++;
 
             var columnsM = 2;
@@ -1325,46 +1532,68 @@ const report = {
 
             // Search
             if (enableSearch) {
+                form.addContent(
+                    new sap.m.Label({
+                        text: sap.n.Adaptive.translateProperty("report", "searchLabel", config),
+                        width: "100%",
+                    })
+                );
 
-                form.addContent(new sap.m.Label({
-                    text: sap.n.Adaptive.translateProperty("report", "searchLabel", config),
-                    width: "100%"
-                }));
+                form.addContent(
+                    new sap.m.SearchField({
+                        placeholder: sap.n.Adaptive.translateProperty(
+                            "report",
+                            "searchPlaceholder",
+                            config
+                        ),
+                        liveChange: function (oEvent) {
+                            var searchField = this;
+                            var filters = [];
+                            var bindingItems = table.getBinding("items");
+                            var fieldsFilter = ModelData.Find(
+                                config.settings.fieldsRun,
+                                "enableFilter",
+                                true
+                            );
 
-                form.addContent(new sap.m.SearchField({
-                    placeholder: sap.n.Adaptive.translateProperty("report", "searchPlaceholder", config),
-                    liveChange: function (oEvent) {
-                        var searchField = this;
-                        var filters = [];
-                        var bindingItems = table.getBinding("items");
-                        var fieldsFilter = ModelData.Find(config.settings.fieldsRun, "enableFilter", true);
+                            $.each(fieldsFilter, function (i, field) {
+                                if (field.valueType) {
+                                    filters.push(
+                                        new sap.ui.model.Filter(
+                                            field.name + "_value",
+                                            "Contains",
+                                            searchField.getValue()
+                                        )
+                                    );
+                                } else {
+                                    filters.push(
+                                        new sap.ui.model.Filter(
+                                            field.name,
+                                            "Contains",
+                                            searchField.getValue()
+                                        )
+                                    );
+                                }
+                            });
 
-                        $.each(fieldsFilter, function (i, field) {
-
-                            if (field.valueType) {
-                                filters.push(new sap.ui.model.Filter(field.name + "_value", "Contains", searchField.getValue()));
-                            } else {
-                                filters.push(new sap.ui.model.Filter(field.name, "Contains", searchField.getValue()));
-                            }
-
-                        });
-
-                        bindingItems.filter([new sap.ui.model.Filter({
-                            filters: filters,
-                            and: false
-                        })]);
-
-                    }
-
-                }));
-
+                            bindingItems.filter([
+                                new sap.ui.model.Filter({
+                                    filters: filters,
+                                    and: false,
+                                }),
+                            ]);
+                        },
+                    })
+                );
             }
 
             $.each(config.settings.fieldsSel, function (i, field) {
-
                 if (field.default) {
-
-                    if (field.type === "MultiSelect" || field.type === "MultiSelectLookup" || field.type === "MultiSelectScript") {
+                    if (
+                        field.type === "MultiSelect" ||
+                        field.type === "MultiSelectLookup" ||
+                        field.type === "MultiSelectScript"
+                    ) {
                         if (typeof field.default === "object") {
                             appdata[field.name] = field.default;
                         } else {
@@ -1374,26 +1603,25 @@ const report = {
                                 appdata[field.name] = field.default;
                             }
                         }
-
                     } else if (field.type === "Switch" || field.type === "CheckBox") {
-                        if (field.default === "true" || field.default === "1" || field.default === "X") {
+                        if (
+                            field.default === "true" ||
+                            field.default === "1" ||
+                            field.default === "X"
+                        ) {
                             appdata[field.name] = true;
                         } else {
                             delete appdata[field.name];
                         }
-
                     } else {
                         appdata[field.name] = field.default;
                     }
-
                 }
 
                 // Values from System Variables
                 if (field.sysvarValue) {
-
                     switch (field.sysvarValue) {
-
-                        case 'UserName':
+                        case "UserName":
                             if (AppCache.userInfo && AppCache.userInfo.username) {
                                 appdata[field.name] = AppCache.userInfo.username;
                             } else {
@@ -1403,20 +1631,22 @@ const report = {
 
                         default:
                             break;
-
                     }
-
                 }
 
                 if (field.required) delete appdata[field.name + "ValueState"];
 
                 // Create Filter Fields
                 switch (field.type) {
-
                     case "MultiSelect":
                     case "MultiSelectLookup":
                     case "MultiSelectScript":
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.MultiComboBox({
                             width: "100%",
@@ -1426,14 +1656,19 @@ const report = {
                             showSecondaryValues: true,
                             selectionChange: function (oEvent) {
                                 if (run) run();
-                            }
-
+                            },
                         });
 
                         if (field.items) field.items.sort(sort_by("text"));
 
                         $.each(field.items, function (i, item) {
-                            selField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                            selField.addItem(
+                                new sap.ui.core.ListItem({
+                                    key: item.key,
+                                    text: item.text,
+                                    additionalText: item.additionalText,
+                                })
+                            );
                         });
 
                         form.addContent(selField);
@@ -1442,7 +1677,12 @@ const report = {
                     case "SingleSelect":
                     case "SingleSelectLookup":
                     case "SingleSelectScript":
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.ComboBox({
                             width: "100%",
@@ -1452,22 +1692,33 @@ const report = {
                             showSecondaryValues: true,
                             change: function (oEvent) {
                                 if (run) run();
-                            }
+                            },
                         });
 
-                        selField.addItem(new sap.ui.core.Item({ key: "", text: "", }));
+                        selField.addItem(new sap.ui.core.Item({ key: "", text: "" }));
 
                         if (field.items) field.items.sort(sort_by("text"));
 
                         $.each(field.items, function (i, item) {
-                            selField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                            selField.addItem(
+                                new sap.ui.core.ListItem({
+                                    key: item.key,
+                                    text: item.text,
+                                    additionalText: item.additionalText,
+                                })
+                            );
                         });
 
                         form.addContent(selField);
                         break;
 
                     case "DateRange":
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.DateRangeSelection({
                             width: "100%",
@@ -1477,13 +1728,18 @@ const report = {
                             valueState: "{AppData>/" + field.name + "ValueState}",
                             change: function (oEvent) {
                                 if (run) run();
-                            }
+                            },
                         });
                         form.addContent(selField);
                         break;
 
                     case "CheckBox":
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.CheckBox({
                             width: "100%",
@@ -1493,26 +1749,36 @@ const report = {
                             valueState: "{AppData>/" + field.name + "ValueState}",
                             select: function (oEvent) {
                                 if (run) run();
-                            }
+                            },
                         });
                         form.addContent(selField);
                         break;
 
                     case "Switch":
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.Switch({
                             visible: field.visible,
                             state: "{AppData>/" + field.name + "}",
                             change: function (oEvent) {
                                 if (run) run();
-                            }
+                            },
                         });
                         form.addContent(selField);
                         break;
 
                     case "ValueHelp":
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.Input({
                             visible: field.visible,
@@ -1523,22 +1789,25 @@ const report = {
                             value: "{AppData>/" + field.name + "}",
                             showValueHelp: true,
                             valueHelpRequest: function (oEvent) {
-
                                 events = {
                                     valueRequest: true,
                                     valueRequestField: selField.sId,
-                                    valueRequestKey: field.valueRequestKey
-                                }
+                                    valueRequestKey: field.valueRequestKey,
+                                };
 
                                 sap.n.Adaptive.navigation(field._navigation, appdata, events);
-                            }
-
+                            },
                         });
                         form.addContent(selField);
                         break;
 
                     default:
-                        form.addContent(new sap.m.Label({ text: sap.n.Adaptive.translateFieldLabel(field, config), required: field.required }));
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                            })
+                        );
 
                         var selField = new sap.m.SearchField({
                             width: "100%",
@@ -1546,24 +1815,20 @@ const report = {
                             value: "{AppData>/" + field.name + "}",
                             search: function (oEvent) {
                                 if (run) run();
-                            }
+                            },
                         });
 
                         form.addContent(selField);
                         break;
-
                 }
-
             });
 
             parent.addContent(form);
-
         } catch (e) {
             console.log(e);
         }
-
-    }
-}
+    },
+};
 
 report.start();
 window.adaptiveListImport = report.import;
