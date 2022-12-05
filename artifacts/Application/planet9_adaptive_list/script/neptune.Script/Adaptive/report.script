@@ -739,7 +739,7 @@ const report = {
                         return sap.n.Adaptive.run(modelAppConfig.oData, item, "Save");
                     })
                 )
-                    .catch(function (_) { })
+                    .catch(function (_) {})
                     .finally(function (_) {
                         importData(data.slice(COUNT));
                     });
@@ -951,7 +951,7 @@ const report = {
 
             try {
                 table.destroyColumns();
-            } catch (e) { }
+            } catch (e) {}
 
             let col = new sap.m.ColumnListItem({ selected: "{_sel}" });
 
@@ -1614,6 +1614,12 @@ const report = {
                             appdata[field.name] = true;
                         } else {
                             delete appdata[field.name];
+                        }
+                    } else if (["DateRange"].includes(field.type)) {
+                        const dateRange = field.default.split("-");
+                        if (dateRange) {
+                            appdata[field.name] = new Date(dateRange[0]);
+                            appdata[field.name + "_end"] = new Date(dateRange[1]);
                         }
                     } else {
                         appdata[field.name] = field.default;

@@ -266,10 +266,6 @@ const report = {
         modelAppConfig.oData.settings.fieldsSel.forEach(function (field) {
             const { name, type } = field;
 
-            // Date Format
-            if (["DatePicker", "DateTimePicker"].includes(type))
-                if (data[name]) data[name] = sap.n.Adaptive.getDate(data[name]);
-
             // Editor
             if (type === "Editor") {
                 field._editor.setData(data[name]);
@@ -281,6 +277,11 @@ const report = {
             // Default Value
             if (field.default && !data[name]) {
                 data[name] = ["Switch", "CheckBox"].includes(type) ? true : field.default;
+            }
+
+            // Date Format
+            if (["DatePicker", "DateTimePicker"].includes(type)) {
+                if (data[name]) data[name] = sap.n.Adaptive.getDate(data[name]);
             }
 
             // MultiSelect Parser
