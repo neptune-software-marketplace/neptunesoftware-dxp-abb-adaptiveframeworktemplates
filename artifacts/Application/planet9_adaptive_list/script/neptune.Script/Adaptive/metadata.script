@@ -702,6 +702,21 @@ const metadata = {
             placeholder: "1",
         },
 
+        stepInputTextAlign: {
+            type: "SingleSelect",
+            label: "TextAlign",
+            visible: vb.typeStepInput,
+            items: valuesToKeyText([
+                "",
+                "Begin",
+                "Center",
+                "End",
+                "Initial",
+                "Left",
+                "Right"
+            ]),
+        },
+
         buttonType: {
             type: "SingleSelect",
             label: "Button Type",
@@ -1095,9 +1110,12 @@ const metadata = {
 
         demandPopin: { type: "CheckBox", label: "Demand Popin" },
         popinDisplay: {
-            type: "SingleSelect", label: "Popin Display", default: "Block", items: [
+            type: "SingleSelect",
+            label: "Popin Display",
+            default: "Block",
+            items: [
                 { key: "Block", text: "Block" },
-                { key: "Inline", text: "Inline" }
+                { key: "Inline", text: "Inline" },
             ],
         },
 

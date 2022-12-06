@@ -714,6 +714,7 @@ const report = {
                         if (field.stepInputMin) options.min = parseInt(field.stepInputMin);
                         if (field.stepInputMax) options.max = parseInt(field.stepInputMax);
                         if (field.stepInputStep) options.step = parseInt(field.stepInputStep);
+                        if (field.stepInputTextAlign) options.textAlign = field.stepInputTextAlign;
 
                         var newField = new sap.m.StepInput(options);
 

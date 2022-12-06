@@ -1,7 +1,7 @@
 {
 	"id": "3348b476-8705-4885-9d69-5dbac3e0bf37",
-	"createdAt": "2022-04-19T10:32:37.546Z",
-	"createdBy": "adeel@neptune-software.com",
+	"createdAt": "2022-03-15T17:06:29.000Z",
+	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"objects": [
 		{
 			"fieldNo": "4a58b1d2-84c8-4f0a-d48c-380e257c0e8e",
@@ -146,7 +146,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.3.1250",
+	"ver": "22.12.6.1223",
 	"application": "planet9_adaptive_splitter",
 	"title": "Adaptive Splitter/Layout",
 	"description": "Adaptive Splitter/Layout",

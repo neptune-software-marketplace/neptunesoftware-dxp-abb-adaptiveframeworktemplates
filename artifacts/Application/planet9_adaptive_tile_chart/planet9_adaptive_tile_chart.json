@@ -1,7 +1,7 @@
 {
 	"id": "61a60e73-95f5-458b-9259-41f2c10659b2",
-	"createdAt": "2022-02-04T15:46:44.660Z",
-	"createdBy": "luuk.wosten@neptune-software.com",
+	"createdAt": "2021-01-12T13:12:51.000Z",
+	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"objects": [
 		{
 			"fieldNo": "5d02ca1f-664d-4451-de25-aeb579e08484",
@@ -220,7 +220,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.3.1252",
+	"ver": "22.12.6.1223",
 	"application": "planet9_adaptive_tile_chart",
 	"title": "Adaptive Tile Chart",
 	"description": "Adaptive Tile Chart",

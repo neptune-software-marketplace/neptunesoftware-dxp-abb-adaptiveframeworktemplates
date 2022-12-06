@@ -1,7 +1,7 @@
 {
 	"id": "b2082507-49ab-4d0a-acba-60668cae952b",
-	"createdAt": "2022-02-04T15:46:44.556Z",
-	"createdBy": "luuk.wosten@neptune-software.com",
+	"createdAt": "2021-01-12T13:12:51.000Z",
+	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"objects": [
 		{
 			"fieldNo": "7dec558c-250b-4961-ddff-94a76ef5ac20",
@@ -17,13 +17,6 @@
 					"attribute": "styleClassPadding",
 					"grouping": "Properties",
 					"value": "sapUiNoContentPadding",
-					"script": "",
-					"translation": []
-				},
-				{
-					"attribute": "styleClass",
-					"grouping": "Properties",
-					"value": "nepNoRadius",
 					"script": "",
 					"translation": []
 				},
@@ -926,7 +919,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.3.1249",
+	"ver": "22.12.6.1223",
 	"application": "planet9_adaptive_tile_table",
 	"title": "Adaptive Tile Table",
 	"description": "Adaptive Tile Table",

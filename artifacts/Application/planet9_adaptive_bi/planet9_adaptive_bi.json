@@ -1,7 +1,7 @@
 {
 	"id": "d29e149b-2716-4c77-b026-4451881e54cd",
-	"createdAt": "2022-02-04T15:46:45.050Z",
-	"createdBy": "luuk.wosten@neptune-software.com",
+	"createdAt": "2020-12-21T13:58:45.000Z",
+	"createdBy": "oah",
 	"objects": [
 		{
 			"fieldNo": "81fae591-3045-42fb-9c1a-8c2c71c6324a",
@@ -5647,7 +5647,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.3.1251",
+	"ver": "22.12.6.1223",
 	"application": "planet9_adaptive_bi",
 	"title": "Analytic Slice&Dice",
 	"description": "Analytic Slice&Dice",

@@ -482,6 +482,13 @@ const metadata = {
             placeholder: "1",
         },
 
+        stepInputTextAlign: {
+            type: "SingleSelect",
+            label: "TextAlign",
+            visible: vb.typeStepInput,
+            items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
+        },
+
         textAreaRows: { type: "Input", label: "Rows", visible: vb.textArea },
 
         editorHeight: { type: "Input", label: "Height", visible: vb.editor },
