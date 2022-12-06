@@ -1176,7 +1176,7 @@ const report = {
                             },
                         };
 
-                        if (f.buttonIconType) opts.icon = `{${f.name}_icon}`;
+                        if (f.statusIconType) opts.icon = `{${f.name}_icon}`;
 
                         newField = new sap.m.Button(opts);
                         break;
