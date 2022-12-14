@@ -908,15 +908,19 @@ const report = {
             ? field.visibleFixedValue
             : field.visibleSystemValue;
 
+        let visibleStatement = field.visibleInverse ? "false:true" : "true:false";
+
         if (field.visibleFieldName && field.visibleCondition && visibleValue) {
             visibleCond =
                 "{= ${AppData>/" +
                 field.visibleFieldName +
-                "} " +
+                "}.toString() " +
                 field.visibleCondition +
                 " '" +
                 visibleValue +
-                "' ? true: false }";
+                "' ? " +
+                visibleStatement +
+                " }";
         }
 
         return visibleCond;

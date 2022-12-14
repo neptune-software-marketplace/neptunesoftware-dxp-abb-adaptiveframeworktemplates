@@ -9,7 +9,7 @@
 	},
 	"name": "neptunesoftware-dxp-abb-adaptiveframeworktemplates",
 	"description": "Neptune Adaptive Templates",
-	"ver": "22.12.5.1420",
+	"ver": "22.12.7.627",
 	"enableCICD": true,
 	"apps": [
 		{

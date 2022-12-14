@@ -1359,6 +1359,7 @@ const report = {
 
                         sap.n.Adaptive.navigation(t._action1Nav, columnData, events, table.sId);
                     },
+                    visible: report.buildVisibleProp("1"),
                 });
 
                 col.addCell(newField);
@@ -1389,6 +1390,7 @@ const report = {
 
                         sap.n.Adaptive.navigation(t._action2Nav, columnData, events, table.sId);
                     },
+                    visible: report.buildVisibleProp("2"),
                 });
 
                 col.addCell(newField);
@@ -1420,6 +1422,7 @@ const report = {
 
                         sap.n.Adaptive.navigation(t._action3Nav, columnData, events, table.sId);
                     },
+                    visible: report.buildVisibleProp("3"),
                 });
 
                 col.addCell(newField);
@@ -1451,6 +1454,7 @@ const report = {
 
                         sap.n.Adaptive.navigation(t._action4Nav, columnData, events, table.sId);
                     },
+                    visible: report.buildVisibleProp("4"),
                 });
 
                 col.addCell(newField);
@@ -1482,6 +1486,7 @@ const report = {
 
                         sap.n.Adaptive.navigation(t._action5Nav, columnData, events, table.sId);
                     },
+                    visible: report.buildVisibleProp("5"),
                 });
 
                 col.addCell(newField);
@@ -1492,6 +1497,57 @@ const report = {
         } catch (e) {
             console.log(e);
         }
+    },
+
+    buildVisibleProp: function (field) {
+        if (field === "1" || field === "2" || field === "3" || field === "4" || field === "5") {
+            field = {
+                visible: true,
+                visibleFixedValue:
+                    modelAppConfig.oData.settings.properties.table[
+                        "action" + field + "VisibleFixedValue"
+                    ],
+                visibleSystemValue:
+                    modelAppConfig.oData.settings.properties.table[
+                        "action" + field + "VisibleSystemValue"
+                    ],
+                visibleFieldName:
+                    modelAppConfig.oData.settings.properties.table[
+                        "action" + field + "VisibleFieldName"
+                    ],
+                visibleCondition:
+                    modelAppConfig.oData.settings.properties.table[
+                        "action" + field + "VisibleCondition"
+                    ],
+                visibleInverse:
+                    modelAppConfig.oData.settings.properties.table[
+                        "action" + field + "VisibleInverse"
+                    ],
+            };
+        }
+
+        let visibleCond = field.visible;
+
+        let visibleValue = field.visibleFixedValue
+            ? field.visibleFixedValue
+            : field.visibleSystemValue;
+
+        let visibleStatement = field.visibleInverse ? "false:true" : "true:false";
+
+        if (field.visibleFieldName && field.visibleCondition && visibleValue) {
+            visibleCond =
+                "{= ${" +
+                field.visibleFieldName +
+                "}.toString() " +
+                field.visibleCondition +
+                " '" +
+                visibleValue +
+                "' ? " +
+                visibleStatement +
+                " }";
+        }
+
+        return visibleCond;
     },
 
     buildTableFilter: function (parent, table, config, appdata, enableSearch, run) {

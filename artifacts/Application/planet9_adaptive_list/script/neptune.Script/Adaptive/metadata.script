@@ -442,6 +442,47 @@ const metadata = {
             },
             action1Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction1 },
 
+            action1VisibleCond: {
+                type: "Title",
+                label: "Row Action 1 - Conditional Visibility",
+                visible: vb.tableEnableAction1,
+            },
+            action1VisibleFieldName: {
+                type: "TableFieldLocal",
+                label: "Field",
+                visible: vb.tableEnableAction1,
+            },
+            action1VisibleCondition: {
+                type: "SingleSelect",
+                label: "Operator",
+                items: [
+                    { key: "", text: "" },
+                    { key: "===", text: "Equal" },
+                    { key: "!==", text: "Not Equal" },
+                    { key: ">=", text: "Greater and Equal to" },
+                    { key: "<=", text: "Lesser and Equal to" },
+                    { key: ">", text: "Greater than" },
+                    { key: "<", text: "Lesser than" },
+                ],
+                visible: vb.tableEnableAction1,
+            },
+            action1VisibleFixedValue: {
+                type: "Input",
+                label: "Fixed Value",
+                visible: vb.tableEnableAction1,
+            },
+            action1VisibleSystemValue: {
+                type: "SingleSelect",
+                label: "System Variable",
+                items: valuesToKeyText(["", "UserName"]),
+                visible: vb.tableEnableAction1,
+            },
+            action1VisibleInverse: {
+                type: "CheckBox",
+                label: "Hide instead of show",
+                visible: vb.tableEnableAction1,
+            },
+
             // Row Action 2
             titleAction2: { type: "Title", label: "Row Action 2", visible: vb.tableEnableAction2 },
             action2Text: {
@@ -474,6 +515,47 @@ const metadata = {
                 ]),
             },
             action2Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction2 },
+
+            action2VisibleCond: {
+                type: "Title",
+                label: "Row Action 2 - Conditional Visibility",
+                visible: vb.tableEnableAction2,
+            },
+            action2VisibleFieldName: {
+                type: "TableFieldLocal",
+                label: "Field",
+                visible: vb.tableEnableAction2,
+            },
+            action2VisibleCondition: {
+                type: "SingleSelect",
+                label: "Operator",
+                items: [
+                    { key: "", text: "" },
+                    { key: "===", text: "Equal" },
+                    { key: "!==", text: "Not Equal" },
+                    { key: ">=", text: "Greater and Equal to" },
+                    { key: "<=", text: "Lesser and Equal to" },
+                    { key: ">", text: "Greater than" },
+                    { key: "<", text: "Lesser than" },
+                ],
+                visible: vb.tableEnableAction2,
+            },
+            action2VisibleFixedValue: {
+                type: "Input",
+                label: "Fixed Value",
+                visible: vb.tableEnableAction2,
+            },
+            action2VisibleSystemValue: {
+                type: "SingleSelect",
+                label: "System Variable",
+                items: valuesToKeyText(["", "UserName"]),
+                visible: vb.tableEnableAction2,
+            },
+            action2VisibleInverse: {
+                type: "CheckBox",
+                label: "Hide instead of show",
+                visible: vb.tableEnableAction2,
+            },
 
             // Row Action 3
             titleAction3: { type: "Title", label: "Row Action 3", visible: vb.tableEnableAction3 },
@@ -508,6 +590,47 @@ const metadata = {
             },
             action3Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction3 },
 
+            action3VisibleCond: {
+                type: "Title",
+                label: "Row Action 3 - Conditional Visibility",
+                visible: vb.tableEnableAction3,
+            },
+            action3VisibleFieldName: {
+                type: "TableFieldLocal",
+                label: "Field",
+                visible: vb.tableEnableAction3,
+            },
+            action3VisibleCondition: {
+                type: "SingleSelect",
+                label: "Operator",
+                items: [
+                    { key: "", text: "" },
+                    { key: "===", text: "Equal" },
+                    { key: "!==", text: "Not Equal" },
+                    { key: ">=", text: "Greater and Equal to" },
+                    { key: "<=", text: "Lesser and Equal to" },
+                    { key: ">", text: "Greater than" },
+                    { key: "<", text: "Lesser than" },
+                ],
+                visible: vb.tableEnableAction3,
+            },
+            action3VisibleFixedValue: {
+                type: "Input",
+                label: "Fixed Value",
+                visible: vb.tableEnableAction3,
+            },
+            action3VisibleSystemValue: {
+                type: "SingleSelect",
+                label: "System Variable",
+                items: valuesToKeyText(["", "UserName"]),
+                visible: vb.tableEnableAction3,
+            },
+            action3VisibleInverse: {
+                type: "CheckBox",
+                label: "Hide instead of show",
+                visible: vb.tableEnableAction3,
+            },
+
             // Row Action 4
             titleAction4: { type: "Title", label: "Row Action 4", visible: vb.tableEnableAction4 },
             action4Text: {
@@ -541,6 +664,47 @@ const metadata = {
             },
             action4Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction4 },
 
+            action4VisibleCond: {
+                type: "Title",
+                label: "Row Action 4 - Conditional Visibility",
+                visible: vb.tableEnableAction4,
+            },
+            action4VisibleFieldName: {
+                type: "TableFieldLocal",
+                label: "Field",
+                visible: vb.tableEnableAction4,
+            },
+            action4VisibleCondition: {
+                type: "SingleSelect",
+                label: "Operator",
+                items: [
+                    { key: "", text: "" },
+                    { key: "===", text: "Equal" },
+                    { key: "!==", text: "Not Equal" },
+                    { key: ">=", text: "Greater and Equal to" },
+                    { key: "<=", text: "Lesser and Equal to" },
+                    { key: ">", text: "Greater than" },
+                    { key: "<", text: "Lesser than" },
+                ],
+                visible: vb.tableEnableAction4,
+            },
+            action4VisibleFixedValue: {
+                type: "Input",
+                label: "Fixed Value",
+                visible: vb.tableEnableAction4,
+            },
+            action4VisibleSystemValue: {
+                type: "SingleSelect",
+                label: "System Variable",
+                items: valuesToKeyText(["", "UserName"]),
+                visible: vb.tableEnableAction3,
+            },
+            action4VisibleInverse: {
+                type: "CheckBox",
+                label: "Hide instead of show",
+                visible: vb.tableEnableAction4,
+            },
+
             // Row Action 5
             titleAction5: { type: "Title", label: "Row Action 5", visible: vb.tableEnableAction5 },
             action5Text: {
@@ -573,6 +737,47 @@ const metadata = {
                 ]),
             },
             action5Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction5 },
+
+            action5VisibleCond: {
+                type: "Title",
+                label: "Row Action 5 - Conditional Visibility",
+                visible: vb.tableEnableAction5,
+            },
+            action5VisibleFieldName: {
+                type: "TableFieldLocal",
+                label: "Field",
+                visible: vb.tableEnableAction5,
+            },
+            action5VisibleCondition: {
+                type: "SingleSelect",
+                label: "Operator",
+                items: [
+                    { key: "", text: "" },
+                    { key: "===", text: "Equal" },
+                    { key: "!==", text: "Not Equal" },
+                    { key: ">=", text: "Greater and Equal to" },
+                    { key: "<=", text: "Lesser and Equal to" },
+                    { key: ">", text: "Greater than" },
+                    { key: "<", text: "Lesser than" },
+                ],
+                visible: vb.tableEnableAction5,
+            },
+            action5VisibleFixedValue: {
+                type: "Input",
+                label: "Fixed Value",
+                visible: vb.tableEnableAction5,
+            },
+            action5VisibleSystemValue: {
+                type: "SingleSelect",
+                label: "System Variable",
+                items: valuesToKeyText(["", "UserName"]),
+                visible: vb.tableEnableAction5,
+            },
+            action5VisibleInverse: {
+                type: "CheckBox",
+                label: "Inverse Logic",
+                visible: vb.tableEnableAction5,
+            },
         },
     },
 
@@ -706,15 +911,7 @@ const metadata = {
             type: "SingleSelect",
             label: "TextAlign",
             visible: vb.typeStepInput,
-            items: valuesToKeyText([
-                "",
-                "Begin",
-                "Center",
-                "End",
-                "Initial",
-                "Left",
-                "Right"
-            ]),
+            items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
         },
 
         buttonType: {
@@ -953,9 +1150,25 @@ const metadata = {
             ]),
         },
         statusStateFixed: {
-            type: "Input",
+            type: "SingleSelect",
             label: "Fixed Value",
             visible: vb.typeObjectStatusStateTypeFixed,
+            items: valuesToKeyText([
+                "",
+                "None",
+                "Error",
+                "Warning",
+                "Success",
+                "Information",
+                "Indication01",
+                "Indication02",
+                "Indication03",
+                "Indication04",
+                "Indication05",
+                "Indication06",
+                "Indication07",
+                "Indication08",
+            ]),
         },
         statusStateRule: {
             type: "Rule",

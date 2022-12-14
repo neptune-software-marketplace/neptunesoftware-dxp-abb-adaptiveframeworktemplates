@@ -4054,30 +4054,6 @@
 					"attributes": [],
 					"data": [
 						{
-							"fieldNo": "00bff267-d008-448e-96fd-10b4e035d23c",
-							"fieldName": "oColumn1",
-							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
-							"fieldType": "sap.m.Column",
-							"script": "",
-							"customComponent": false,
-							"request": [],
-							"response": [],
-							"attributes": [],
-							"data": []
-						},
-						{
-							"fieldNo": "b1c05e02-855e-42c9-bd0a-899bbf8f918a",
-							"fieldName": "oStepInput",
-							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
-							"fieldType": "sap.m.StepInput",
-							"script": "",
-							"customComponent": false,
-							"request": [],
-							"response": [],
-							"attributes": [],
-							"data": []
-						},
-						{
 							"fieldNo": "9538462d-31af-41f6-b485-465a0b64b6a4",
 							"fieldName": "AppConfig",
 							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
@@ -4182,7 +4158,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.6.149",
+	"ver": "22.12.12.753",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
