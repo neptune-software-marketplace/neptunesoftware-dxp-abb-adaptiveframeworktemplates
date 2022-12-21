@@ -7,7 +7,7 @@ const report = {
     sortOrder: null,
     pages: {},
     initId: null,
-    tabObject: null,
+    gridObject: null,
     filterObject: null,
 
     pagination: {
@@ -66,14 +66,21 @@ const report = {
         if (config.settings.properties.report.hideHeader) {
             oApp.to(oPageChild);
             oPageChild.setFooter(oPageFooter);
-            report.tabObject = tabDataChild;
+            report.tabObject = gridDataChild;
             report.filterObject = panFilterChild;
         } else {
             oApp.to(oPageDynamic);
             oPageDynamic.setFooter(oPageFooter);
-            report.tabObject = tabData;
+            report.tabObject = gridData;
             report.filterObject = oPanFilter;
         }
+
+        report.tabObject.setCustomLayout(
+            new sap.ui.layout.cssgrid.GridBoxLayout({
+                boxMinWidth: config.settings.properties.table.gridBoxMinWidth,
+                boxesPerRowConfig: config.settings.properties.table.gridBoxPerRow,
+            })
+        );
 
         // Set Default Values
         sap.n.Adaptive.setDefaultData(config, metadata);
@@ -261,7 +268,7 @@ const report = {
                     );
 
                 // Build Table Columns
-                report.buildTableColumns(report.tabObject, modelAppConfig.oData, report.events);
+                report.buildGrid(report.tabObject, modelAppConfig.oData, report.events);
 
                 // Auto Run
                 if (s.properties.report.autoRun) report.run();
@@ -940,20 +947,20 @@ const report = {
         });
     },
 
-    buildTableColumns: function (table, config, events) {
+    buildGrid: function (grid, config, events) {
         try {
             const props = config.settings.properties;
             if (props.table.enableCompact) {
-                table.addStyleClass("sapUiSizeCompact");
+                grid.addStyleClass("sapUiSizeCompact");
             } else {
-                table.removeStyleClass("sapUiSizeCompact");
+                grid.removeStyleClass("sapUiSizeCompact");
             }
 
             try {
-                table.destroyColumns();
+                // table.destroyColumns();
             } catch (e) {}
 
-            let col = new sap.m.ColumnListItem({ selected: "{_sel}" });
+            let col = new sap.f.GridListItem({ selected: "{_sel}" });
 
             // Handle Item Press
             if (config.settings.events && config.settings.events.valueRequest) {
@@ -983,7 +990,7 @@ const report = {
                                 colData[nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(nav, colData, events, table.sId);
+                        sap.n.Adaptive.navigation(nav, colData, events, grid.sId);
                     });
                 }
             }
@@ -992,510 +999,330 @@ const report = {
                 onFieldChangeEvent(oEvent, events);
             }
 
-            // Build Columns
-            config.settings.fieldsRun.forEach(function (f) {
-                if (!f.visible) return;
-
-                let ColumnHeader = new sap.m.Column({
-                    width: f.width,
-                    minScreenWidth: f.minScreenWidth,
-                });
-
-                if (f.hAlign) ColumnHeader.setHAlign(f.hAlign);
-                if (f.vAlign) ColumnHeader.setVAlign(f.vAlign);
-                if (f.demandPopin) ColumnHeader.setDemandPopin(f.demandPopin);
-                if (f.popinDisplay) ColumnHeader.setPopinDisplay(f.popinDisplay);
-
-                // Enable Sum
-                if (f.enableSum && f.type === "ObjectNumber") {
-                    const prefix = "AppConfig>/settings/properties/table/_sum/";
-                    let sumField = new sap.m.ObjectNumber({
-                        number: `{${prefix}${f.name}}`,
-                        unit: `{${prefix}${f.name}_unit}`,
-                    });
-                    ColumnHeader.setFooter(sumField);
-                }
-
-                const HBox = new sap.m.HBox();
-                HBox.addItem(
-                    new sap.m.Label({
-                        text: sap.n.Adaptive.translateFieldLabel(f, config),
-                        wrapping: true,
-                    })
-                );
-
-                if (f.enableSort || f.enableGroup) {
-                    let ColumnButton = new sap.ui.core.Icon({
-                        src: "sap-icon://slim-arrow-down",
-                        press: function (_oEvent) {
-                            if (events.onHeaderClick) events.onHeaderClick(f, this);
-                        },
-                    });
-                    ColumnButton.addStyleClass("sapUiTinyMarginBegin");
-                    HBox.addItem(ColumnButton);
-                }
-
-                ColumnHeader.setHeader(HBox);
-                table.addColumn(ColumnHeader);
-
-                let newField = null;
-                let formatterProp = f.type === "ObjectNumber" ? "number" : "text";
-                let opts;
-
-                switch (f.type) {
-                    case "Link":
-                        opts = {
-                            text: getFieldBindingText(f),
-                            wrapping: getFieldWrapping(f),
-                            press: function (oEvent) {
-                                if (!f._navigation) return;
-
-                                const ctx = oEvent.oSource.getBindingContext();
-                                const colData = ctx.getObject();
-
-                                // Sidepanel Lookup Text
-                                if (f._navigation.openAs === "S") {
-                                    const k = f._navigation.dialogTitleField;
-                                    const { valueType } = ModelData.FindFirst(
-                                        config.settings.fieldsRun,
-                                        "name",
-                                        k
-                                    );
-                                    f._navigation.dialogTitleFieldText =
-                                        colData[valueType ? `${k}_value` : k];
-                                }
-
-                                // Add pressed fieldname
-                                events.objectPressed = f.name;
-
-                                sap.n.Adaptive.navigation(
-                                    f._navigation,
-                                    colData,
-                                    events,
-                                    newField.sId
-                                );
-                            },
-                        };
-
-                        if (f.linkHrefType) {
-                            opts.href = `{${f.name}_href}`;
-                            opts.target = "_blank";
-                        }
-
-                        newField = new sap.m.Link(opts);
-                        break;
-
-                    case "ObjectNumber":
-                        opts = {
-                            number: getFieldBindingText(f),
-                        };
-
-                        if (f.numberUnitType) opts.unit = `{${f.name}_unit}`;
-                        if (f.numberStateType) opts.state = `{${f.name}_state}`;
-
-                        newField = new sap.m.ObjectNumber(opts);
-
-                        if (f.numberUnitType && f.numberUnitFormatter) {
-                            newField.bindProperty("unit", {
-                                parts: [`${f.name}_unit`],
-                                formatter: function (fieldName) {
-                                    if (typeof fieldName === "undefined" || fieldName === null)
-                                        return;
-                                    return sap.n.Adaptive.formatter(
-                                        fieldName,
-                                        f.numberUnitFormatter
-                                    );
-                                },
-                            });
-                        }
-                        break;
-
-                    case "ObjectStatus":
-                        opts = {
-                            text: getFieldBindingText(f),
-                        };
-
-                        if (f.statusInverted) opts.inverted = true;
-                        if (f.statusTitleType) opts.title = `{${f.name}_title}`;
-                        if (f.statusIconType) opts.icon = `{${f.name}_icon}`;
-                        if (f.statusStateType) opts.state = `{${f.name}_state}`;
-
-                        newField = new sap.m.ObjectStatus(opts);
-
-                        if (f.statusTitleType && f.statusTitleFormatter) {
-                            newField.bindProperty("title", {
-                                parts: [`${f.name}_title`],
-                                formatter: function (name) {
-                                    if (typeof name === "undefined" || name === null) return;
-                                    return sap.n.Adaptive.formatter(name, f.statusTitleFormatter);
-                                },
-                            });
-                        }
-                        break;
-
-                    case "CheckBox":
-                        newField = new sap.m.CheckBox({
-                            selected: getFieldBindingText(f),
-                            editable: isFieldEditable(f),
-                            wrapping: getFieldWrapping(f),
-                            select: onChange,
-                        });
-                        break;
-
-                    case "Button":
-                        opts = {
-                            text: getFieldBindingText(f),
-                            type: f.buttonType,
-                            press: function (oEvent) {
-                                if (!f._navigation) return;
-
-                                const ctx = oEvent.oSource.getBindingContext();
-                                const colData = ctx.getObject();
-
-                                // Sidepanel Lookup Text
-                                if (f._navigation.openAs === "S") {
-                                    const k = f._navigation.dialogTitleField;
-                                    const { valueType } = ModelData.FindFirst(
-                                        config.settings.fieldsRun,
-                                        "name",
-                                        k
-                                    );
-                                    f._navigation.dialogTitleFieldText =
-                                        colData[valueType ? `${k}_value` : k];
-                                }
-
-                                // Add pressed fieldname
-                                events.objectPressed = f.name;
-
-                                sap.n.Adaptive.navigation(
-                                    f._navigation,
-                                    colData,
-                                    events,
-                                    newField.sId
-                                );
-                            },
-                        };
-
-                        if (f.statusIconType) opts.icon = `{${f.name}_icon}`;
-
-                        newField = new sap.m.Button(opts);
-                        break;
-
-                    case "Switch":
-                        newField = new sap.m.Switch({
-                            state: getFieldBindingText(f),
-                            enabled: isFieldEditable(f),
-                            change: onChange,
-                        });
-                        break;
-
-                    case "Image":
-                        newField = new sap.m.Image({
-                            src: getFieldBindingText(f),
-                            height: "32px",
-                        });
-                        break;
-
-                    case "StepInput":
-                        let options = {
-                            value: getFieldBindingText(f),
-                            placeholder: getFieldPlaceholder(f),
-                            change: onChange,
-                        };
-
-                        if (f.stepInputMin) options.min = parseInt(f.stepInputMin);
-                        if (f.stepInputMax) options.max = parseInt(f.stepInputMax);
-                        if (f.stepInputStep) options.step = parseInt(f.stepInputStep);
-                        if (f.stepInputTextAlign) options.textAlign = f.stepInputTextAlign;
-
-                        newField = new sap.m.StepInput(options);
-                        break;
-
-                    case "Icon":
-                        newField = new sap.ui.core.Icon({
-                            src: getFieldBindingText(f),
-                        });
-                        break;
-
-                    case "Input":
-                        newField = new sap.m.Input({
-                            value: getFieldBindingText(f),
-                            editable: isFieldEditable(f),
-                            placeholder: getFieldPlaceholder(f),
-                            textAlign: f.hAlign,
-                            change: onChange,
-                        });
-                        break;
-
-                    case "DatePicker":
-                        newField = new sap.m.DatePicker({
-                            visible: f.visible,
-                            editable: isFieldEditable(f),
-                            placeholder: getFieldPlaceholder(f),
-                            displayFormat: f.displayFormat,
-                            dateValue: getFieldBindingText(f),
-                            change: onChange,
-                        });
-
-                        newField.bindProperty("dateValue", {
-                            parts: [f.name],
-                            formatter: getDateFormatter(f.name),
-                        });
-                        break;
-
-                    case "DateTimePicker":
-                        newField = new sap.m.DateTimePicker({
-                            visible: f.visible,
-                            editable: isFieldEditable(f),
-                            placeholder: getFieldPlaceholder(f),
-                            secondsStep: parseInt(f.dateTimePickerSecondsStep) || 1,
-                            minutesStep: parseInt(f.dateTimePickerMinutesStep) || 1,
-                            dateValue: getFieldBindingText(f),
-                            change: onChange,
-                        });
-
-                        newField.bindProperty("dateValue", {
-                            parts: [f.name],
-                            formatter: getDateFormatter(f.name),
-                        });
-                        break;
-
-                    case "SingleSelectLookup":
-                    case "SingleSelectScript":
-                        newField = new sap.m.ComboBox({
-                            width: "100%",
-                            visible: f.visible,
-                            editable: isFieldEditable(f),
-                            placeholder: getFieldPlaceholder(f),
-                            selectedKey: getFieldBindingText(f),
-                            showSecondaryValues: true,
-                            selectionChange: onChange,
-                        });
-
-                        if (f.items) f.items.sort(sort_by("text"));
-
-                        newField.addItem(new sap.ui.core.Item({ key: "", text: "" }));
-                        f.items.forEach(function (item) {
-                            newField.addItem(
-                                new sap.ui.core.ListItem({
-                                    key: item.key,
-                                    text: item.text,
-                                    additionalText: item.additionalText,
-                                })
-                            );
-                        });
-                        break;
-
-                    case "MultiSelectLookup":
-                    case "MultiSelectScript":
-                        newField = new sap.m.MultiComboBox({
-                            width: "100%",
-                            visible: f.visible,
-                            selectedKeys: getFieldBindingText(f),
-                            placeholder: getFieldPlaceholder(f),
-                            showSecondaryValues: true,
-                            selectionChange: onChange,
-                        });
-
-                        if (f.items) f.items.sort(sort_by("text"));
-
-                        f.items.forEach(function (item) {
-                            newField.addItem(
-                                new sap.ui.core.ListItem({
-                                    key: item.key,
-                                    text: item.text,
-                                    additionalText: item.additionalText,
-                                })
-                            );
-                        });
-                        break;
-
-                    default:
-                        newField = new sap.m.Text({
-                            text: getFieldBindingText(f),
-                            wrapping: getFieldWrapping(f),
-                        });
-                        break;
-                }
-
-                col.addCell(newField);
-
-                // Formatter
-                if (f.formatter) {
-                    let fieldName = f.valueType ? f.name + "_value" : f.name;
-                    newField.bindProperty(formatterProp, {
-                        parts: [fieldName],
-                        formatter: function (fieldName) {
-                            if (typeof fieldName === "undefined" || fieldName === null) return;
-                            return sap.n.Adaptive.formatter(fieldName, f.formatter);
-                        },
-                    });
-                }
+            const gridBoxTop = new sap.m.VBox({
+                height: "100%",
+                justifyContent: "SpaceBetween",
             });
 
-            // Row Action 1
-            const t = config.settings.properties.table;
-            if (t.enableAction1) {
-                let ColumnHeader = new sap.m.Column({
-                    width: t.action1Width || "",
-                });
-                table.addColumn(ColumnHeader);
+            gridBoxTop.setLayoutData(
+                new sap.m.FlexItemData({
+                    growFactor: 1,
+                    shrinkFactor: 0,
+                })
+            );
 
-                let newField = new sap.m.Button({
-                    text: t.action1Text,
-                    icon: t.action1Icon,
-                    type: t.action1Type,
+            const gridBoxContent = new sap.m.VBox({}).addStyleClass("sapUiSmallMargin");
+
+            const gridBoxIcon = new sap.m.HBox({
+                justifyContent: "SpaceBetween",
+            }).addStyleClass("sapUiSmallMarginBottom");
+
+            // Icon
+            const fieldIcon = ModelData.FindFirst(config.settings.fieldsRun, "type", "Icon");
+
+            if (fieldIcon) {
+                let fieldIconBinding = fieldIcon ? "{" + fieldIcon.name + "}" : "";
+
+                if (fieldIcon.statusIconType) {
+                    fieldIconBinding = "{" + fieldIcon.name + "_icon}";
+                }
+
+                const gridIcon = new sap.ui.core.Icon({
+                    src: fieldIconBinding,
+                    size: "2.625rem",
+                    color: "Default",
+                });
+
+                gridBoxIcon.addItem(gridIcon);
+            }
+
+            // Status
+            const fieldStatus = ModelData.FindFirst(config.settings.fieldsRun, "type", "Status");
+
+            if (fieldStatus) {
+                let fieldStatusBinding = fieldStatus ? "{" + fieldStatus.name + "}" : "";
+                let fieldStatusStateBinding = "None";
+                let fieldIconBinding = "";
+
+                if (fieldStatus.valueType) {
+                    fieldStatusBinding = "{" + fieldStatus.name + "_value}";
+                }
+
+                if (fieldStatus.statusStateType) {
+                    fieldStatusStateBinding = "{" + fieldStatus.name + "_state}";
+                }
+
+                if (fieldStatus.statusIconType) {
+                    fieldIconBinding = "{" + fieldStatus.name + "_icon}";
+                }
+
+                const gridStatus = new sap.m.ObjectStatus({
+                    text: fieldStatusBinding,
+                    state: fieldStatusStateBinding,
+                    icon: fieldIconBinding,
+                });
+
+                if (fieldStatus.statusInverted) gridStatus.setInverted(true);
+                // if (fieldIconBinding) gridStatus.setIcon(fieldIconBinding);
+
+                report.buildFormatter(fieldStatus, gridStatus, "text");
+
+                gridBoxIcon.addItem(gridStatus);
+            }
+
+            // Title
+            const fieldTitle = ModelData.FindFirst(config.settings.fieldsRun, "type", "Title");
+            let fieldTitleBinding = fieldTitle ? "{" + fieldTitle.name + "}" : "";
+
+            if (fieldTitle.valueType) {
+                fieldTitleBinding = "{" + fieldTitle.name + "_value}";
+            }
+
+            const gridTitle = new nep.bootstrap.Text({
+                text: fieldTitleBinding,
+                textWrapping: true,
+                fontSize: fieldTitle.textFontSize,
+                textColor: fieldTitle.textColor,
+                type: fieldTitle.textType,
+            });
+
+            report.buildFormatter(fieldTitle, gridTitle, "text");
+
+            // SubTitle
+            const fieldSubTitle = ModelData.FindFirst(
+                config.settings.fieldsRun,
+                "type",
+                "SubTitle"
+            );
+            let fieldSubTitleBinding = fieldSubTitle ? "{" + fieldSubTitle.name + "}" : "";
+
+            if (fieldSubTitle.valueType) {
+                fieldSubTitleBinding = "{" + fieldSubTitle.name + "_value}";
+            }
+
+            const gridSubTitle = new nep.bootstrap.Text({
+                text: fieldSubTitleBinding,
+                textWrapping: true,
+                fontSize: fieldSubTitle.textFontSize,
+                textColor: fieldSubTitle.textColor,
+                type: fieldSubTitle.textType,
+            }).addStyleClass("sapUiTinyMarginBottom");
+
+            report.buildFormatter(fieldSubTitle, gridSubTitle, "text");
+
+            // Description
+            const fieldDescription = ModelData.FindFirst(
+                config.settings.fieldsRun,
+                "type",
+                "Description"
+            );
+
+            let fieldDescriptionBinding = fieldDescription ? "{" + fieldDescription.name + "}" : "";
+
+            if (fieldDescription.valueType) {
+                fieldDescriptionBinding = "{" + fieldDescription.name + "_value}";
+            }
+
+            const gridDescription = new nep.bootstrap.Text({
+                text: fieldDescriptionBinding,
+                textWrapping: true,
+                fontSize: fieldDescription.textFontSize,
+                textColor: fieldDescription.textColor,
+                type: fieldDescription.textType,
+            });
+
+            report.buildFormatter(fieldDescription, gridDescription, "text");
+
+            gridBoxContent.addItem(gridBoxIcon);
+
+            if (fieldTitle) gridBoxContent.addItem(gridTitle);
+            if (fieldSubTitle) gridBoxContent.addItem(gridSubTitle);
+            if (fieldDescription) gridBoxContent.addItem(gridDescription);
+
+            gridBoxTop.addItem(gridBoxContent);
+
+            // Row Actions
+            const gridToolbar = new sap.m.OverflowToolbar({
+                design: "Transparent",
+                width: "100%",
+            }).addStyleClass("nepAFGridNoBorder");
+
+            // Action 1
+            if (props.table.enableAction1) {
+                let actionButton1 = new sap.m.Button({
+                    text: props.table.action1Text,
+                    icon: props.table.action1Icon,
+                    type: props.table.action1Type,
+                    width: props.table.action1Width,
                     press: function (oEvent) {
-                        if (!t._action1Nav) return;
+                        if (!props.table._action1Nav) return;
 
                         let context = oEvent.oSource.getBindingContext();
                         let columnData = context.getObject();
 
-                        if (t._action1Nav.dialogTitleField) {
-                            t._action1Nav.dialogTitleFieldText =
-                                columnData[t._action1Nav.dialogTitleField + "_value"] ||
-                                columnData[t._action1Nav.dialogTitleField];
+                        if (props.table._action1Nav.dialogTitleField) {
+                            props.table._action1Nav.dialogTitleFieldText =
+                                columnData[props.table._action1Nav.dialogTitleField + "_value"] ||
+                                columnData[props.table._action1Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action1Nav, columnData, events, table.sId);
+                        sap.n.Adaptive.navigation(
+                            props.table._action1Nav,
+                            columnData,
+                            events,
+                            table.sId
+                        );
                     },
                     visible: report.buildVisibleProp("1"),
                 });
-
-                col.addCell(newField);
+                gridToolbar.addContent(actionButton1);
             }
 
-            // Row Action 2
-            if (t.enableAction2) {
-                let ColumnHeader = new sap.m.Column({
-                    width: t.action2Width || "",
-                });
-
-                table.addColumn(ColumnHeader);
-                let newField = new sap.m.Button({
-                    text: t.action2Text,
-                    icon: t.action2Icon,
-                    type: t.action2Type,
-                    width: t.action2Width || "",
+            // Action 2
+            if (props.table.enableAction2) {
+                let actionButton2 = new sap.m.Button({
+                    text: props.table.action2Text,
+                    icon: props.table.action2Icon,
+                    type: props.table.action2Type,
+                    width: props.table.action1Width,
                     press: function (oEvent) {
-                        if (!t._action2Nav) return;
+                        if (!props.table._action2Nav) return;
 
                         let context = oEvent.oSource.getBindingContext();
                         let columnData = context.getObject();
-                        if (t._action2Nav.dialogTitleField) {
-                            t._action2Nav.dialogTitleFieldText =
-                                columnData[t._action2Nav.dialogTitleField + "_value"] ||
-                                columnData[t._action2Nav.dialogTitleField];
+
+                        if (props.table._action2Nav.dialogTitleField) {
+                            props.table._action2Nav.dialogTitleFieldText =
+                                columnData[props.table._action2Nav.dialogTitleField + "_value"] ||
+                                columnData[props.table._action2Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action2Nav, columnData, events, table.sId);
+                        sap.n.Adaptive.navigation(
+                            props.table._action2Nav,
+                            columnData,
+                            events,
+                            table.sId
+                        );
                     },
                     visible: report.buildVisibleProp("2"),
                 });
-
-                col.addCell(newField);
+                gridToolbar.addContent(actionButton2);
             }
 
-            // Row Action 3
-            if (t.enableAction3) {
-                let ColumnHeader = new sap.m.Column({
-                    width: t.action3Width || "",
-                });
-
-                table.addColumn(ColumnHeader);
-                let newField = new sap.m.Button({
-                    text: t.action3Text,
-                    icon: t.action3Icon,
-                    type: t.action3Type,
-                    width: t.action3Width || "",
+            // Action 3
+            if (props.table.enableAction3) {
+                let actionButton3 = new sap.m.Button({
+                    text: props.table.action3Text,
+                    icon: props.table.action3Icon,
+                    type: props.table.action3Type,
+                    width: props.table.action1Width,
                     press: function (oEvent) {
-                        if (!t._action3Nav) return;
+                        if (!props.table._action3Nav) return;
 
                         let context = oEvent.oSource.getBindingContext();
                         let columnData = context.getObject();
 
-                        if (t._action3Nav.dialogTitleField) {
-                            t._action3Nav.dialogTitleFieldText =
-                                columnData[t._action3Nav.dialogTitleField + "_value"] ||
-                                columnData[t._action3Nav.dialogTitleField];
+                        if (props.table._action3Nav.dialogTitleField) {
+                            props.table._action3Nav.dialogTitleFieldText =
+                                columnData[props.table._action3Nav.dialogTitleField + "_value"] ||
+                                columnData[props.table._action3Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action3Nav, columnData, events, table.sId);
+                        sap.n.Adaptive.navigation(
+                            props.table._action3Nav,
+                            columnData,
+                            events,
+                            table.sId
+                        );
                     },
                     visible: report.buildVisibleProp("3"),
                 });
-
-                col.addCell(newField);
+                gridToolbar.addContent(actionButton3);
             }
 
-            // Row Action 4
-            if (t.enableAction4) {
-                let ColumnHeader = new sap.m.Column({
-                    width: t.action4Width || "",
-                });
-
-                table.addColumn(ColumnHeader);
-                let newField = new sap.m.Button({
-                    text: t.action4Text,
-                    icon: t.action4Icon,
-                    type: t.action4Type,
-                    width: t.action4Width || "",
+            // Action 4
+            if (props.table.enableAction4) {
+                let actionButton4 = new sap.m.Button({
+                    text: props.table.action4Text,
+                    icon: props.table.action4Icon,
+                    type: props.table.action4Type,
+                    width: props.table.action1Width,
                     press: function (oEvent) {
-                        if (!t._action4Nav) return;
+                        if (!props.table._action4Nav) return;
 
                         let context = oEvent.oSource.getBindingContext();
                         let columnData = context.getObject();
 
-                        if (t._action4Nav.dialogTitleField) {
-                            t._action4Nav.dialogTitleFieldText =
-                                columnData[t._action4Nav.dialogTitleField + "_value"] ||
-                                columnData[t._action4Nav.dialogTitleField];
+                        if (props.table._action4Nav.dialogTitleField) {
+                            props.table._action4Nav.dialogTitleFieldText =
+                                columnData[props.table._action4Nav.dialogTitleField + "_value"] ||
+                                columnData[props.table._action4Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action4Nav, columnData, events, table.sId);
+                        sap.n.Adaptive.navigation(
+                            props.table._action4Nav,
+                            columnData,
+                            events,
+                            table.sId
+                        );
                     },
                     visible: report.buildVisibleProp("4"),
                 });
-
-                col.addCell(newField);
+                gridToolbar.addContent(actionButton4);
             }
 
-            // Row Action 5
-            if (t.enableAction5) {
-                let ColumnHeader = new sap.m.Column({
-                    width: t.action5Width || "",
-                });
-
-                table.addColumn(ColumnHeader);
-                let newField = new sap.m.Button({
-                    text: t.action5Text,
-                    icon: t.action5Icon,
-                    type: t.action5Type,
-                    width: t.action5Width || "",
+            // Action 5
+            if (props.table.enableAction5) {
+                let actionButton5 = new sap.m.Button({
+                    text: props.table.action5Text,
+                    icon: props.table.action5Icon,
+                    type: props.table.action5Type,
+                    width: props.table.action1Width,
                     press: function (oEvent) {
-                        if (!t._action5Nav) return;
+                        if (!props.table._action5Nav) return;
 
                         let context = oEvent.oSource.getBindingContext();
                         let columnData = context.getObject();
 
-                        if (t._action5Nav.dialogTitleField) {
-                            t._action5Nav.dialogTitleFieldText =
-                                columnData[t._action5Nav.dialogTitleField + "_value"] ||
-                                columnData[t._action5Nav.dialogTitleField];
+                        if (props.table._action5Nav.dialogTitleField) {
+                            props.table._action5Nav.dialogTitleFieldText =
+                                columnData[props.table._action5Nav.dialogTitleField + "_value"] ||
+                                columnData[props.table._action5Nav.dialogTitleField];
                         }
 
-                        sap.n.Adaptive.navigation(t._action5Nav, columnData, events, table.sId);
+                        sap.n.Adaptive.navigation(
+                            props.table._action5Nav,
+                            columnData,
+                            events,
+                            table.sId
+                        );
                     },
                     visible: report.buildVisibleProp("5"),
                 });
-
-                col.addCell(newField);
+                gridToolbar.addContent(actionButton5);
             }
 
+            gridBoxTop.addItem(gridToolbar);
+
+            col.addContent(gridBoxTop);
+
             // Table - Aggregation
-            table.bindAggregation("items", { path: "/", template: col, templateShareable: false });
+            grid.bindAggregation("items", { path: "/", template: col, templateShareable: false });
         } catch (e) {
             console.log(e);
+        }
+    },
+
+    buildFormatter: function (field, component, fieldProp) {
+        if (field.formatter) {
+            let fieldName = field.valueType ? field.name + "_value" : field.name;
+            component.bindProperty("text", {
+                parts: [fieldName],
+                formatter: function (fieldName) {
+                    if (typeof fieldName === "undefined" || fieldName === null) return;
+                    return sap.n.Adaptive.formatter(fieldName, field.formatter);
+                },
+            });
         }
     },
 
@@ -1711,13 +1538,11 @@ const report = {
 
                         switch (field.sysvarValue) {
                             case "TOMORROW":
-                                daysFrom = 1;
                                 daysTo = 1;
                                 break;
 
                             case "YESTERDAY":
                                 daysFrom = -1;
-                                daysTo = -1;
                                 break;
 
                             case "LAST_7":

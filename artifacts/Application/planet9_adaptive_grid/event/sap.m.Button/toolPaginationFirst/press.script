@@ -1,0 +1,3 @@
+report.pagination.index = 0;
+report.run(true);
+report.handlePagination();

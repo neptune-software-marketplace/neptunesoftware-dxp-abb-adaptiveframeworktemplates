@@ -13,6 +13,12 @@
 	"enableCICD": true,
 	"apps": [
 		{
+			"id": "e05cbe5a-57dd-4bce-bc4b-5c113decb1c6",
+			"application": "planet9_adaptive_grid",
+			"title": "Adaptive Grid List",
+			"description": "Adaptive Grid List (experimental)"
+		},
+		{
 			"id": "d29e149b-2716-4c77-b026-4451881e54cd",
 			"application": "planet9_adaptive_bi",
 			"title": "Analytic Slice&Dice",

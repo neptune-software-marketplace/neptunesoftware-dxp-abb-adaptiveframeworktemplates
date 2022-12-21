@@ -1,7 +1,7 @@
 {
-	"id": "77d5d812-f861-4044-ba75-3e7a268a4d14",
-	"createdAt": "2022-02-04T15:46:44.966Z",
-	"createdBy": "luuk.wosten@neptune-software.com",
+	"id": "e05cbe5a-57dd-4bce-bc4b-5c113decb1c6",
+	"createdAt": "2022-12-12T05:05:51.000Z",
+	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"objects": [
 		{
 			"fieldNo": "8db38342-83bc-4e8d-fbc9-ae83b9d85a66",
@@ -858,104 +858,70 @@
 							"attributes": [],
 							"data": [
 								{
-									"fieldNo": "d7e955cb-6766-4f84-baa7-64759c660ec7",
-									"fieldName": "tabData",
+									"fieldNo": "7602b69e-3b9c-4685-fdbe-ff1ebe5f94f2",
+									"fieldName": "oPageContentPadding",
 									"fieldParent": "7af36c73-300e-4896-97f0-0f0d710a8214",
-									"fieldType": "sap.m.Table",
+									"fieldType": "sap.m.Panel",
 									"script": "",
 									"customComponent": false,
-									"bindingValue": "Generic Array",
-									"bindingType": "h",
-									"bindingSource": "P9",
 									"request": [],
 									"response": [],
 									"attributes": [
 										{
-											"attribute": "showSeparators",
+											"attribute": "backgroundDesign",
 											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/showSeparators}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "modeAnimationOn",
-											"grouping": "Properties",
-											"value": "false",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "inset",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/inset}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growingThreshold",
-											"grouping": "Properties",
-											"value": "100",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growingScrollToLoad",
-											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growing",
-											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "fixedLayout",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/fixedLayout}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "delete",
-											"grouping": "Events",
-											"value": "Anonymous Function",
-											"script": "file://event/sap.m.Table/tabData/delete.script",
-											"translation": []
-										},
-										{
-											"attribute": "busyIndicatorDelay",
-											"grouping": "Properties",
-											"value": "250",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "alternateRowColors",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/alternateRowColors}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "sticky",
-											"grouping": "Properties",
-											"value": "[\"ColumnHeaders\"]",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "contextualWidth",
-											"grouping": "Properties",
-											"value": "Auto",
+											"value": "Transparent",
 											"script": "",
 											"translation": []
 										}
 									],
-									"data": []
+									"data": [
+										{
+											"fieldNo": "8c6a9903-dfea-40b1-fff2-4301ee7142ca",
+											"fieldName": "gridData",
+											"fieldParent": "7602b69e-3b9c-4685-fdbe-ff1ebe5f94f2",
+											"fieldType": "sap.f.GridList",
+											"script": "",
+											"customComponent": false,
+											"bindingValue": "Generic Array",
+											"bindingType": "h",
+											"bindingSource": "P9",
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "inset",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/table/inset}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "showSeparators",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/table/showSeparators}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "sticky",
+													"grouping": "Properties",
+													"value": "[\"ColumnHeaders\"]",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "delete",
+													"grouping": "Events",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.f.GridList/gridData/delete.script",
+													"language": "javascript",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
 								}
 							]
 						},
@@ -1995,10 +1961,10 @@
 							],
 							"data": [
 								{
-									"fieldNo": "580d43ad-f32c-426c-952e-487e88bdf937",
-									"fieldName": "tabDataChild",
+									"fieldNo": "433525c0-393e-4bd8-bdbb-0add2eecc3a3",
+									"fieldName": "gridDataChild",
 									"fieldParent": "1e5f6c43-a31f-4ad0-801d-a5aea9ccfacf",
-									"fieldType": "sap.m.Table",
+									"fieldType": "sap.f.GridList",
 									"script": "",
 									"customComponent": false,
 									"bindingValue": "Generic Array",
@@ -2007,20 +1973,6 @@
 									"request": [],
 									"response": [],
 									"attributes": [
-										{
-											"attribute": "noDataText",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/noDataText}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "modeAnimationOn",
-											"grouping": "Properties",
-											"value": "false",
-											"script": "",
-											"translation": []
-										},
 										{
 											"attribute": "inset",
 											"grouping": "Properties",
@@ -2036,58 +1988,16 @@
 											"translation": []
 										},
 										{
-											"attribute": "growingThreshold",
+											"attribute": "noDataText",
 											"grouping": "Properties",
-											"value": "100",
+											"value": "{AppConfig>/settings/properties/table/noDataText}",
 											"script": "",
 											"translation": []
 										},
 										{
-											"attribute": "growingScrollToLoad",
+											"attribute": "showSeparators",
 											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growing",
-											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "footerText",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/footerText}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "fixedLayout",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/fixedLayout}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "delete",
-											"grouping": "Events",
-											"value": "Anonymous Function",
-											"script": "file://event/sap.m.Table/tabDataChild/delete.script",
-											"translation": []
-										},
-										{
-											"attribute": "busyIndicatorDelay",
-											"grouping": "Properties",
-											"value": "250",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "alternateRowColors",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/alternateRowColors}",
+											"value": "{AppConfig>/settings/properties/table/showSeparators}",
 											"script": "",
 											"translation": []
 										},
@@ -2097,22 +2007,17 @@
 											"value": "[\"ColumnHeaders\"]",
 											"script": "",
 											"translation": []
+										},
+										{
+											"attribute": "delete",
+											"grouping": "Events",
+											"value": "Anonymous Function",
+											"script": "file://event/sap.f.GridList/gridDataChild/delete.script",
+											"language": "javascript",
+											"translation": []
 										}
 									],
-									"data": [
-										{
-											"fieldNo": "5d2d1171-4380-4774-952f-6565dadbc4d7",
-											"fieldName": "oColumn",
-											"fieldParent": "580d43ad-f32c-426c-952e-487e88bdf937",
-											"fieldType": "sap.m.Column",
-											"script": "",
-											"customComponent": false,
-											"request": [],
-											"response": [],
-											"attributes": [],
-											"data": []
-										}
-									]
+									"data": []
 								}
 							]
 						}
@@ -2159,6 +2064,26 @@
 					"response": [],
 					"attributes": [],
 					"data": [
+						{
+							"fieldNo": "6f63cabf-a9ee-4624-d31b-4c9d451a797e",
+							"fieldName": "oText",
+							"fieldParent": "40e42cca-5e2c-4f66-d405-ebc7fabab603",
+							"fieldType": "nep.bootstrap.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "textColor",
+									"grouping": "Properties",
+									"value": "Secondary",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
 						{
 							"fieldNo": "96c14769-0ab6-4677-ebb4-068220e74123",
 							"fieldName": "diaVariant",
@@ -4158,10 +4083,10 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.20.1247",
-	"application": "planet9_adaptive_list",
-	"title": "Adaptive List ",
-	"description": "Adaptive List ",
+	"ver": "22.12.21.653",
+	"application": "planet9_adaptive_grid",
+	"title": "Adaptive Grid List",
+	"description": "Adaptive Grid List (experimental)",
 	"enableFileStorage": true,
 	"enableManifest": false,
 	"enableStylesheet": true,
@@ -4185,12 +4110,12 @@
 	"css": "file:///css.script",
 	"header": "",
 	"manifest": "",
-	"globalScript": "",
+	"globalScript": null,
 	"deleted": false,
 	"libHighchart": false,
 	"libHighmap": false,
 	"publicAccess": false,
-	"ui5_bootstrap": false,
+	"ui5_bootstrap": true,
 	"ui5_ionic": false,
 	"useV2AppHandler": false,
 	"compilerTarget": 3,

@@ -1,0 +1,6 @@
+modelpageVariantSave.setData({
+    public: false,
+});
+modelpageVariantSave.refresh();
+//butVariantDelete.setVisible(false);
+navVariant.to(pageVariantSave);

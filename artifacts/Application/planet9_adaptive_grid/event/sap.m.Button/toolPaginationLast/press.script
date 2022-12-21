@@ -1,0 +1,6 @@
+let maxIndex = (report.pagination.count / report.pagination.take);
+maxIndex = Math.ceil(maxIndex);
+
+report.pagination.index = maxIndex - 1;
+report.run(true);
+report.handlePagination();

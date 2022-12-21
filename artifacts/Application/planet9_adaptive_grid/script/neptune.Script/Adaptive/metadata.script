@@ -19,8 +19,6 @@ const vb = {
     typeMultiOrSingleSelectScript:
         "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
     typeInput: "{= ${/type} === 'Input' || ! ${/type} ? true : false }",
-    typeLink: "{= ${/type} === 'Link' ? true : false }",
-    typeButton: "{= ${/type} === 'Button' ? true : false }",
 
     typeEvents: "{= ${/type} === 'Link' || ${/type} === 'Button'? true : false }",
 
@@ -39,33 +37,30 @@ const vb = {
         "Up",
     ],
 
-    typeFixed: "{= ${/valueType} === 'Fixed' ? true : false }",
-    typeLookup: "{= ${/valueType} === 'Lookup' ? true : false }",
-    typeRule: "{= ${/valueType} === 'Rule' ? true : false }",
+    typeFixed: "{= ${/type} !== 'Icon' && ${/valueType} === 'Fixed' ? true : false }",
+    typeFixedIcon: "{= ${/type} === 'Icon' && ${/valueType} === 'Fixed' ? true : false }",
+    typeLookup: "{= ${/type} !== 'Icon' && ${/valueType} === 'Lookup' ? true : false }",
+    typeRule: "{= ${/type} !== 'Icon' && ${/valueType} === 'Rule' ? true : false }",
 
-    typeStepInput: "{= ${/type} === 'StepInput' ? true : false }",
-    typeObjectAllowIcon: "{= ${/type} === 'ObjectStatus' || ${/type} === 'Button'? true : false }",
-    typeObjectStatus: "{= ${/type} === 'ObjectStatus' ? true : false }",
-    typeObjectNumber: "{= ${/type} === 'ObjectNumber' ? true : false }",
+    typeObjectTextLayout:
+        "{= ${/type} === 'Title' || ${/type} === 'SubTitle' || ${/type} === 'Description' ? true : false }",
+    typeObjectAllowIcon: "{= ${/type} === 'Icon' || ${/type} === 'Status' ? true : false }",
+    typeObjectNotIcon: "{= ${/type} !== 'Icon' ? true : false }",
+    typeObjectStatus: "{= ${/type} === 'Status' ? true : false }",
     typeDateTimePicker: "{= ${/type} === 'DateTimePicker' ? true : false }",
     typeDateOrDateTimePicker:
         "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' ? true : false }",
 
     typeValueHelp: "{= ${/type} === 'ValueHelp'  ? true : false }",
 
-    typeLinkFixed: "{= ${/type} === 'Link' && ${/linkHrefType} === 'Fixed' ? true : false }",
-    typeLinkRule: "{= ${/type} === 'Link' && ${/linkHrefType} === 'Rule' ? true : false }",
-    typeLinkBinding: "{= ${/type} === 'Link' && ${/linkHrefType} === 'Binding' ? true : false }",
-    typeLinkLookup: "{= ${/type} === 'Link' && ${/linkHrefType} === 'Lookup'  ? true : false }",
-
     typeObjectStatusIconTypeFixed:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Fixed' ? true : false }",
+        "{= (${/type} === 'Icon' || ${/type} === 'Status' ) && ${/statusIconType} === 'Fixed' ? true : false }",
     typeObjectStatusIconTypeRule:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Rule' ? true : false }",
+        "{= (${/type} === 'Icon' || ${/type} === 'Status') && ${/statusIconType} === 'Rule' ? true : false }",
     typeObjectStatusIconTypeBinding:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Binding' ? true : false }",
+        "{= (${/type} === 'Icon' || ${/type} === 'Status') && ${/statusIconType} === 'Binding' ? true : false }",
     typeObjectStatusIconTypeLookup:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Lookup'  ? true : false }",
+        "{= (${/type} === 'Icon' || ${/type} === 'Status') && ${/statusIconType} === 'Lookup'  ? true : false }",
 
     typeObjectStatusTitleTypeFixed:
         "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Fixed'? true : false }",
@@ -77,13 +72,13 @@ const vb = {
         "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Lookup'? true : false }",
 
     typeObjectStatusStateTypeFixed:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Fixed' ? true : false }",
+        "{= ${/type} === 'Status' && ${/statusStateType} === 'Fixed' ? true : false }",
     typeObjectStatusStateTypeRule:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Rule'? true : false }",
+        "{= ${/type} === 'Status' && ${/statusStateType} === 'Rule'? true : false }",
     typeObjectStatusStateTypeBinding:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Binding'? true : false }",
+        "{= ${/type} === 'Status' && ${/statusStateType} === 'Binding'? true : false }",
     typeObjectStatusStateTypeLookup:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Lookup'? true : false }",
+        "{= ${/type} === 'Status' && ${/statusStateType} === 'Lookup'? true : false }",
 
     typeObjectStatusNumberUnitTypeFixed:
         "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Fixed'? true : false }",
@@ -117,9 +112,9 @@ const metadata = {
         enableTable: true,
         tableUsage: "OUTPUT",
         titleForm: "Filter",
-        titleTable: "Table",
+        titleTable: "Grid",
         iconForm: "/public/icons/s_b_filt.gif",
-        iconTable: "/public/icons/s_wdvtlc.gif",
+        iconTable: "/public/icons/s_b_list.gif",
 
         report: {
             titleGeneral: { type: "Title", label: "General" },
@@ -399,15 +394,26 @@ const metadata = {
                 default: "All",
                 items: valuesToKeyText(["All", "Inner", "None"]),
             },
-            alternateRowColors: { type: "CheckBox", label: "Alternate Row Colors", default: false },
-            fixedLayout: { type: "CheckBox", label: "Fixed Layout", default: false },
+
+            gridBoxPerRow: {
+                type: "Input",
+                label: "Boxes Per Row",
+                default: "XL7 L6 M4 S2",
+            },
+
+            gridBoxMinWidth: {
+                type: "Input",
+                label: "Box Min Width",
+                default: "",
+            },
+
             inset: { type: "CheckBox", label: "Inset", default: false },
             enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
-            enableAction1: { type: "CheckBox", label: "Enable Row Action 1", default: false },
-            enableAction2: { type: "CheckBox", label: "Enable Row Action 2", default: false },
-            enableAction3: { type: "CheckBox", label: "Enable Row Action 3", default: false },
-            enableAction4: { type: "CheckBox", label: "Enable Row Action 4", default: false },
-            enableAction5: { type: "CheckBox", label: "Enable Row Action 5", default: false },
+            enableAction1: { type: "CheckBox", label: "Enable Card Action 1", default: false },
+            enableAction2: { type: "CheckBox", label: "Enable Card Action 2", default: false },
+            enableAction3: { type: "CheckBox", label: "Enable Card Action 3", default: false },
+            enableAction4: { type: "CheckBox", label: "Enable Card Action 4", default: false },
+            enableAction5: { type: "CheckBox", label: "Enable Card Action 5", default: false },
 
             // Row Action 1
             titleAction1: { type: "Title", label: "Row Action 1", visible: vb.tableEnableAction1 },
@@ -465,10 +471,7 @@ const metadata = {
             action1VisibleSystemValue: {
                 type: "SingleSelect",
                 label: "System Variable",
-                items: distinctValuesToKeyText([
-                    ["", ""],
-                    ["Username", "Username"],
-                ]),
+                items: valuesToKeyText(["", "UserName"]),
                 visible: vb.tableEnableAction1,
             },
             action1VisibleInverse: {
@@ -835,72 +838,92 @@ const metadata = {
 
     fieldsRun: {
         titleGeneral: { type: "Title", label: "General" },
-        text: { type: "Input", label: "Label" },
         type: {
             type: "SingleSelect",
             label: "Type",
-            items: valuesToKeyText([
-                "|Text",
-                "Button",
-                "Link",
-                "CheckBox",
-                "DatePicker",
-                "DateTimePicker",
-                "Icon",
-                "Input",
-                "Image",
-                "MultiSelectLookup",
-                "MultiSelectScript",
-                "ObjectNumber",
-                "ObjectStatus",
-                "SingleSelectLookup",
-                "SingleSelectScript",
-                "Switch",
-                "StepInput",
-            ]),
+            items: valuesToKeyText(["", "Icon", "Status", "Title", "SubTitle", "Description"]),
         },
 
+        statusLayout: { type: "Title", label: "Layout", visible: vb.typeObjectStatus },
         statusInverted: { type: "CheckBox", label: "Inverted", visible: vb.typeObjectStatus },
 
-        stepInputMin: {
-            type: "Input",
-            label: "Min",
-            visible: vb.typeStepInput,
-            placeholder: "Min value",
-        },
-        stepInputMax: {
-            type: "Input",
-            label: "Max",
-            visible: vb.typeStepInput,
-            placeholder: "Max value",
-        },
-        stepInputStep: {
-            type: "Input",
-            label: "Step",
-            visible: vb.typeStepInput,
-            placeholder: "1",
+        textLayout: { type: "Title", label: "Layout", visible: vb.typeObjectTextLayout },
+        // textTitleStyle: {
+        //     type: "SingleSelect",
+        //     label: "Text Size",
+        //     items: valuesToKeyText(["", "H1", "H2", "H3", "H4", "H5", "H6"]),
+        //     visible: vb.typeObjectTextLayout,
+        // },
+
+        textType: {
+            type: "SingleSelect",
+            label: "Text Type",
+            items: valuesToKeyText([
+                "",
+                "Badge",
+                "Blockquote",
+                "Deleted",
+                "Emphasized",
+                "Heading1",
+                "Heading2",
+                "Heading3",
+                "Heading4",
+                "Heading5",
+                "Heading6",
+                "Inserted",
+                "Label",
+                "Mark",
+                "NavbarText",
+                "Paragraph",
+                "Small",
+                "Strong",
+                "Text",
+            ]),
+            visible: vb.typeObjectTextLayout,
         },
 
-        stepInputTextAlign: {
+        textFontSize: {
             type: "SingleSelect",
-            label: "TextAlign",
-            visible: vb.typeStepInput,
-            items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
+            label: "Text Size",
+            items: valuesToKeyText([
+                "",
+                "FontSize1",
+                "FontSize2",
+                "FontSize3",
+                "FontSize4",
+                "FontSize5",
+                "FontSize6",
+            ]),
+            visible: vb.typeObjectTextLayout,
         },
 
-        buttonType: {
+        textColor: {
             type: "SingleSelect",
-            label: "Button Type",
-            default: "Transparent",
-            visible: vb.typeButton,
-            items: valuesToKeyText(vb.buttonTypes),
+            label: "Text Color",
+            items: valuesToKeyText([
+                "",
+                "Black50",
+                "Body",
+                "Danger",
+                "Dark",
+                "Info",
+                "Light",
+                "Muted",
+                "Primary",
+                "Secondary",
+                "Success",
+                "Warning",
+                "White",
+                "White50",
+            ]),
+            visible: vb.typeObjectTextLayout,
         },
 
         titleNavigation: { type: "Title", label: "Event", visible: vb.typeEvents },
         navigation: { type: "Navigation", label: "Press", visible: vb.typeEvents },
 
         // Value
-        titleValue: { type: "Title", label: "Value" },
+        titleValue: { type: "Title", label: "Value", visible: vb.typeObjectNotIcon },
         valueType: {
             type: "SingleSelect",
             label: "Source",
@@ -911,6 +934,7 @@ const metadata = {
                 ["Rule", "Rules Engine"],
                 ["Script", "Script (from post processing)"],
             ]),
+            visible: vb.typeObjectNotIcon,
         },
         valueFixed: { type: "Input", label: "Fixed Value", visible: vb.typeFixed },
         valueLookup: { type: "Lookup", label: "Lookup", visible: vb.typeLookup },
@@ -919,8 +943,7 @@ const metadata = {
         formatter: {
             type: "SingleSelect",
             label: "Formatter",
-            visible:
-                "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Input' ? false : true }",
+            visible: "{= ${/type} === 'Icon' ? false : true }",
             items: distinctValuesToKeyText([
                 ["", ""],
                 ["date00", "Date Browser Format"],
@@ -943,12 +966,6 @@ const metadata = {
                 ["number06", "Number Decimals 2 Point"],
                 ["number07", "Number Decimals 3 Point"],
             ]),
-        },
-
-        displayFormat: {
-            type: "Input",
-            label: "Date Format",
-            visible: vb.typeDateOrDateTimePicker,
         },
 
         titleLookup: {
@@ -989,28 +1006,12 @@ const metadata = {
             visible: vb.typeMultiOrSingleSelectScript,
         },
 
-        // Link - Href
-        titleLinkHref: { type: "Title", label: "Value: URL", visible: vb.typeLink },
-        linkHrefType: {
-            type: "SingleSelect",
-            label: "Source",
-            visible: vb.typeLink,
-            items: distinctValuesToKeyText([
-                ["", ""],
-                ["Binding", "Binding"],
-                ["Fixed", "Fixed Value"],
-                ["Lookup", "Lookup"],
-                ["Rule", "Rules Engine"],
-                ["Script", "Script (from post processing)"],
-            ]),
-        },
-        linkHrefFixed: { type: "Input", label: "Fixed Value", visible: vb.typeLinkFixed },
-        linkHrefRule: { type: "Rule", label: "Rules Engine", visible: vb.typeLinkRule },
-        linkHrefBinding: { type: "TableFieldLocal", label: "Binding", visible: vb.typeLinkBinding },
-        linkHrefLookup: { type: "Lookup", label: "Lookup Value", visible: vb.typeLinkLookup },
-
         // ObjectStatus - Icon
-        titleStatusIcon: { type: "Title", label: "Value: Icon", visible: vb.typeObjectAllowIcon },
+        titleStatusIcon: {
+            type: "Title",
+            label: "Value: Icon",
+            visible: vb.typeObjectAllowIcon,
+        },
         statusIconType: {
             type: "SingleSelect",
             label: "Source",
@@ -1045,68 +1046,68 @@ const metadata = {
             visible: vb.typeObjectStatusIconTypeLookup,
         },
 
-        // ObjectStatus - Title
-        titleStatusTitle: { type: "Title", label: "Value: Title", visible: vb.typeObjectStatus },
-        statusTitleType: {
-            type: "SingleSelect",
-            label: "Source",
-            visible: vb.typeObjectStatus,
-            items: distinctValuesToKeyText([
-                ["", ""],
-                ["Binding", "Binding"],
-                ["Fixed", "Fixed Value"],
-                ["Lookup", "Lookup"],
-                ["Rule", "Rules Engine"],
-                ["Script", "Script (from post processing)"],
-            ]),
-        },
-        statusTitleFixed: {
-            type: "Input",
-            label: "Fixed Value",
-            visible: vb.typeObjectStatusTitleTypeFixed,
-        },
-        statusTitleRule: {
-            type: "Rule",
-            label: "Rules Engine",
-            visible: vb.typeObjectStatusTitleTypeRule,
-        },
-        statusTitleBinding: {
-            type: "TableFieldLocal",
-            label: "Binding",
-            visible: vb.typeObjectStatusTitleTypeBinding,
-        },
-        statusTitleLookup: {
-            type: "Lookup",
-            label: "Lookup Value",
-            visible: vb.typeObjectStatusTitleTypeLookup,
-        },
-        statusTitleFormatter: {
-            type: "SingleSelect",
-            label: "Formatter",
-            visible: vb.typeObjectStatus,
-            items: distinctValuesToKeyText([
-                ["", ""],
-                ["date00", "Date Browser Format"],
-                ["date01", "Date (dd.mm.yyyy)"],
-                ["date02", "Date (mm-dd-yyyy)"],
-                ["date03", "Date (Month)"],
-                ["date04", "Date (Quarter)"],
-                ["sapdate01", "SAP Date (dd.mm.yyyy)"],
-                ["sapdate02", "SAP Date (mm-dd-yyyy)"],
-                ["zero", "Remove Leading Zero"],
-                ["uppercase", "Upper Case"],
-                ["lowercase", "Lower Case"],
-                ["number00", "Number Browser Format"],
-                ["number01", "Number Decimals 0"],
-                ["number02", "Number Decimals 1 Comma"],
-                ["number03", "Number Decimals 2 Comma"],
-                ["number04", "Number Decimals 3 Comma"],
-                ["number05", "Number Decimals 1 Point"],
-                ["number06", "Number Decimals 2 Point"],
-                ["number07", "Number Decimals 3 Point"],
-                ["file", "File Size"],
-            ]),
-        },
+        // // ObjectStatus - Title
+        // titleStatusTitle: { type: "Title", label: "Value: Title", visible: vb.typeObjectStatus },
+        // statusTitleType: {
+        //     type: "SingleSelect",
+        //     label: "Source",
+        //     visible: vb.typeObjectStatus,
+        //     items: distinctValuesToKeyText([
+        //         ["", ""],
+        //         ["Binding", "Binding"],
+        //         ["Fixed", "Fixed Value"],
+        //         ["Lookup", "Lookup"],
+        //         ["Rule", "Rules Engine"],
+        //         ["Script", "Script (from post processing)"],
+        //     ]),
+        // },
+        // statusTitleFixed: {
+        //     type: "Input",
+        //     label: "Fixed Value",
+        //     visible: vb.typeObjectStatusTitleTypeFixed,
+        // },
+        // statusTitleRule: {
+        //     type: "Rule",
+        //     label: "Rules Engine",
+        //     visible: vb.typeObjectStatusTitleTypeRule,
+        // },
+        // statusTitleBinding: {
+        //     type: "TableFieldLocal",
+        //     label: "Binding",
+        //     visible: vb.typeObjectStatusTitleTypeBinding,
+        // },
+        // statusTitleLookup: {
+        //     type: "Lookup",
+        //     label: "Lookup Value",
+        //     visible: vb.typeObjectStatusTitleTypeLookup,
+        // },
+        // statusTitleFormatter: {
+        //     type: "SingleSelect",
+        //     label: "Formatter",
+        //     visible: vb.typeObjectStatus,
+        //     items: distinctValuesToKeyText([
+        //         ["", ""],
+        //         ["date00", "Date Browser Format"],
+        //         ["date01", "Date (dd.mm.yyyy)"],
+        //         ["date02", "Date (mm-dd-yyyy)"],
+        //         ["date03", "Date (Month)"],
+        //         ["date04", "Date (Quarter)"],
+        //         ["sapdate01", "SAP Date (dd.mm.yyyy)"],
+        //         ["sapdate02", "SAP Date (mm-dd-yyyy)"],
+        //         ["zero", "Remove Leading Zero"],
+        //         ["uppercase", "Upper Case"],
+        //         ["lowercase", "Lower Case"],
+        //         ["number00", "Number Browser Format"],
+        //         ["number01", "Number Decimals 0"],
+        //         ["number02", "Number Decimals 1 Comma"],
+        //         ["number03", "Number Decimals 2 Comma"],
+        //         ["number04", "Number Decimals 3 Comma"],
+        //         ["number05", "Number Decimals 1 Point"],
+        //         ["number06", "Number Decimals 2 Point"],
+        //         ["number07", "Number Decimals 3 Point"],
+        //         ["file", "File Size"],
+        //     ]),
+        // },
 
         // ObjectStatus - State
         titleStatusState: { type: "Title", label: "Value: State", visible: vb.typeObjectStatus },
@@ -1160,172 +1161,103 @@ const metadata = {
             visible: vb.typeObjectStatusStateTypeLookup,
         },
 
-        // ObjectNumber - Unit
-        titleNumberUnit: { type: "Title", label: "Value: Unit", visible: vb.typeObjectNumber },
-        numberUnitType: {
-            type: "SingleSelect",
-            label: "Source",
-            visible: vb.typeObjectNumber,
-            items: distinctValuesToKeyText([
-                ["", ""],
-                ["Binding", "Binding"],
-                ["Fixed", "Fixed Value"],
-                ["Lookup", "Lookup"],
-                ["Rule", "Rules Engine"],
-                ["Script", "Script (from post processing)"],
-            ]),
-        },
-        numberUnitFixed: {
-            type: "Input",
-            label: "Fixed Value",
-            visible: vb.typeObjectStatusNumberUnitTypeFixed,
-        },
-        numberUnitRule: {
-            type: "Rule",
-            label: "Rules Engine",
-            visible: vb.typeObjectStatusNumberUnitTypeRule,
-        },
-        numberUnitBinding: {
-            type: "TableFieldLocal",
-            label: "Binding",
-            visible: vb.typeObjectStatusNumberUnitTypeBinding,
-        },
-        numberUnitLookup: {
-            type: "Lookup",
-            label: "Lookup Value",
-            visible: vb.typeObjectStatusNumberUnitTypeLookup,
-        },
-        numberUnitFormatter: {
-            type: "SingleSelect",
-            label: "Formatter",
-            visible: vb.typeObjectNumber,
-            items: distinctValuesToKeyText([
-                ["", ""],
-                ["date00", "Date Browser Format"],
-                ["date01", "Date (dd.mm.yyyy)"],
-                ["date02", "Date (mm-dd-yyyy)"],
-                ["date03", "Date (Month)"],
-                ["date04", "Date (Quarter)"],
-                ["sapdate01", "SAP Date (dd.mm.yyyy)"],
-                ["sapdate02", "SAP Date (mm-dd-yyyy)"],
-                ["zero", "Remove Leading Zero"],
-                ["uppercase", "Upper Case"],
-                ["lowercase", "Lower Case"],
-                ["number00", "Number Browser Format"],
-                ["number01", "Number Decimals 0"],
-                ["number02", "Number Decimals 1 Comma"],
-                ["number03", "Number Decimals 2 Comma"],
-                ["number04", "Number Decimals 3 Comma"],
-                ["number05", "Number Decimals 1 Point"],
-                ["number06", "Number Decimals 2 Point"],
-                ["number07", "Number Decimals 3 Point"],
-                ["file", "File Size"],
-            ]),
-        },
+        // // ObjectNumber - Unit
+        // titleNumberUnit: { type: "Title", label: "Value: Unit", visible: vb.typeObjectNumber },
+        // numberUnitType: {
+        //     type: "SingleSelect",
+        //     label: "Source",
+        //     visible: vb.typeObjectNumber,
+        //     items: distinctValuesToKeyText([
+        //         ["", ""],
+        //         ["Binding", "Binding"],
+        //         ["Fixed", "Fixed Value"],
+        //         ["Lookup", "Lookup"],
+        //         ["Rule", "Rules Engine"],
+        //         ["Script", "Script (from post processing)"],
+        //     ]),
+        // },
+        // numberUnitFixed: {
+        //     type: "Input",
+        //     label: "Fixed Value",
+        //     visible: vb.typeObjectStatusNumberUnitTypeFixed,
+        // },
+        // numberUnitRule: {
+        //     type: "Rule",
+        //     label: "Rules Engine",
+        //     visible: vb.typeObjectStatusNumberUnitTypeRule,
+        // },
+        // numberUnitBinding: {
+        //     type: "TableFieldLocal",
+        //     label: "Binding",
+        //     visible: vb.typeObjectStatusNumberUnitTypeBinding,
+        // },
+        // numberUnitLookup: {
+        //     type: "Lookup",
+        //     label: "Lookup Value",
+        //     visible: vb.typeObjectStatusNumberUnitTypeLookup,
+        // },
+        // numberUnitFormatter: {
+        //     type: "SingleSelect",
+        //     label: "Formatter",
+        //     visible: vb.typeObjectNumber,
+        //     items: distinctValuesToKeyText([
+        //         ["", ""],
+        //         ["date00", "Date Browser Format"],
+        //         ["date01", "Date (dd.mm.yyyy)"],
+        //         ["date02", "Date (mm-dd-yyyy)"],
+        //         ["date03", "Date (Month)"],
+        //         ["date04", "Date (Quarter)"],
+        //         ["sapdate01", "SAP Date (dd.mm.yyyy)"],
+        //         ["sapdate02", "SAP Date (mm-dd-yyyy)"],
+        //         ["zero", "Remove Leading Zero"],
+        //         ["uppercase", "Upper Case"],
+        //         ["lowercase", "Lower Case"],
+        //         ["number00", "Number Browser Format"],
+        //         ["number01", "Number Decimals 0"],
+        //         ["number02", "Number Decimals 1 Comma"],
+        //         ["number03", "Number Decimals 2 Comma"],
+        //         ["number04", "Number Decimals 3 Comma"],
+        //         ["number05", "Number Decimals 1 Point"],
+        //         ["number06", "Number Decimals 2 Point"],
+        //         ["number07", "Number Decimals 3 Point"],
+        //         ["file", "File Size"],
+        //     ]),
+        // },
 
-        // ObjectNumber - State
-        titleNumberState: { type: "Title", label: "Value: State", visible: vb.typeObjectNumber },
-        numberStateType: {
-            type: "SingleSelect",
-            label: "Source",
-            visible: vb.typeObjectNumber,
-            items: distinctValuesToKeyText([
-                ["", ""],
-                ["Binding", "Binding"],
-                ["Fixed", "Fixed Value"],
-                ["Lookup", "Lookup"],
-                ["Rule", "Rules Engine"],
-                ["Script", "Script (from post processing)"],
-            ]),
-        },
-        numberStateFixed: {
-            type: "Input",
-            label: "Fixed Value",
-            visible: vb.typeObjectStatusNumberStateTypeFixed,
-        },
-        numberStateRule: {
-            type: "Rule",
-            label: "Rules Engine",
-            visible: vb.typeObjectStatusNumberStateTypeRule,
-        },
-        numberStateBinding: {
-            type: "TableFieldLocal",
-            label: "Binding",
-            visible: vb.typeObjectStatusNumberStateTypeBinding,
-        },
-        numberStateLookup: {
-            type: "Lookup",
-            label: "Lookup Value",
-            visible: vb.typeObjectStatusNumberStateTypeLookup,
-        },
-
-        // Layout
-        titleLayout: { type: "Title", label: "Layout" },
-        hAlign: {
-            type: "SingleSelect",
-            label: "Horizontal Align",
-            items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
-        },
-        vAlign: {
-            type: "SingleSelect",
-            label: "Vertical Align",
-            items: valuesToKeyText(["", "Bottom", "Inherit", "Middle", "Top"]),
-        },
-        minScreenWidth: {
-            type: "SingleSelect",
-            label: "MinScreenSize",
-            items: [
-                { key: "", text: "" },
-                { key: "2560px", text: "2560px" },
-                { key: "2240px", text: "2240px" },
-                { key: "1920px", text: "1920px" },
-                { key: "1680px", text: "1680px" },
-                { key: "1536px", text: "1536px" },
-                { key: "1440px", text: "1440px" },
-                { key: "1280px", text: "1280px" },
-                { key: "XXLarge", text: "1120px" },
-                { key: "Desktop", text: "1024px" },
-                { key: "XLarge", text: "960px" },
-                { key: "Tablet", text: "600px" },
-                { key: "Medium", text: "560px" },
-                { key: "Small", text: "480px" },
-                { key: "XSmall", text: "320px" },
-                { key: "Phone", text: "240px" },
-                { key: "XXSmall", text: "240px" },
-            ],
-        },
-
-        demandPopin: { type: "CheckBox", label: "Demand Popin" },
-        popinDisplay: {
-            type: "SingleSelect",
-            label: "Popin Display",
-            default: "Block",
-            items: [
-                { key: "Block", text: "Block" },
-                { key: "Inline", text: "Inline" },
-            ],
-        },
-
-        placeholder: { type: "Input", label: "Placeholder", visible: vb.placeholder },
-        dateTimePickerMinutesStep: {
-            type: "Input",
-            label: "Step Minutes",
-            visible: vb.typeDateTimePicker,
-        },
-        dateTimePickerSecondsStep: {
-            type: "Input",
-            label: "Step Seconds",
-            visible: vb.typeDateTimePicker,
-        },
-        width: { type: "Input", label: "Width", placeholder: "Example 100px or 50%" },
-        wrapping: { type: "CheckBox", label: "Wrapping", default: false },
-
-        titleSettings: { type: "Title", label: "Properties" },
-        editable: { type: "CheckBox", label: "Editable", default: false, visible: vb.editable },
-        enableGroup: { type: "CheckBox", label: "Grouping", default: false },
-        enableFilter: { type: "CheckBox", label: "Search", default: true },
-        enableSort: { type: "CheckBox", label: "Sorting", default: true },
-        enableSum: { type: "CheckBox", label: "Sum", default: false, visible: vb.typeObjectNumber },
-        visible: { type: "CheckBox", label: "Visible", default: true },
+        // // ObjectNumber - State
+        // titleNumberState: { type: "Title", label: "Value: State", visible: vb.typeObjectNumber },
+        // numberStateType: {
+        //     type: "SingleSelect",
+        //     label: "Source",
+        //     visible: vb.typeObjectNumber,
+        //     items: distinctValuesToKeyText([
+        //         ["", ""],
+        //         ["Binding", "Binding"],
+        //         ["Fixed", "Fixed Value"],
+        //         ["Lookup", "Lookup"],
+        //         ["Rule", "Rules Engine"],
+        //         ["Script", "Script (from post processing)"],
+        //     ]),
+        // },
+        // numberStateFixed: {
+        //     type: "Input",
+        //     label: "Fixed Value",
+        //     visible: vb.typeObjectStatusNumberStateTypeFixed,
+        // },
+        // numberStateRule: {
+        //     type: "Rule",
+        //     label: "Rules Engine",
+        //     visible: vb.typeObjectStatusNumberStateTypeRule,
+        // },
+        // numberStateBinding: {
+        //     type: "TableFieldLocal",
+        //     label: "Binding",
+        //     visible: vb.typeObjectStatusNumberStateTypeBinding,
+        // },
+        // numberStateLookup: {
+        //     type: "Lookup",
+        //     label: "Lookup Value",
+        //     visible: vb.typeObjectStatusNumberStateTypeLookup,
+        // },
     },
 };

@@ -1,0 +1,2 @@
+report.pagination.index = parseInt(this.getSelectedKey());
+report.run(true);
