@@ -467,7 +467,7 @@ const metadata = {
                 label: "System Variable",
                 items: distinctValuesToKeyText([
                     ["", ""],
-                    ["Username", "Username"],
+                    ["UserName", "UserName"],
                 ]),
                 visible: vb.tableEnableAction1,
             },
@@ -809,7 +809,7 @@ const metadata = {
             label: "System Variable",
             items: distinctValuesToKeyText([
                 ["", ""],
-                ["Username", "Username"],
+                ["UserName", "UserName"],
                 ["TOMORROW", "DateRange: Tomorrow"],
                 ["TODAY", "DateRange: Today"],
                 ["YESTERDAY", "DateRange: Yesterday"],
