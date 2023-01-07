@@ -69,9 +69,11 @@ const report = {
         if (config.settings.properties.report.enablePadding) {
             tabAttachment.removeStyleClass("nepNoRadiusTop");
             tabAttachment.addStyleClass("nepRadiusTop");
+            barEdit.addStyleClass("nepDynamicPageNoPadding");
         } else {
             tabAttachment.removeStyleClass("nepRadiusTop");
             tabAttachment.addStyleClass("nepNoRadiusTop");
+            barEdit.removeStyleClass("nepDynamicPageNoPadding");
         }
 
         // Action Button Left
@@ -407,17 +409,31 @@ const report = {
                 if (data.status && data.status === "required") {
                     sap.m.MessageToast.show("Please fill in all the required fields");
                 } else {
+                    // Message from Server Script
+                    if (data.message && data.message.text) {
+                        if (data.message.type) {
+                            sap.m.MessageBox[data.message.type](data.message.text);
+                        } else {
+                            sap.m.MessageBox.information(data.message.text);
+                        }
+                        return;
+                    }
+
                     sap.m.MessageToast.show(toastSaved.getText());
+
                     if (
                         oApp.getParent() &&
                         oApp.getParent().getParent() &&
                         oApp.getParent().getParent().close
-                    )
+                    ) {
                         oApp.getParent().getParent().close();
+                    }
+
                     if (s.events && s.events.afterChildSave) s.events.afterChildSave();
 
                     const openedAsSidepanel =
                         modelAppConfig.oData.settings.navigation.openAs === "S";
+
                     if (openedAsSidepanel) {
                         // a new record is being created in the sidepanel tab
                         if (!saveData.id) {

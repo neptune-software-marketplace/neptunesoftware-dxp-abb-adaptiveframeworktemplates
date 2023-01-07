@@ -30,7 +30,7 @@
 				{
 					"attribute": "backgroundDesign",
 					"grouping": "Properties",
-					"value": "Solid",
+					"value": "Transparent",
 					"script": "",
 					"translation": []
 				}
@@ -919,7 +919,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.6.1223",
+	"ver": "23.1.7.1223",
 	"application": "planet9_adaptive_tile_table",
 	"title": "Adaptive Tile Table",
 	"description": "Adaptive Tile Table",

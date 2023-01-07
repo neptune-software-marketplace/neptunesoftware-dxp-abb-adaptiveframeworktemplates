@@ -1569,6 +1569,13 @@
 							"translation": []
 						},
 						{
+							"attribute": "floatingFooter",
+							"grouping": "Properties",
+							"value": "true",
+							"script": "",
+							"translation": []
+						},
+						{
 							"attribute": "enableScrolling",
 							"grouping": "Properties",
 							"value": "false",
@@ -1578,7 +1585,7 @@
 						{
 							"attribute": "backgroundDesign",
 							"grouping": "Properties",
-							"value": "Solid",
+							"value": "Transparent",
 							"script": "",
 							"translation": []
 						}
@@ -4158,7 +4165,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.6.915",
+	"ver": "23.1.7.1227",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",

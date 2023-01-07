@@ -1,3 +1,8 @@
+.nepDynamicPageNoPadding .sapMIBar-CTX.sapMFooter-CTX {
+    border-radius: 8px;
+    bottom: 20px;
+}
+
 .nepDynamicPage .sapFDynamicPageTitle {
     padding: 0.5rem 0.8rem !important;
 }
