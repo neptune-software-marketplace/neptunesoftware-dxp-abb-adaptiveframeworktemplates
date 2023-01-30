@@ -914,7 +914,7 @@
 													"attribute": "delete",
 													"grouping": "Events",
 													"value": "Anonymous Function",
-													"script": "file://event/sap.f.GridList/gridData/delete.script",
+													"script": "file://event/sap.f.GridList/gridData/delete.js",
 													"language": "javascript",
 													"translation": []
 												}
@@ -1079,7 +1079,7 @@
 															"attribute": "change",
 															"grouping": "Events",
 															"value": "Anonymous Function",
-															"script": "file://event/sap.m.Select/toolPaginationShowItems/change.script",
+															"script": "file://event/sap.m.Select/toolPaginationShowItems/change.js",
 															"language": "javascript",
 															"translation": []
 														}
@@ -2012,7 +2012,7 @@
 											"attribute": "delete",
 											"grouping": "Events",
 											"value": "Anonymous Function",
-											"script": "file://event/sap.f.GridList/gridDataChild/delete.script",
+											"script": "file://event/sap.f.GridList/gridDataChild/delete.js",
 											"language": "javascript",
 											"translation": []
 										}
@@ -4030,7 +4030,7 @@
 							"fieldName": "jQuery",
 							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/jQuery.script",
+							"script": "file://script/neptune.Script/Adaptive/jQuery.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -4042,7 +4042,7 @@
 							"fieldName": "helpers",
 							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/helpers.script",
+							"script": "file://script/neptune.Script/Adaptive/helpers.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -4054,7 +4054,7 @@
 							"fieldName": "metadata",
 							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/metadata.script",
+							"script": "file://script/neptune.Script/Adaptive/metadata.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -4066,7 +4066,7 @@
 							"fieldName": "report",
 							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/report.script",
+							"script": "file://script/neptune.Script/Adaptive/report.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -4083,7 +4083,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "22.12.21.653",
+	"ver": "23.1.30.816",
 	"application": "planet9_adaptive_grid",
 	"title": "Adaptive Grid List",
 	"description": "Adaptive Grid List (experimental)",
@@ -4107,7 +4107,7 @@
 	"ui5_language": null,
 	"ui5_url": "",
 	"cus_theme": "",
-	"css": "file:///css.script",
+	"css": "file:///css.css",
 	"header": "",
 	"manifest": "",
 	"globalScript": null,

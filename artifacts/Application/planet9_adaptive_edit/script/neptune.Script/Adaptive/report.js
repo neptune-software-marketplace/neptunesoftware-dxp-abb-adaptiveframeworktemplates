@@ -476,23 +476,25 @@ const report = {
     },
 
     close: function () {
-        const s = modelAppConfig.oData.settings;
         if (
             oApp.getParent() &&
             oApp.getParent().getParent() &&
             oApp.getParent().getParent().close
         ) {
             oApp.getParent().getParent().close();
-        } else if (s.events && s.events.onChildBack) {
-            s.events.onChildBack();
         } else if (
-            sap.n.Shell &&
-            sap.n.Shell.closeTile &&
-            sap.n.Launchpad &&
-            sap.n.Launchpad.currentTile &&
-            sap.n.Launchpad.currentTile.id
+            modelAppConfig.oData.settings.events &&
+            modelAppConfig.oData.settings.events.onChildBack
         ) {
-            sap.n.Shell.closeTile(sap.n.Launchpad.currentTile);
+            modelAppConfig.oData.settings.events.onChildBack();
+        } else if (AppCache && AppCache.Back) {
+            AppCache.Back();
+        }
+
+        if (sap.n.Shell && sap.n.Shell.closeAllSidepanelTabs) sap.n.Shell.closeAllSidepanelTabs();
+
+        if (sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
+            sap.n.HashNavigation.deleteNavItem();
         }
     },
 

@@ -9,8 +9,3 @@ function getPivotGridEl() {
 
 modelDataReports.setSizeLimit(10000);
 modelDataPivot.setSizeLimit(10000);
-
-// Before Display
-sap.n.Shell.attachBeforeDisplay(function () {
-    SplitRun.rerender();
-});

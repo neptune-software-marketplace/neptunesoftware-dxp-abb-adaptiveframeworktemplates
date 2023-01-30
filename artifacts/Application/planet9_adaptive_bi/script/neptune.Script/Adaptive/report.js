@@ -1,11 +1,10 @@
 const report = {
-
     metadata: metadata,
     initId: null,
 
     start: function () {
         if (!sap.n || !sap.n.Adaptive) {
-            console.error('Neptune Adaptive Framework not found');
+            console.error("Neptune Adaptive Framework not found");
             return;
         }
 
@@ -16,18 +15,16 @@ const report = {
         const config = data.settings;
         config.id = data.id;
 
-
         if (report.initId === config.id && runtime) {
-            
-            SplitRun.rerender();
             return;
         }
 
         report.initId = config.id;
 
-        // Language 
+        // Language
         if (runtime) {
-            if (AppCache && AppCache.userInfo && AppCache.userInfo.language) config.language = AppCache.userInfo.language;
+            if (AppCache && AppCache.userInfo && AppCache.userInfo.language)
+                config.language = AppCache.userInfo.language;
         } else {
             const language = getAdaptiveEditorPreviewLanguage();
             if (language) {
@@ -39,38 +36,35 @@ const report = {
         modelappData.refresh();
 
         // Translation - Properties
-        toolDetailTitle.setText(report.translateProperty('report', 'title', config));
-        toolGridClose.setText(report.translateProperty('report', 'textButtonClose', config));
+        toolDetailTitle.setText(report.translateProperty("report", "title", config));
+        toolGridClose.setText(report.translateProperty("report", "textButtonClose", config));
 
-        // Variant 
+        // Variant
         if (modelappData.oData.properties.report.enableVariant) report.variantList();
 
         // Init
         sap.n.Adaptive.init(modelappData.oData).then(function (data) {
-
-            pivotGrid.buildSelectionScreen(data)
+            pivotGrid.buildSelectionScreen(data);
             oApp.to(oPageDetail);
 
             // Auto Run
-            if (pivotGrid.initialized && modelappData.oData.properties.report.autoRun) pivotGrid.runReport();
+            if (pivotGrid.initialized && modelappData.oData.properties.report.autoRun)
+                pivotGrid.runReport();
         });
     },
 
     close: function () {
         const p = oApp.getParent();
         const evts = modelappData.oData.events;
-        const shell = sap.n.Shell;
-        const lp = sap.n.Launchpad;
 
         if (p && p.getParent() && p.getParent().close) {
             p.getParent().close();
         } else if (evts && evts.onChildBack) {
             evts.onChildBack();
-        } else if (
-            shell && shell.closeTile &&
-            lp && lp.currentTile && lp.currentTile.id
-        ) {
-            shell.closeTile(lp.currentTile);
+        } else if (AppCache && AppCache.Back) {
+            AppCache.Back();
+        } else if (sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
+            sap.n.HashNavigation.deleteNavItem();
         }
     },
 
@@ -81,18 +75,18 @@ const report = {
 
         const t = config.translation;
         if (t && t[language] && t[language].fieldCatalog[name]) {
-            return t[language].fieldCatalog[name]
+            return t[language].fieldCatalog[name];
         }
 
         return text;
     },
 
     translateProperty: function (parent, key, config) {
-        if (!config.language) return config.properties[parent][key]
+        if (!config.language) return config.properties[parent][key];
 
         const { language, translation } = config;
         if (translation && translation[language] && translation[language][parent][key]) {
-            return translation[language][parent][key]
+            return translation[language][parent][key];
         }
 
         return config.properties[parent][key];
@@ -103,30 +97,30 @@ const report = {
             url: `${AppCache.Url}/api/functions/Variant/List`,
             data: JSON.stringify({
                 objectKey: report.initId,
-                objectType: 'Adaptive'
+                objectType: "Adaptive",
             }),
             success: function (data) {
                 if (selectedItem) {
-                    let rec = ModelData.FindFirst(data, 'id', selectedItem);
+                    let rec = ModelData.FindFirst(data, "id", selectedItem);
                     if (rec) rec.selected = true;
                 }
 
                 modeltabVariant.setData(data);
                 modeltabVariant.refresh();
-            }
+            },
         });
     },
 
     variantSave: function () {
         const reqData = {
             objectKey: report.initId,
-            objectType: 'Adaptive',
+            objectType: "Adaptive",
             name: modelpageVariantSave.oData.name,
             ispublic: informVariantpublic.getSelected(),
             content: {
                 selection: modelpanSelection.oData,
-                settings: modelDataVariant.oData
-            }
+                settings: modelDataVariant.oData,
+            },
         };
 
         if (modelpageVariantSave.oData.id) reqData.id = modelpageVariantSave.oData.id;
@@ -137,7 +131,7 @@ const report = {
             success: function (data) {
                 report.variantList(data.id);
                 diaVariant.close();
-            }
+            },
         });
     },
 
@@ -146,10 +140,10 @@ const report = {
             url: `${AppCache.Url}/api/functions/Variant/Delete`,
             data: JSON.stringify({ id }),
             success: function (_data) {
-                ModelData.Delete(tabVariant, 'id', id);
-            }
+                ModelData.Delete(tabVariant, "id", id);
+            },
         });
-    }
-}
+    },
+};
 
 report.start();
