@@ -1535,16 +1535,28 @@ const report = {
         let visibleStatement = field.visibleInverse ? "false:true" : "true:false";
 
         if (field.visibleFieldName && field.visibleCondition && visibleValue) {
-            visibleCond =
-                "{= ${" +
-                field.visibleFieldName +
-                "}.toString() " +
-                field.visibleCondition +
-                " '" +
-                visibleValue +
-                "' ? " +
-                visibleStatement +
-                " }";
+            if (isNaN(visibleValue)) {
+                visibleCond =
+                    "{= ${" +
+                    field.visibleFieldName +
+                    "}.toString() " +
+                    field.visibleCondition +
+                    " '" +
+                    visibleValue +
+                    "' ? " +
+                    visibleStatement +
+                    " }";
+            } else {
+                visibleCond =
+                    "{= parseInt(${" +
+                    field.visibleFieldName +
+                    "}) " +
+                    field.visibleCondition +
+                    parseInt(visibleValue) +
+                    " ? " +
+                    visibleStatement +
+                    " }";
+            }
         }
 
         return visibleCond;

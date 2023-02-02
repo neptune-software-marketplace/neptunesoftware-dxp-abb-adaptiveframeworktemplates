@@ -169,42 +169,6 @@ const report = {
                         report.afterRun(data);
                     });
                 }
-
-                // Tabs
-                if (r._tab1Nav) {
-                    report.openChild(r._tab1Nav, barEditItem1);
-                } else {
-                    barEditItem1.destroyContent();
-                    barEditItem1.setCount(0);
-                }
-
-                if (r._tab2Nav) {
-                    report.openChild(r._tab2Nav, barEditItem2);
-                } else {
-                    barEditItem2.destroyContent();
-                    barEditItem2.setCount(0);
-                }
-
-                if (r._tab3Nav) {
-                    report.openChild(r._tab3Nav, barEditItem3);
-                } else {
-                    barEditItem3.destroyContent();
-                    barEditItem3.setCount(0);
-                }
-
-                if (r._tab4Nav) {
-                    report.openChild(r._tab4Nav, barEditItem4);
-                } else {
-                    barEditItem4.destroyContent();
-                    barEditItem4.setCount(0);
-                }
-
-                if (r._tab5Nav) {
-                    report.openChild(r._tab5Nav, barEditItem5);
-                } else {
-                    barEditItem5.destroyContent();
-                    barEditItem5.setCount(0);
-                }
             })
             .catch(function (data) {
                 if (data.responseJSON && data.responseJSON.status)
@@ -358,6 +322,57 @@ const report = {
         modelAppData.setData(data);
         modelAppData.refresh();
 
+        // Tabs
+        if (modelAppConfig.oData.settings.properties.report._tab1Nav) {
+            report.openChild(
+                modelAppConfig.oData.settings.properties.report._tab1Nav,
+                barEditItem1
+            );
+        } else {
+            barEditItem1.destroyContent();
+            barEditItem1.setCount(0);
+        }
+
+        if (modelAppConfig.oData.settings.properties.report._tab2Nav) {
+            report.openChild(
+                modelAppConfig.oData.settings.properties.report._tab2Nav,
+                barEditItem2
+            );
+        } else {
+            barEditItem2.destroyContent();
+            barEditItem2.setCount(0);
+        }
+
+        if (modelAppConfig.oData.settings.properties.report._tab3Nav) {
+            report.openChild(
+                modelAppConfig.oData.settings.properties.report._tab3Nav,
+                barEditItem3
+            );
+        } else {
+            barEditItem3.destroyContent();
+            barEditItem3.setCount(0);
+        }
+
+        if (modelAppConfig.oData.settings.properties.report._tab4Nav) {
+            report.openChild(
+                modelAppConfig.oData.settings.properties.report._tab4Nav,
+                barEditItem4
+            );
+        } else {
+            barEditItem4.destroyContent();
+            barEditItem4.setCount(0);
+        }
+
+        if (modelAppConfig.oData.settings.properties.report._tab5Nav) {
+            report.openChild(
+                modelAppConfig.oData.settings.properties.report._tab5Nav,
+                barEditItem5
+            );
+        } else {
+            barEditItem5.destroyContent();
+            barEditItem5.setCount(0);
+        }
+
         oApp.setBusy(false);
     },
 
@@ -499,13 +514,12 @@ const report = {
     },
 
     openChild: function (navigation, child) {
-        const s = modelAppConfig.oData.settings;
         if (navigation.destinationType === "F") {
             sap.n.Adaptive.getConfig(navigation.destinationTargetF).then(function (config) {
                 if (!config) return;
 
                 config.settings.navigation = navigation;
-                config.settings.data = s.data;
+                config.settings.data = modelAppData.oData;
 
                 if (config.settings.data && navigation.keyField)
                     config.settings.data._keyField = navigation.keyField;
@@ -518,7 +532,10 @@ const report = {
             });
         } else {
             let startParams = {};
-            if (s && s.data) startParams.data = JSON.parse(JSON.stringify(s.data));
+
+            if (modelAppData.oData) {
+                startParams.data = JSON.parse(JSON.stringify(modelAppData.oData));
+            }
 
             AppCache.Load(navigation.destinationTargetA, {
                 appGUID: ModelData.genID(),
@@ -929,16 +946,28 @@ const report = {
         let visibleStatement = field.visibleInverse ? "false:true" : "true:false";
 
         if (field.visibleFieldName && field.visibleCondition && visibleValue) {
-            visibleCond =
-                "{= ${AppData>/" +
-                field.visibleFieldName +
-                "}.toString() " +
-                field.visibleCondition +
-                " '" +
-                visibleValue +
-                "' ? " +
-                visibleStatement +
-                " }";
+            if (isNaN(visibleValue)) {
+                visibleCond =
+                    "{= ${AppData>/" +
+                    field.visibleFieldName +
+                    "}.toString() " +
+                    field.visibleCondition +
+                    " '" +
+                    visibleValue +
+                    "' ? " +
+                    visibleStatement +
+                    " }";
+            } else {
+                visibleCond =
+                    "{= parseInt(${AppData>/" +
+                    field.visibleFieldName +
+                    "}) " +
+                    field.visibleCondition +
+                    visibleValue +
+                    " ? " +
+                    visibleStatement +
+                    " }";
+            }
         }
 
         return visibleCond;
