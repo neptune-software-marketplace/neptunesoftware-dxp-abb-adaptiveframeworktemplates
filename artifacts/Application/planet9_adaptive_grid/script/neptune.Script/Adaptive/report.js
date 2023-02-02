@@ -611,11 +611,11 @@ const report = {
     },
 
     close: function () {
-        if (
-            oApp.getParent() &&
+        const isDialog = oApp.getParent() &&
             oApp.getParent().getParent() &&
-            oApp.getParent().getParent().close
-        ) {
+            oApp.getParent().getParent().close;
+            
+        if (isDialog) {
             oApp.getParent().getParent().close();
         } else if (
             modelAppConfig.oData.settings.events &&
@@ -628,7 +628,7 @@ const report = {
 
         if (sap.n.Shell && sap.n.Shell.closeAllSidepanelTabs) sap.n.Shell.closeAllSidepanelTabs();
 
-        if (sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
+        if (!isDialog && sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
             sap.n.HashNavigation.deleteNavItem();
         }
     },

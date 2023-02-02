@@ -56,14 +56,15 @@ const report = {
     close: function () {
         const p = oApp.getParent();
         const evts = modelappData.oData.events;
+        const isDialog = p && p.getParent() && p.getParent().close;
 
-        if (p && p.getParent() && p.getParent().close) {
+        if (isDialog) {
             p.getParent().close();
         } else if (evts && evts.onChildBack) {
             evts.onChildBack();
         } else if (AppCache && AppCache.Back) {
             AppCache.Back();
-        } else if (sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
+        } else if (!isDialog && sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
             sap.n.HashNavigation.deleteNavItem();
         }
     },

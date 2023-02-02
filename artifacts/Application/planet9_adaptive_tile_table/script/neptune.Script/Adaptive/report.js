@@ -590,7 +590,7 @@ var report = {
                                 const colData = ctx.getObject();
 
                                 // Sidepanel Lookup Text 
-                                if (f._navigation.openAs === 'S') {
+                                if (f?._navigation?.openAs === 'S') {
                                     const k = f._navigation.dialogTitleField;
                                     const { valueType } = ModelData.FindFirst(config.settings.fieldsRun, 'name', k);
                                     f._navigation.dialogTitleFieldText = colData[valueType ? `${k}_value` : k];
