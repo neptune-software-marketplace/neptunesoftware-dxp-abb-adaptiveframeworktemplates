@@ -604,10 +604,9 @@ const report = {
     },
 
     close: function () {
-        const isDialog = oApp.getParent() &&
-            oApp.getParent().getParent() &&
-            oApp.getParent().getParent().close;
-            
+        const isDialog =
+            oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close;
+
         if (isDialog) {
             oApp.getParent().getParent().close();
         } else if (
@@ -1197,18 +1196,18 @@ const report = {
                         break;
 
                     case "StepInput":
-                        let options = {
+                        opts = {
                             value: getFieldBindingText(f),
                             placeholder: getFieldPlaceholder(f),
                             change: onChange,
                         };
 
-                        if (f.stepInputMin) options.min = parseInt(f.stepInputMin);
-                        if (f.stepInputMax) options.max = parseInt(f.stepInputMax);
-                        if (f.stepInputStep) options.step = parseInt(f.stepInputStep);
-                        if (f.stepInputTextAlign) options.textAlign = f.stepInputTextAlign;
+                        if (f.stepInputMinType) opts.min = `{${f.name}_min}`;
+                        if (f.stepInputMaxType) opts.max = `{${f.name}_max}`;
+                        if (f.stepInputStepType) opts.step = `{${f.name}_step}`;
+                        if (f.stepInputTextAlign) opts.textAlign = f.stepInputTextAlign;
 
-                        newField = new sap.m.StepInput(options);
+                        newField = new sap.m.StepInput(opts);
                         break;
 
                     case "Icon":

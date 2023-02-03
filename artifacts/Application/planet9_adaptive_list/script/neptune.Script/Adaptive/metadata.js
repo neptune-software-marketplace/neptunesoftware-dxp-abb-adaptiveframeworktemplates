@@ -43,7 +43,6 @@ const vb = {
     typeLookup: "{= ${/valueType} === 'Lookup' ? true : false }",
     typeRule: "{= ${/valueType} === 'Rule' ? true : false }",
 
-    typeStepInput: "{= ${/type} === 'StepInput' ? true : false }",
     typeObjectAllowIcon: "{= ${/type} === 'ObjectStatus' || ${/type} === 'Button'? true : false }",
     typeObjectStatus: "{= ${/type} === 'ObjectStatus' ? true : false }",
     typeObjectNumber: "{= ${/type} === 'ObjectNumber' ? true : false }",
@@ -862,29 +861,10 @@ const metadata = {
 
         statusInverted: { type: "CheckBox", label: "Inverted", visible: vb.typeObjectStatus },
 
-        stepInputMin: {
-            type: "Input",
-            label: "Min",
-            visible: vb.typeStepInput,
-            placeholder: "Min value",
-        },
-        stepInputMax: {
-            type: "Input",
-            label: "Max",
-            visible: vb.typeStepInput,
-            placeholder: "Max value",
-        },
-        stepInputStep: {
-            type: "Input",
-            label: "Step",
-            visible: vb.typeStepInput,
-            placeholder: "1",
-        },
-
         stepInputTextAlign: {
             type: "SingleSelect",
             label: "TextAlign",
-            visible: vb.typeStepInput,
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
             items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
         },
 
@@ -988,6 +968,150 @@ const metadata = {
             type: "Script",
             label: "Server Script",
             visible: vb.typeMultiOrSingleSelectScript,
+        },
+
+        // StepInput - Min
+        titleStepInputMin: {
+            type: "Title",
+            label: "Mix",
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
+        },
+
+        stepInputMinType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
+            items: distinctValuesToKeyText([
+                ["", ""],
+                ["Binding", "Binding"],
+                ["Fixed", "Fixed Value"],
+                ["Lookup", "Lookup"],
+                ["Rule", "Rules Engine"],
+            ]),
+        },
+
+        stepInputMinFixed: {
+            type: "Input",
+            label: "Fixed Value",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Fixed' ? true : false }",
+        },
+
+        stepInputMinRule: {
+            type: "Rule",
+            label: "Rules Engine",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Rule' ? true : false }",
+        },
+
+        stepInputMinBinding: {
+            type: "TableFieldLocal",
+            label: "Binding",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Binding' ? true : false }",
+        },
+
+        stepInputMinLookup: {
+            type: "Lookup",
+            label: "Lookup Value",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Lookup' ? true : false }",
+        },
+
+        // StepInput - Max
+        titleStepInputMax: {
+            type: "Title",
+            label: "Max",
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
+        },
+
+        stepInputMaxType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
+            items: distinctValuesToKeyText([
+                ["", ""],
+                ["Binding", "Binding"],
+                ["Fixed", "Fixed Value"],
+                ["Lookup", "Lookup"],
+                ["Rule", "Rules Engine"],
+            ]),
+        },
+
+        stepInputMaxFixed: {
+            type: "Input",
+            label: "Fixed Value",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Fixed' ? true : false }",
+        },
+
+        stepInputMaxRule: {
+            type: "Rule",
+            label: "Rules Engine",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Rule' ? true : false }",
+        },
+
+        stepInputMaxBinding: {
+            type: "TableFieldLocal",
+            label: "Binding",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Binding' ? true : false }",
+        },
+
+        stepInputMaxLookup: {
+            type: "Lookup",
+            label: "Lookup Value",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Lookup' ? true : false }",
+        },
+
+        // StepInput - Step
+        titleStepInputStep: {
+            type: "Title",
+            label: "Step",
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
+        },
+
+        stepInputStepType: {
+            type: "SingleSelect",
+            label: "Source",
+            visible: "{= ${/type} === 'StepInput' ? true : false }",
+            items: distinctValuesToKeyText([
+                ["", ""],
+                ["Binding", "Binding"],
+                ["Fixed", "Fixed Value"],
+                ["Lookup", "Lookup"],
+                ["Rule", "Rules Engine"],
+            ]),
+        },
+
+        stepInputStepFixed: {
+            type: "Input",
+            label: "Fixed Value",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Fixed' ? true : false }",
+        },
+
+        stepInputStepRule: {
+            type: "Rule",
+            label: "Rules Engine",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Rule' ? true : false }",
+        },
+
+        stepInputStepBinding: {
+            type: "TableFieldLocal",
+            label: "Binding",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Binding' ? true : false }",
+        },
+
+        stepInputStepLookup: {
+            type: "Lookup",
+            label: "Lookup Value",
+            visible:
+                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Lookup' ? true : false }",
         },
 
         // Link - Href

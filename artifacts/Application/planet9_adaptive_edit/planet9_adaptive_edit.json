@@ -245,13 +245,6 @@
 															"response": [],
 															"attributes": [
 																{
-																	"attribute": "text",
-																	"grouping": "Properties",
-																	"value": "{AppConfig>/settings/properties/report/title}",
-																	"script": "",
-																	"translation": []
-																},
-																{
 																	"attribute": "styleClassMargin",
 																	"grouping": "Properties",
 																	"value": "sapUiTinyMarginEnd",
@@ -285,20 +278,6 @@
 															"request": [],
 															"response": [],
 															"attributes": [
-																{
-																	"attribute": "visible",
-																	"grouping": "Properties",
-																	"value": "{= ${AppConfig>/settings/properties/report/subTitle} ? true:false}",
-																	"script": "",
-																	"translation": []
-																},
-																{
-																	"attribute": "text",
-																	"grouping": "Properties",
-																	"value": "{AppConfig>/settings/properties/report/subTitle}",
-																	"script": "",
-																	"translation": []
-																},
 																{
 																	"attribute": "styleClassVisibility",
 																	"grouping": "Properties",
@@ -1519,7 +1498,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.3.1111",
+	"ver": "23.2.3.1322",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",

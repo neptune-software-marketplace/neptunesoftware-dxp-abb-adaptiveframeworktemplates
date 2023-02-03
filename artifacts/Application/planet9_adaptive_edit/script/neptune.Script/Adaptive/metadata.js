@@ -77,6 +77,10 @@ const metadata = {
             showIcon: { type: "CheckBox", label: "Icon Visible", default: true },
             actionButtonLeft: { type: "CheckBox", label: "Action Button Left", default: false },
 
+            titleDynamicTitle: { type: "Title", label: "Dynamic Title" },
+            dynamicTitle: { type: "TableFieldLocal", label: "Title" },
+            dynamicSubTitle: { type: "TableFieldLocal", label: "Sub Title" },
+
             textGeneral: { type: "Title", label: "Texts" },
             textUnique: { type: "Input", label: "Unique Error", translate: true },
 

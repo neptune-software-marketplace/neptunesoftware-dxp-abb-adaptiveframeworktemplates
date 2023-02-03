@@ -87,8 +87,30 @@ const report = {
         }
 
         // Translation - Properties
-        oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
-        oPageHeaderSubTitle.setText(sap.n.Adaptive.translateProperty("report", "subTitle", config));
+        if (config.settings.properties.report.dynamicTitle) {
+            oPageHeaderTitle.bindProperty(
+                "text",
+                "AppData>/" + config.settings.properties.report.dynamicTitle
+            );
+        } else {
+            oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
+        }
+
+        if (config.settings.properties.report.dynamicSubTitle) {
+            oPageHeaderSubTitle.bindProperty(
+                "text",
+                "AppData>/" + config.settings.properties.report.dynamicSubTitle
+            );
+        } else {
+            oPageHeaderSubTitle.setText(
+                sap.n.Adaptive.translateProperty("report", "subTitle", config)
+            );
+
+            if (!oPageHeaderSubTitle.getText()) {
+                oPageHeaderSubTitle.setVisible(false);
+            }
+        }
+
         toastSaved.setText(sap.n.Adaptive.translateProperty("report", "textToastSave", config));
         toastDelete.setText(sap.n.Adaptive.translateProperty("report", "textToastDelete", config));
         toolHeaderBack.setText(
