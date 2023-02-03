@@ -10,11 +10,12 @@ const pivotGrid = {
     // first initialize pivot HTML object, as it's delay in rendering
     // is forcing us to use setTimeout to unpredictably initialize the pivot grid
     initPivotHTMLObject: function () {
-        pivotHTMLObject.setContent(`<div id="${pivotGridId}" style='width:100%; height:100%;'></div>`);
+        pivotHTMLObject.setContent(
+            `<div id="${pivotGridId}" style='width:100%; height:100%;'></div>`
+        );
     },
 
     init: function () {
-
         if (pivotGrid.initialized) {
             pivotGrid.afterInit();
             return;
@@ -22,34 +23,29 @@ const pivotGrid = {
 
         pivotGrid.initialized = true;
 
-        inSetupType.setTooltip('Presentation Type');
-        inSetupCalc.setTooltip('Calculation Type');
-        inSetupSortCol.setTooltip('Sort Columns');
-        inSetupSortRow.setTooltip('Sort Rows');
+        inSetupType.setTooltip("Presentation Type");
+        inSetupCalc.setTooltip("Calculation Type");
+        inSetupSortCol.setTooltip("Sort Columns");
+        inSetupSortRow.setTooltip("Sort Rows");
 
         modelinSetupType.setData(pivotGrid.dataType);
         modelinSetupCalc.setData(pivotGrid.dataCalc);
-        modelDataVariant.setDefaultBindingMode('OneWay');
-        modelDataPivot.setDefaultBindingMode('OneWay');
+        modelDataVariant.setDefaultBindingMode("OneWay");
+        modelDataPivot.setDefaultBindingMode("OneWay");
 
-        tabFilter
-            .getBinding('rows')
-            .sort(new sap.ui.model.Sorter('value', false, false));
+        tabFilter.getBinding("rows").sort(new sap.ui.model.Sorter("value", false, false));
 
         const el = getPivotGridEl();
 
         $(el).pivotUI([], {
-            renderers: $.extend(
-                $.pivotUtilities.renderers,
-                $.pivotUtilities.highchart_renderers,
-            ),
+            renderers: $.extend($.pivotUtilities.renderers, $.pivotUtilities.highchart_renderers),
             table: {
                 clickCallback: function (oEvent) {
                     console.log("CALLING FROM HERE");
                 },
                 rowTotals: false,
-                colTotals: false
-            }
+                colTotals: false,
+            },
         });
 
         inGridToolsCount.setNumber(0);
@@ -59,7 +55,7 @@ const pivotGrid = {
     afterInit: function () {
         const n = modelappData.oData.navigation;
 
-        // Key Fields for GET Record 
+        // Key Fields for GET Record
         if (n && n.keyField && n.keyField.length) {
             n.keyField.forEach(function ({ fieldName, key, value }) {
                 if (value) modelpanSelection.oData[fieldName] = value;
@@ -74,40 +70,57 @@ const pivotGrid = {
     loadLibrary: function (library) {
         return new Promise(function (resolve) {
             jsonRequest({
-                type: 'GET',
+                type: "GET",
                 url: library,
                 success: function (data) {
-                    resolve('OK');
+                    resolve("OK");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    resolve('ERROR');
+                    resolve("ERROR");
                 },
-                dataType: 'script',
+                dataType: "script",
                 cache: true,
-            })
+            });
         });
     },
 
+    setDateRange: function (days, state) {
+        let date = new Date();
+
+        if (state === "to") {
+            date.setHours(23, 59, 00);
+        } else {
+            date.setHours(00, 00, 00);
+        }
+
+        date = new Date(date);
+        date = date.setDate(date.getDate() + days);
+        return new Date(date);
+    },
+
     buildSelectionScreen: function (dataSettings) {
-
         // Delete Hidden Fields
-        ModelData.Delete(dataSettings.fieldsReport, 'hidden', true);
+        ModelData.Delete(dataSettings.fieldsReport, "hidden", true);
 
-        dataSettings.fieldsReport = dataSettings.fieldsReport.sort(sort_by('text'));
+        dataSettings.fieldsReport = dataSettings.fieldsReport.sort(sort_by("text"));
 
         modelDataSettings.setData(dataSettings);
 
         // Override if no selection field is present
-        const visibleFields = ModelData.Find(dataSettings.fieldsSelection, 'visible', true);
+        const visibleFields = ModelData.Find(dataSettings.fieldsSelection, "visible", true);
         formSelection.setVisible(visibleFields && visibleFields.length > 0);
 
-        const { showLeftPanel, showRightPanel, enableValues } = modelappData.oData.properties.report;
+        const {
+            showLeftPanel,
+            showRightPanel,
+            enableValues,
+        } = modelappData.oData.properties.report;
 
         layoutSel.setResizable(showLeftPanel);
-        layoutSel.setSize(showLeftPanel ? '300px' : '0px');
+        layoutSel.setSize(showLeftPanel ? "300px" : "0px");
 
         layoutSetup.setResizable(showRightPanel);
-        layoutSetup.setSize(showRightPanel ? '300px' : '0px');
+        layoutSetup.setSize(showRightPanel ? "300px" : "0px");
 
         // Build Selection Screen Fields
         formSelection.destroyContent();
@@ -117,29 +130,38 @@ const pivotGrid = {
         inSetupCalc.setVisible(enableValues);
 
         // Fields Sorting
-        if (dataSettings.fieldsSelection) dataSettings.fieldsSelection.sort(sort_by('fieldPos'));
+        if (dataSettings.fieldsSelection) dataSettings.fieldsSelection.sort(sort_by("fieldPos"));
 
         modelpanSelection.setData({});
 
-        // Key Fields for GET Record 
-        if (modelappData.oData.navigation && modelappData.oData.navigation.keyField && modelappData.oData.navigation.keyField.length) {
+        // Key Fields for GET Record
+        if (
+            modelappData.oData.navigation &&
+            modelappData.oData.navigation.keyField &&
+            modelappData.oData.navigation.keyField.length
+        ) {
             modelappData.oData.navigation.keyField.forEach(function (mapping) {
                 if (mapping.value) modelpanSelection.oData[mapping.fieldName] = mapping.value;
-                if (mapping.key) modelpanSelection.oData[mapping.fieldName] = modelappData.oData.data[mapping.key];
+                if (mapping.key)
+                    modelpanSelection.oData[mapping.fieldName] =
+                        modelappData.oData.data[mapping.key];
             });
         }
 
         dataSettings.fieldsSelection.forEach(function (field) {
-
-            if (field.columnLabel) formSelection.addContent(new sap.ui.core.Title({ text: field.columnLabel }));
+            if (field.columnLabel)
+                formSelection.addContent(new sap.ui.core.Title({ text: field.columnLabel }));
 
             const { type, required, name, visible } = field;
             const fieldName = `{/${name}}`;
             const fieldNameEnd = `{/${name}_end}`;
 
             if (field.default) {
-
-                if (field.type === "MultiSelect" || field.type === "MultiSelectLookup" || field.type === "MultiSelectScript") {
+                if (
+                    field.type === "MultiSelect" ||
+                    field.type === "MultiSelectLookup" ||
+                    field.type === "MultiSelectScript"
+                ) {
                     if (typeof field.default === "object") {
                         modelpanSelection.oData[field.name] = field.default;
                     } else {
@@ -149,26 +171,25 @@ const pivotGrid = {
                             modelpanSelection.oData[field.name] = field.default;
                         }
                     }
-
                 } else if (field.type === "Switch" || field.type === "CheckBox") {
-                    if (field.default === "true" || field.default === "1" || field.default === "X") {
+                    if (
+                        field.default === "true" ||
+                        field.default === "1" ||
+                        field.default === "X"
+                    ) {
                         modelpanSelection.oData[field.name] = true;
                     } else {
                         delete modelpanSelection.oData[field.name];
                     }
-
                 } else {
                     modelpanSelection.oData[field.name] = field.default;
                 }
-
             }
 
             // Values from System Variables
             if (field.sysvarValue) {
-
                 switch (field.sysvarValue) {
-
-                    case 'UserName':
+                    case "UserName":
                         if (AppCache.userInfo && AppCache.userInfo.username) {
                             modelpanSelection.oData[field.name] = AppCache.userInfo.username;
                         } else {
@@ -178,9 +199,70 @@ const pivotGrid = {
 
                     default:
                         break;
+                }
+            }
 
+            if (["DateRange"].includes(field.type)) {
+                let daysFrom = 0;
+                let daysTo = 0;
+
+                switch (field.sysvarValue) {
+                    case "TOMORROW":
+                        daysFrom = 1;
+                        daysTo = 1;
+                        break;
+
+                    case "YESTERDAY":
+                        daysFrom = -1;
+                        daysTo = -1;
+                        break;
+
+                    case "LAST_7":
+                        daysFrom = -7;
+                        break;
+
+                    case "LAST_30":
+                        daysFrom = -30;
+                        break;
+
+                    case "LAST_60":
+                        daysFrom = -60;
+                        break;
+
+                    case "LAST_90":
+                        daysFrom = -90;
+                        break;
+
+                    case "LAST_180":
+                        daysFrom = -180;
+                        break;
+
+                    case "NEXT_7":
+                        daysTo = 7;
+                        break;
+
+                    case "NEXT_30":
+                        daysTo = 30;
+                        break;
+
+                    case "NEXT_60":
+                        daysTo = 60;
+                        break;
+
+                    case "NEXT_90":
+                        daysTo = 90;
+                        break;
+
+                    case "NEXT_180":
+                        daysTo = 180;
+                        break;
+
+                    default:
+                        break;
                 }
 
+                modelpanSelection.oData[field.name] = pivotGrid.setDateRange(daysFrom, "from");
+                modelpanSelection.oData[field.name + "_end"] = pivotGrid.setDateRange(daysTo, "to");
             }
 
             if (field.required) delete modelpanSelection.oData[field.name + "ValueState"];
@@ -192,89 +274,83 @@ const pivotGrid = {
                 })
             );
 
-            if (['MultiSelect', 'MultiSelectLookup', 'MultiSelectScript'].includes(type)) {
+            if (["MultiSelect", "MultiSelectLookup", "MultiSelectScript"].includes(type)) {
                 const f = new sap.m.MultiComboBox(name, {
                     visible,
-                    width: '100%',
+                    width: "100%",
                     selectedKeys: fieldName,
-                    showSecondaryValues: true
+                    showSecondaryValues: true,
                 });
 
-                field.items.sort(sort_by('text'));
+                field.items.sort(sort_by("text"));
 
                 field.items.forEach(function ({ key, text, additionalText }) {
                     f.addItem(new sap.ui.core.ListItem({ key, text, additionalText }));
                 });
 
                 formSelection.addContent(f);
-
-
-            } else if (['SingleSelect', 'SingleSelectLookup', 'SingleSelectScript'].includes(type)) {
+            } else if (
+                ["SingleSelect", "SingleSelectLookup", "SingleSelectScript"].includes(type)
+            ) {
                 const f = new sap.m.ComboBox(name, {
-                    width: '100%',
+                    width: "100%",
                     visible,
                     selectedKey: fieldName,
-                    showSecondaryValues: true
+                    showSecondaryValues: true,
                 });
 
-                f.addItem(new sap.ui.core.Item({ key: '', text: '', }));
+                f.addItem(new sap.ui.core.Item({ key: "", text: "" }));
 
-                field.items.sort(sort_by('text'));
+                field.items.sort(sort_by("text"));
 
                 field.items.forEach(function ({ key, text, additionalText }) {
                     f.addItem(new sap.ui.core.ListItem({ key, text, additionalText }));
                 });
 
                 formSelection.addContent(f);
-
-            } else if (type === 'DateRange') {
+            } else if (type === "DateRange") {
                 const f = new sap.m.DateRangeSelection(name, {
-                    width: '100%',
+                    width: "100%",
                     visible,
                     dateValue: fieldName,
                     secondDateValue: fieldNameEnd,
                 });
 
                 formSelection.addContent(f);
-
-            } else if (type === 'DatePicker') {
+            } else if (type === "DatePicker") {
                 const f = new sap.m.DatePicker(name, {
-                    width: '100%',
+                    width: "100%",
                     visible,
                     valueFormat: "yyyyMMdd",
-                    value: fieldName
+                    value: fieldName,
                 });
 
                 formSelection.addContent(f);
-
-            } else if (type === 'CheckBox') {
+            } else if (type === "CheckBox") {
                 const f = new sap.m.CheckBox(name, {
                     visible,
-                    selected: fieldName
+                    selected: fieldName,
                 });
 
                 formSelection.addContent(f);
-
-            } else if (type === 'Switch') {
+            } else if (type === "Switch") {
                 const f = new sap.m.Switch(name, {
                     visible,
-                    state: fieldName
+                    state: fieldName,
                 });
 
                 formSelection.addContent(f);
-
             } else {
-                const f = new sap.m.Input(name, { width: '100%', visible, value: fieldName });
+                const f = new sap.m.Input(name, { width: "100%", visible, value: fieldName });
                 formSelection.addContent(f);
-
             }
-
         });
 
         // Check Variant Data
-        if (modelappControl.oData.enableEdit) pivotGrid.checkVariant(modelappData.oData.settings.defaultVariant);
+        if (modelappControl.oData.enableEdit)
+            pivotGrid.checkVariant(modelappData.oData.settings.defaultVariant);
 
-        // Default Variant 
+        // Default Variant
         modelDataVariant.setData(modelappData.oData.defaultVariant);
         pivotGrid.updateConfig(modelDataVariant.oData);
         pivotGrid.applyFieldFilter();
@@ -286,50 +362,59 @@ const pivotGrid = {
         } else {
             // toolGridClose.setVisible(false);
         }
-
     },
 
     checkVariant: function (variant) {
         // Update Fields Label
         modelDataSettings.oData.fieldsReport.forEach(function (pivotField) {
-            let col = ModelData.FindFirst(variant.column, 'name', pivotField.name);
+            let col = ModelData.FindFirst(variant.column, "name", pivotField.name);
             if (col) col.text = pivotField.text;
 
-            let row = ModelData.FindFirst(variant.row, 'name', pivotField.name);
+            let row = ModelData.FindFirst(variant.row, "name", pivotField.name);
             if (row) row.text = pivotField.text;
 
-            let val = ModelData.FindFirst(variant.val, 'name', pivotField.name);
+            let val = ModelData.FindFirst(variant.val, "name", pivotField.name);
             if (val) val.text = pivotField.text;
-
         });
 
         // Delete Fields - Column
         variant.column.forEach(function (field) {
-            let pivotField = ModelData.FindFirst(modelDataSettings.oData.fieldsReport, 'name', field.name);
+            let pivotField = ModelData.FindFirst(
+                modelDataSettings.oData.fieldsReport,
+                "name",
+                field.name
+            );
             if (!pivotField) field.delete = true;
         });
 
         // Delete Fields - Rows
         variant.row.forEach(function (field) {
-            let pivotField = ModelData.FindFirst(modelDataSettings.oData.fieldsReport, 'name', field.name);
+            let pivotField = ModelData.FindFirst(
+                modelDataSettings.oData.fieldsReport,
+                "name",
+                field.name
+            );
             if (!pivotField) field.delete = true;
         });
 
         // Delete Fields - Value
         variant.val.forEach(function (field) {
-            let pivotField = ModelData.FindFirst(modelDataSettings.oData.fieldsReport, 'name', field.name);
+            let pivotField = ModelData.FindFirst(
+                modelDataSettings.oData.fieldsReport,
+                "name",
+                field.name
+            );
             if (!pivotField) field.delete = true;
         });
 
-        ModelData.Delete(variant.column, 'delete', true);
-        ModelData.Delete(variant.row, 'delete', true);
-        ModelData.Delete(variant.val, 'delete', true);
+        ModelData.Delete(variant.column, "delete", true);
+        ModelData.Delete(variant.row, "delete", true);
+        ModelData.Delete(variant.val, "delete", true);
     },
 
     isRunReportValid: function () {
         let valid = true;
         modelDataSettings.oData.fieldsSelection.forEach(function ({ type, name, required }) {
-
             if (!required) return;
 
             let ref = sap.ui.getCore().byId(name);
@@ -339,12 +424,12 @@ const pivotGrid = {
 
             const v = modelpanSelection.oData[name];
             if (!v) {
-                ref.setValueState('Error');
+                ref.setValueState("Error");
                 valid = false;
             }
 
-            if (type === 'MultiSelect' && v && !v.length) {
-                ref.setValueState('Error');
+            if (type === "MultiSelect" && v && !v.length) {
+                ref.setValueState("Error");
                 valid = false;
             }
         });
@@ -369,7 +454,6 @@ const pivotGrid = {
             url,
             data: JSON.stringify(modelpanSelection.oData),
             success: function (data, status, request) {
-
                 // Error - Message from Server Script
                 if (data.message && data.message.text) {
                     if (data.message.type) {
@@ -380,16 +464,18 @@ const pivotGrid = {
                     return;
                 }
 
-                // Error 
+                // Error
                 if (data.status && data.status === "ERROR") {
                     console.log(data);
-                    sap.m.MessageBox.information("Error fetching data. Please see console.log for further information");
+                    sap.m.MessageBox.information(
+                        "Error fetching data. Please see console.log for further information"
+                    );
                     return;
                 }
 
                 let dataFormatted = null;
 
-                if (data.hasOwnProperty('result')) {
+                if (data.hasOwnProperty("result")) {
                     inGridToolsCount.setNumber(data.count);
                     dataFormatted = pivotGrid.formatter(data.result);
                 } else {
@@ -400,8 +486,7 @@ const pivotGrid = {
                 modelDataPivot.setData(dataFormatted);
                 pivotGrid.buildData(modelDataPivot.oData);
                 pivotGrid.updateConfig(modelDataVariant.oData);
-
-            }
+            },
         }).always(function () {
             busy = false;
             oBusyRun.close();
@@ -409,57 +494,90 @@ const pivotGrid = {
     },
 
     formatter: function (data) {
-        const runFields = ModelData.Find(modelappData.oData.fieldsRun, 'formatter', '', 'NE');
+        const runFields = ModelData.Find(modelappData.oData.fieldsRun, "formatter", "", "NE");
         if (runFields.length === 0) {
             return data;
         }
 
         const formatDate00 = sap.ui.core.format.DateFormat.getDateTimeInstance();
-        const formatDate01 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'dd.MM.yyyy' });
-        const formatDate02 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'mm-dd-yyyy' });
-        const formatDate03 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'yyyy MMM' });
-        const formatDate04 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'yyyy QQ' });
-        const formatDate05 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'yyyy' });
-        const formatDate06 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'yyyy.MM.dd' });
-        const formatDate07 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: 'yyyy-MM-dd' });
+        const formatDate01 = sap.ui.core.format.DateFormat.getDateTimeInstance({
+            pattern: "dd.MM.yyyy",
+        });
+        const formatDate02 = sap.ui.core.format.DateFormat.getDateTimeInstance({
+            pattern: "mm-dd-yyyy",
+        });
+        const formatDate03 = sap.ui.core.format.DateFormat.getDateTimeInstance({
+            pattern: "yyyy MMM",
+        });
+        const formatDate04 = sap.ui.core.format.DateFormat.getDateTimeInstance({
+            pattern: "yyyy QQ",
+        });
+        const formatDate05 = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "yyyy" });
+        const formatDate06 = sap.ui.core.format.DateFormat.getDateTimeInstance({
+            pattern: "yyyy.MM.dd",
+        });
+        const formatDate07 = sap.ui.core.format.DateFormat.getDateTimeInstance({
+            pattern: "yyyy-MM-dd",
+        });
 
         // Formatters
         try {
             data.forEach(function (raw) {
                 runFields.forEach(function ({ name, formatter }) {
-                    if (['date00', 'date01', 'date02', 'date03', 'date04', 'date05', 'date06', 'date07'].includes(formatter)) {
-
+                    if (
+                        [
+                            "date00",
+                            "date01",
+                            "date02",
+                            "date03",
+                            "date04",
+                            "date05",
+                            "date06",
+                            "date07",
+                        ].includes(formatter)
+                    ) {
                         // Only when string and number
-                        if (typeof raw[name] === 'string' && raw[name].indexOf(":") === -1) raw[name] = parseInt(raw[name]);
+                        if (typeof raw[name] === "string" && raw[name].indexOf(":") === -1)
+                            raw[name] = parseInt(raw[name]);
 
                         const d = new Date(raw[name]);
-                        if (formatter === 'date00') formatDate00.format(d);
-                        else if (formatter === 'date01') raw[name] = formatDate01.format(d);
-                        else if (formatter === 'date02') raw[name] = formatDate02.format(d);
-                        else if (formatter === 'date03') raw[name] = formatDate03.format(d);
-                        else if (formatter === 'date04') raw[name] = formatDate04.format(d);
-                        else if (formatter === 'date05') raw[name] = formatDate05.format(d);
-                        else if (formatter === 'date06') raw[name] = formatDate06.format(d);
-                        else if (formatter === 'date07') raw[name] = formatDate07.format(d);
-                    } else if (formatter === 'sapdate01') {
-                        raw[name] = raw[name].substr(6, 2) + '.' + raw[name].substr(4, 2) + '.' + raw[name].substr(0, 4);
-                    } else if (formatter === 'sapdate02') {
-                        raw[name] = raw[name].substr(4, 2) + '-' + raw[name].substr(6, 2) + '-' + raw[name].substr(0, 4);
-                    } else if (formatter === 'sapdate03') {
-                        raw[name] = raw[name].substr(0, 4) + '.' + raw[name].substr(4, 2);
-                    } else if (formatter === 'zero') {
-                        raw[name] = raw[name].replace(/^0+/, '');
-                    } else if (formatter === 'uppercase') {
+                        if (formatter === "date00") formatDate00.format(d);
+                        else if (formatter === "date01") raw[name] = formatDate01.format(d);
+                        else if (formatter === "date02") raw[name] = formatDate02.format(d);
+                        else if (formatter === "date03") raw[name] = formatDate03.format(d);
+                        else if (formatter === "date04") raw[name] = formatDate04.format(d);
+                        else if (formatter === "date05") raw[name] = formatDate05.format(d);
+                        else if (formatter === "date06") raw[name] = formatDate06.format(d);
+                        else if (formatter === "date07") raw[name] = formatDate07.format(d);
+                    } else if (formatter === "sapdate01") {
+                        raw[name] =
+                            raw[name].substr(6, 2) +
+                            "." +
+                            raw[name].substr(4, 2) +
+                            "." +
+                            raw[name].substr(0, 4);
+                    } else if (formatter === "sapdate02") {
+                        raw[name] =
+                            raw[name].substr(4, 2) +
+                            "-" +
+                            raw[name].substr(6, 2) +
+                            "-" +
+                            raw[name].substr(0, 4);
+                    } else if (formatter === "sapdate03") {
+                        raw[name] = raw[name].substr(0, 4) + "." + raw[name].substr(4, 2);
+                    } else if (formatter === "zero") {
+                        raw[name] = raw[name].replace(/^0+/, "");
+                    } else if (formatter === "uppercase") {
                         raw[name] = raw[name].toUpperCase();
-                    } else if (formatter === 'lowercase') {
+                    } else if (formatter === "lowercase") {
                         raw[name] = raw[name].toLowerCase();
                     } else {
-                        // Boolean 
-                        if (raw[name] === true) raw[name] = 'true';
-                        if (raw[name] === false) raw[name] = 'false';
+                        // Boolean
+                        if (raw[name] === true) raw[name] = "true";
+                        if (raw[name] === false) raw[name] = "false";
 
                         // Number
-                        if (typeof raw[name] === 'number') raw[name] = raw[name].toString();
+                        if (typeof raw[name] === "number") raw[name] = raw[name].toString();
                     }
                 });
             });
@@ -473,26 +591,24 @@ const pivotGrid = {
     buildPivot: function () {
         pivotGrid.currentConfig.onRefresh = function (config) {
             const currentConfig = JSON.parse(JSON.stringify(config));
-            delete currentConfig['aggregators'];
-            delete currentConfig['renderers'];
-            delete currentConfig['rendererOptions'];
-            delete currentConfig['localeStrings'];
+            delete currentConfig["aggregators"];
+            delete currentConfig["renderers"];
+            delete currentConfig["rendererOptions"];
+            delete currentConfig["localeStrings"];
             pivotGrid.currentConfig = currentConfig;
-        }
+        };
 
         if (pivotGrid.initialized) {
-
             const el = getPivotGridEl();
 
             pivotGrid.currentConfig.rendererOptions = {
                 table: {
                     colTotals: modelappData.oData.properties.table.showColTotal,
-                    rowTotals: modelappData.oData.properties.table.showRowTotal
-                }
-            }
+                    rowTotals: modelappData.oData.properties.table.showRowTotal,
+                },
+            };
 
-            $(el).pivotUI(pivotGrid.data, pivotGrid.currentConfig, true)
-
+            $(el).pivotUI(pivotGrid.data, pivotGrid.currentConfig, true);
         }
     },
 
@@ -500,21 +616,23 @@ const pivotGrid = {
         const pivotData = [];
 
         if (dataExternal && dataExternal.length) {
-
             dataExternal.forEach(function (data) {
                 let keys = Object.keys(data);
                 let rec = {};
                 keys.forEach(function (k) {
-                    let field = ModelData.FindFirst(modelDataSettings.oData.fieldsReport, 'name', k);
+                    let field = ModelData.FindFirst(
+                        modelDataSettings.oData.fieldsReport,
+                        "name",
+                        k
+                    );
                     if (field) {
-                        rec[field.text] = (field.valueType ? data[`${k}_value`] : data[k]);
+                        rec[field.text] = field.valueType ? data[`${k}_value`] : data[k];
                     } else {
                         rec[k] = data[k];
                     }
                 });
                 pivotData.push(rec);
             });
-
         }
 
         pivotGrid.data = pivotData;
@@ -526,17 +644,17 @@ const pivotGrid = {
         pivotGrid.currentConfig.rows = [];
         pivotGrid.currentConfig.vals = [];
 
-        // Columns 
+        // Columns
         dataVariant.column.forEach(function (column) {
             pivotGrid.currentConfig.cols.push(column.text);
         });
 
-        // Rows 
+        // Rows
         dataVariant.row.forEach(function (row) {
             pivotGrid.currentConfig.rows.push(row.text);
         });
 
-        // Value 
+        // Value
         dataVariant.val.forEach(function (row) {
             pivotGrid.currentConfig.vals.push(row.text);
         });
@@ -544,11 +662,11 @@ const pivotGrid = {
         pivotGrid.currentConfig.exclusions = dataVariant.exclusions;
         pivotGrid.currentConfig.inclusions = dataVariant.inclusions;
 
-        pivotGrid.currentConfig.colOrder = dataVariant.colOrder || 'key_a_to_z';
-        pivotGrid.currentConfig.rowOrder = dataVariant.rowOrder || 'key_a_to_z';
+        pivotGrid.currentConfig.colOrder = dataVariant.colOrder || "key_a_to_z";
+        pivotGrid.currentConfig.rowOrder = dataVariant.rowOrder || "key_a_to_z";
 
-        pivotGrid.currentConfig.rendererName = dataVariant.rendererName || 'Table';
-        pivotGrid.currentConfig.aggregatorName = dataVariant.aggregatorName || 'Count';
+        pivotGrid.currentConfig.rendererName = dataVariant.rendererName || "Table";
+        pivotGrid.currentConfig.aggregatorName = dataVariant.aggregatorName || "Count";
 
         if (!window._pivotGrid) window._pivotGrid = {};
 
@@ -556,16 +674,13 @@ const pivotGrid = {
             exclusions: dataVariant.exclusions,
             inclusions: dataVariant.inclusions,
             table: {
-                clickCallback: function (oEvent) {
-                    
-                },
+                clickCallback: function (oEvent) {},
                 rowTotals: false,
-                colTotals: false
-            }
-        }
+                colTotals: false,
+            },
+        };
 
         pivotGrid.buildPivot();
-
     },
 
     variantAfterDnD: function (oDraggedControl, oDraggedData) {
@@ -575,13 +690,13 @@ const pivotGrid = {
             const { column, row, val } = modelDataVariant.oData;
             const { fieldsReport } = modelDataSettings.oData;
 
-            const k = 'name';
+            const k = "name";
             const v = name;
 
             if (parent === tabColumn) ModelData.Delete(column, k, v);
             if (parent === tabRow) ModelData.Delete(row, k, v);
             if (parent === tabVal) ModelData.Delete(val, k, v);
-            if (parent === tabFields) ModelData.UpdateField(fieldsReport, k, v, 'visible', false);
+            if (parent === tabFields) ModelData.UpdateField(fieldsReport, k, v, "visible", false);
         }
 
         [tabFields, tabColumn, tabRow, tabVal].forEach(function (t) {
@@ -614,59 +729,62 @@ const pivotGrid = {
             field.visible = true;
 
             let fieldName = field.name;
-            let fieldColumn = ModelData.FindFirst(column, 'name', fieldName);
+            let fieldColumn = ModelData.FindFirst(column, "name", fieldName);
 
             if (fieldColumn) {
                 field.visible = false;
                 fieldColumn.filter = field.filter;
                 fieldColumn.text = field.text;
 
-                fieldColumn.filterType = exclusions && exclusions[field.text] ? 'Accept' : 'Transparent';
+                fieldColumn.filterType =
+                    exclusions && exclusions[field.text] ? "Accept" : "Transparent";
             }
 
-            let fieldRow = ModelData.FindFirst(row, 'name', fieldName);
+            let fieldRow = ModelData.FindFirst(row, "name", fieldName);
             if (fieldRow) {
                 field.visible = false;
                 fieldRow.filter = field.filter;
                 fieldRow.text = field.text;
 
-                fieldRow.filterType = exclusions && exclusions[field.text] ? 'Accept' : 'Transparent';
+                fieldRow.filterType =
+                    exclusions && exclusions[field.text] ? "Accept" : "Transparent";
             }
 
-            let fieldVal = ModelData.FindFirst(val, 'name', fieldName);
+            let fieldVal = ModelData.FindFirst(val, "name", fieldName);
             if (fieldVal) {
                 field.visible = false;
                 fieldVal.filter = field.filter;
                 fieldVal.text = field.text;
 
-                fieldVal.filterType = exclusions && exclusions[field.text] ? 'Accept' : 'Transparent';
+                fieldVal.filterType =
+                    exclusions && exclusions[field.text] ? "Accept" : "Transparent";
             }
 
-            field.filterType = 'Transparent';
-            if (exclusions && exclusions[field.text]) field.filterType = 'Accept';
+            field.filterType = "Transparent";
+            if (exclusions && exclusions[field.text]) field.filterType = "Accept";
         });
 
         const { column, row, val } = modelDataVariant.oData;
         column.forEach(function (field) {
-            let catalog = ModelData.FindFirst(fieldsReport, 'name', field.name);
+            let catalog = ModelData.FindFirst(fieldsReport, "name", field.name);
             if (!catalog) field.delete = true;
-        })
+        });
 
         row.forEach(function (field) {
-            let catalog = ModelData.FindFirst(fieldsReport, 'name', field.name);
+            let catalog = ModelData.FindFirst(fieldsReport, "name", field.name);
             if (!catalog) field.delete = true;
-        })
+        });
 
         val.forEach(function (field) {
-            let catalog = ModelData.FindFirst(fieldsReport, 'name', field.name);
+            let catalog = ModelData.FindFirst(fieldsReport, "name", field.name);
             if (!catalog) field.delete = true;
-        })
+        });
 
-        ModelData.Delete(modelDataVariant.oData.column, 'delete', true);
-        ModelData.Delete(modelDataVariant.oData.row, 'delete', true);
-        ModelData.Delete(modelDataVariant.oData.val, 'delete', true);
+        ModelData.Delete(modelDataVariant.oData.column, "delete", true);
+        ModelData.Delete(modelDataVariant.oData.row, "delete", true);
+        ModelData.Delete(modelDataVariant.oData.val, "delete", true);
 
-        tabFields.getBinding('items').filter(new sap.ui.model.Filter('visible', 'EQ', true));
+        tabFields.getBinding("items").filter(new sap.ui.model.Filter("visible", "EQ", true));
 
         modelDataPivot.refresh();
         modelDataVariant.refresh();
@@ -682,15 +800,15 @@ const pivotGrid = {
             if (!keys[value]) {
                 keys[value] = {
                     value,
-                    counter: 1
-                }
+                    counter: 1,
+                };
                 return;
             }
 
             keys[value] = {
                 value,
-                counter: keys[value].counter + 1
-            }
+                counter: keys[value].counter + 1,
+            };
         });
 
         for (let key in keys) {
@@ -706,8 +824,12 @@ const pivotGrid = {
         diaFilter.setTitle("Filter (" + dataTree.length + ") - " + name);
         modeltabFilter.setData(dataTree);
 
-        tabFilter.getBinding("rows").sort([new sap.ui.model.Sorter("selected", true, false), new sap.ui.model.Sorter("value", false, false)]);
-
+        tabFilter
+            .getBinding("rows")
+            .sort([
+                new sap.ui.model.Sorter("selected", true, false),
+                new sap.ui.model.Sorter("value", false, false),
+            ]);
     },
 
     close: function () {
@@ -720,10 +842,7 @@ const pivotGrid = {
             p.getParent().close();
         } else if (evts && evts.onChildBack) {
             evts.onChildBack();
-        } else if (
-            shell && shell.closeTile &&
-            lp && lp.currentTile && lp.currentTile.id
-        ) {
+        } else if (shell && shell.closeTile && lp && lp.currentTile && lp.currentTile.id) {
             shell.closeTile(lp.currentTile);
         }
     },
@@ -745,46 +864,46 @@ const pivotGrid = {
     },
 
     dataType: [
-        { name: 'Table' },
-        { name: 'Table Barchart' },
-        { name: 'Area Chart' },
-        { name: 'Area Spline Chart' },
-        { name: 'Area Percent Chart' },
-        { name: 'Bar Chart' },
-        { name: 'Bar Percent Chart' },
-        { name: 'Column Chart' },
-        { name: 'Column Percent Chart' },
-        { name: 'Line Chart' },
-        { name: 'Pie Chart' },
-        { name: 'Spline Chart' },
-        { name: 'Stacked Bar Chart' },
-        { name: 'Stacked Column Chart' },
-        { name: 'TreeMap Chart' },       
+        { name: "Table" },
+        { name: "Table Barchart" },
+        { name: "Area Chart" },
+        { name: "Area Spline Chart" },
+        { name: "Area Percent Chart" },
+        { name: "Bar Chart" },
+        { name: "Bar Percent Chart" },
+        { name: "Column Chart" },
+        { name: "Column Percent Chart" },
+        { name: "Line Chart" },
+        { name: "Pie Chart" },
+        { name: "Spline Chart" },
+        { name: "Stacked Bar Chart" },
+        { name: "Stacked Column Chart" },
+        { name: "TreeMap Chart" },
         // { name: 'Heatmap' },
         // { name: 'Row Heatmap' },
         // { name: 'Col Heatmap' },
     ],
 
     dataCalc: [
-        { name: 'Count' },
-        { name: 'Average' },
-        { name: 'Count Unique Values' },
-        { name: 'First' },
-        { name: 'Last' },
-        { name: 'List Unique Values' },
-        { name: 'Integer Sum' },
-        { name: 'Median' },
-        { name: 'Minimum' },
-        { name: 'Maximum' },
-        { name: 'Sum' },
-        { name: 'Sum over Sum' },
-        { name: 'Sum as Fraction of Total' },
-        { name: 'Sum as Fraction of Rows' },
-        { name: 'Sum as Fraction of Columns' },
-        { name: 'Count as Fraction of Total' },
-        { name: 'Count as Fraction of Rows' },
-        { name: 'Count as Fraction of Columns' },
-        { name: 'Sample Variance' },
-        { name: 'Sample Standard Deviation' }
-    ]
+        { name: "Count" },
+        { name: "Average" },
+        { name: "Count Unique Values" },
+        { name: "First" },
+        { name: "Last" },
+        { name: "List Unique Values" },
+        { name: "Integer Sum" },
+        { name: "Median" },
+        { name: "Minimum" },
+        { name: "Maximum" },
+        { name: "Sum" },
+        { name: "Sum over Sum" },
+        { name: "Sum as Fraction of Total" },
+        { name: "Sum as Fraction of Rows" },
+        { name: "Sum as Fraction of Columns" },
+        { name: "Count as Fraction of Total" },
+        { name: "Count as Fraction of Rows" },
+        { name: "Count as Fraction of Columns" },
+        { name: "Sample Variance" },
+        { name: "Sample Standard Deviation" },
+    ],
 };

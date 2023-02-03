@@ -942,6 +942,7 @@ const metadata = {
                 ["number05", "Number Decimals 1 Point"],
                 ["number06", "Number Decimals 2 Point"],
                 ["number07", "Number Decimals 3 Point"],
+                ["file", "File Size"],
             ]),
         },
 
