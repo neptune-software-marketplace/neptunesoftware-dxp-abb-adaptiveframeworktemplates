@@ -162,6 +162,7 @@ const report = {
                 } else {
                     // Key Fields for GET Record
                     if (s.navigation && s.navigation.keyField && s.navigation.keyField.length) {
+                        if (!s.data) s.data = {};
                         s.data._keyField = s.navigation.keyField;
                     }
 
