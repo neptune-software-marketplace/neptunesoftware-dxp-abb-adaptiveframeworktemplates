@@ -164,6 +164,14 @@ const report = {
                     if (s.navigation && s.navigation.keyField && s.navigation.keyField.length) {
                         if (!s.data) s.data = {};
                         s.data._keyField = s.navigation.keyField;
+
+                        // Fix before patch 4
+                        s.navigation.keyField.forEach(function (field) {
+                            if (field.valueKey) {
+                                s.data[field.fieldName] = field.valueKey;
+                                field.key = field.fieldName;
+                            }
+                        });
                     }
 
                     sap.n.Adaptive.run(modelAppConfig.oData, s.data, "Get").then(function (data) {
@@ -492,10 +500,9 @@ const report = {
     },
 
     close: function () {
-        const isDialog = oApp.getParent() &&
-            oApp.getParent().getParent() &&
-            oApp.getParent().getParent().close;
-            
+        const isDialog =
+            oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close;
+
         if (isDialog) {
             oApp.getParent().getParent().close();
         } else if (
