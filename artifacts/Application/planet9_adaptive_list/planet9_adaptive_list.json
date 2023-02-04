@@ -953,13 +953,6 @@
 											"value": "Auto",
 											"script": "",
 											"translation": []
-										},
-										{
-											"attribute": "autoPopinMode",
-											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
 										}
 									],
 									"data": []
@@ -4179,7 +4172,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.4.935",
+	"ver": "23.2.4.938",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
