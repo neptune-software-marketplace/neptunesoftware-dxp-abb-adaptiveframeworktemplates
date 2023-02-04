@@ -202,9 +202,14 @@ const report = {
                 }
             })
             .catch(function (data) {
-                if (data.responseJSON && data.responseJSON.status)
+                if (data.responseJSON && data.responseJSON.status) {
                     sap.m.MessageToast.show(data.responseJSON.status);
-                if (data.status === 0) sap.m.MessageToast.show("No connection");
+                }
+
+                if (data.status === 0) {
+                    sap.m.MessageToast.show("No connection");
+                }
+
                 oApp.setBusy(false);
             });
     },
@@ -229,8 +234,10 @@ const report = {
                             oApp.getParent() &&
                             oApp.getParent().getParent() &&
                             oApp.getParent().getParent().close
-                        )
+                        ) {
                             oApp.getParent().getParent().close();
+                        }
+
                         if (s.events && s.events.afterChildSave) s.events.afterChildSave();
 
                         // const openedAsSidepanel = modelAppConfig.oData.settings.navigation.openAs === 'S';
@@ -551,8 +558,9 @@ const report = {
                 config.settings.navigation = navigation;
                 config.settings.data = modelAppData.oData;
 
-                if (config.settings.data && navigation.keyField)
+                if (config.settings.data && navigation.keyField) {
                     config.settings.data._keyField = navigation.keyField;
+                }
 
                 AppCache.Load(config.application, {
                     appGUID: ModelData.genID(),

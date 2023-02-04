@@ -38,3 +38,17 @@
 .nepContentPanelFull .sapMBarLeft {
     margin-top: 6px;
 }
+
+.nepMTableSortCell,
+.nepMTableSortCell .sapMLabel {
+    cursor: pointer;
+}
+
+.sapMListTblHeader>.sapMTableTH.nepMTableSortCell:hover {
+    background-color: #ebf8ff;
+}
+
+.sapUiTheme-sap_horizon_dark .sapMListTblHeader>.sapMTableTH.nepMTableSortCell:hover,
+.sapUiTheme-sap_fiori_3_dark .sapMListTblHeader>.sapMTableTH.nepMTableSortCell:hover {
+    background-color: #1d2d3e;
+}

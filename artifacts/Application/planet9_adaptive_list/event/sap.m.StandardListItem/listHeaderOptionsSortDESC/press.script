@@ -7,4 +7,6 @@ if (modelAppConfig.oData.settings.properties.table.enablePagination) {
     report.handleSortingClient();
 }
 
+report.handleTableSortIndicator();
+
 popHeader.close();

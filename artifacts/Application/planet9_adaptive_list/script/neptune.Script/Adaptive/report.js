@@ -9,6 +9,7 @@ const report = {
     initId: null,
     tabObject: null,
     filterObject: null,
+    colHeaders: null,
 
     pagination: {
         take: 100,
@@ -272,7 +273,22 @@ const report = {
             });
     },
 
-    handlePagination() {
+    handleTableSortIndicator: function () {
+        if (!report.sortBy) return;
+        console.log("report.sortOrder");
+
+        // Clear All
+        const keys = Object.keys(report.colHeaders);
+
+        keys.forEach(function (key) {
+            report.colHeaders[key].setSortIndicator("None");
+        });
+
+        const sortIndicator = report.sortOrder === "ASC" ? "Ascending" : "Descending";
+        report.colHeaders[report.sortBy].setSortIndicator(sortIndicator);
+    },
+
+    handlePagination: function () {
         let maxIndex = report.pagination.count / report.pagination.take;
         maxIndex = Math.ceil(maxIndex);
 
@@ -328,6 +344,9 @@ const report = {
 
         // Sorting
         if (!report.sortBy && fieldsRun.length) report.sortBy = fieldsRun[0].name;
+
+        // Apply Initial SortingIndicator
+        report.handleTableSortIndicator();
 
         // Pagination
         if (properties.table.enablePagination) {
@@ -941,6 +960,7 @@ const report = {
 
     buildTableColumns: function (table, config, events) {
         try {
+            report.colHeaders = {};
             const props = config.settings.properties;
             if (props.table.enableCompact) {
                 table.addStyleClass("sapUiSizeCompact");
@@ -1005,6 +1025,24 @@ const report = {
                 if (f.demandPopin) ColumnHeader.setDemandPopin(f.demandPopin);
                 if (f.popinDisplay) ColumnHeader.setPopinDisplay(f.popinDisplay);
 
+                // Sorting
+                if (f.enableSort || f.enableGroup) {
+                    var _column_delegate = {
+                        onclick: function (e) {
+                            if (events.onHeaderClick) events.onHeaderClick(f, ColumnHeader);
+                        },
+                    };
+                    ColumnHeader.addEventDelegate(_column_delegate);
+
+                    ColumnHeader.exit = function () {
+                        ColumnHeader.removeEventDelegate(_column_delegate);
+                    };
+
+                    ColumnHeader.setStyleClass("nepMTableSortCell");
+
+                    report.colHeaders[f.name] = ColumnHeader;
+                }
+
                 // Enable Sum
                 if (f.enableSum && f.type === "ObjectNumber") {
                     const prefix = "AppConfig>/settings/properties/table/_sum/";
@@ -1015,26 +1053,13 @@ const report = {
                     ColumnHeader.setFooter(sumField);
                 }
 
-                const HBox = new sap.m.HBox();
-                HBox.addItem(
+                ColumnHeader.setHeader(
                     new sap.m.Label({
                         text: sap.n.Adaptive.translateFieldLabel(f, config),
-                        wrapping: true,
+                        // wrapping: true,
                     })
                 );
 
-                if (f.enableSort || f.enableGroup) {
-                    let ColumnButton = new sap.ui.core.Icon({
-                        src: "sap-icon://slim-arrow-down",
-                        press: function (_oEvent) {
-                            if (events.onHeaderClick) events.onHeaderClick(f, this);
-                        },
-                    });
-                    ColumnButton.addStyleClass("sapUiTinyMarginBegin");
-                    HBox.addItem(ColumnButton);
-                }
-
-                ColumnHeader.setHeader(HBox);
                 table.addColumn(ColumnHeader);
 
                 let newField = null;
