@@ -275,7 +275,6 @@ const report = {
 
     handleTableSortIndicator: function () {
         if (!report.sortBy) return;
-        console.log("report.sortOrder");
 
         // Clear All
         const keys = Object.keys(report.colHeaders);
@@ -284,8 +283,10 @@ const report = {
             report.colHeaders[key].setSortIndicator("None");
         });
 
-        const sortIndicator = report.sortOrder === "ASC" ? "Ascending" : "Descending";
-        report.colHeaders[report.sortBy].setSortIndicator(sortIndicator);
+        if (report.colHeaders[report.sortBy]) {
+            const sortIndicator = report.sortOrder === "ASC" ? "Ascending" : "Descending";
+            report.colHeaders[report.sortBy].setSortIndicator(sortIndicator);
+        }
     },
 
     handlePagination: function () {

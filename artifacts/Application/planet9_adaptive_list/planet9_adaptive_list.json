@@ -4172,7 +4172,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.4.938",
+	"ver": "23.2.6.2126",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
@@ -4208,6 +4208,8 @@
 	"ui5_ionic": false,
 	"useV2AppHandler": false,
 	"compilerTarget": 3,
+	"tabWidth": null,
+	"printWidth": null,
 	"apis": [],
 	"package": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
 }
