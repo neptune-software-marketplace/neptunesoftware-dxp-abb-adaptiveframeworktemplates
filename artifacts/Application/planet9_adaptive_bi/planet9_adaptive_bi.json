@@ -5707,6 +5707,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
+	"compiledCss": null,
 	"header": "",
 	"manifest": "",
 	"globalScript": "",

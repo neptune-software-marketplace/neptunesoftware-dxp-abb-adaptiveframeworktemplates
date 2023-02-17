@@ -46,15 +46,15 @@
     width: 100% !important;
 }
 
-.sapMDialog>.sapMDialogTitle .sapMDialogTitleGroup:focus::after {
+.sapMDialog > .sapMDialogTitle .sapMDialogTitleGroup:focus::after {
     border: none;
 }
 
-.nepTitleZero .sapUiFormContainerTitle>.sapUiFormTitleH1,
-.nepTitleZero .sapUiFormContainerTitle>.sapUiFormTitleH2,
-.nepTitleZero .sapUiFormContainerTitle>.sapUiFormTitleH3,
-.nepTitleZero .sapUiFormContainerTitle>.sapUiFormTitleH4,
-.nepTitleZero .sapUiFormContainerTitle>.sapUiFormTitleH5,
-.nepTitleZero .sapUiFormContainerTitle>.sapUiFormTitleH6 {
+.nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH1,
+.nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH2,
+.nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH3,
+.nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH4,
+.nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH5,
+.nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH6 {
     height: 0 !important;
 }

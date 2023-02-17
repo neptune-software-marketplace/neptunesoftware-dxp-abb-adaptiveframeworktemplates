@@ -4172,7 +4172,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.6.2126",
+	"ver": "23.2.17.714",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
@@ -4197,6 +4197,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
+	"compiledCss": "file://script/undefined/undefined.script",
 	"header": "",
 	"manifest": "",
 	"globalScript": "",
@@ -4209,7 +4210,7 @@
 	"useV2AppHandler": false,
 	"compilerTarget": 3,
 	"tabWidth": null,
-	"printWidth": null,
+	"printWidth": 200,
 	"apis": [],
 	"package": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
 }

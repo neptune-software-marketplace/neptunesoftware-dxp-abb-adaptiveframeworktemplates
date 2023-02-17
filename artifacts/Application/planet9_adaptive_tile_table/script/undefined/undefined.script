@@ -1,0 +1,16 @@
+.nepNoBorder .sapMPanelContent {
+  border-bottom: none !important;
+}
+
+.nepToolFilter {
+  height: 80px;
+}
+
+.nepNoRadius {
+  border-radius: 0;
+}
+
+.nepNoRadius.sapMPanel .sapMPanelWrappingDiv:not(.sapMPanelWrappingDivExpanded),
+.nepNoRadius.sapMPanel .sapMPanelWrappingDivTb:not(.sapMPanelWrappingDivTbExpanded) {
+  border-radius: 0 !important;
+}

@@ -1,8 +1,7 @@
 // Visibility Bindings
 const vb = {
     reportEnableCreate: "{= ${appData>/settings/properties/report/enableCreate} ? true : false }",
-    reportEnableMultiSelect:
-        "{= ${appData>/settings/properties/report/enableMultiSelect} ? true : false }",
+    reportEnableMultiSelect: "{= ${appData>/settings/properties/report/enableMultiSelect} ? true : false }",
     reportEnableClose: "{= ${appData>/settings/properties/report/enableClose} ? true : false }",
     reportEnableExport: "{= ${appData>/settings/properties/report/enableExport} ? true : false }",
     reportEnableImport: "{= ${appData>/settings/properties/report/enableImport} ? true : false }",
@@ -14,30 +13,15 @@ const vb = {
     tableEnableAction4: "{= ${appData>/settings/properties/table/enableAction4} ? true : false }",
     tableEnableAction5: "{= ${appData>/settings/properties/table/enableAction5} ? true : false }",
 
-    typeMultiOrSingleSelectLookup:
-        "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
-    typeMultiOrSingleSelectScript:
-        "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
+    typeMultiOrSingleSelectLookup: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
+    typeMultiOrSingleSelectScript: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
     typeInput: "{= ${/type} === 'Input' || ! ${/type} ? true : false }",
     typeLink: "{= ${/type} === 'Link' ? true : false }",
     typeButton: "{= ${/type} === 'Button' ? true : false }",
 
     typeEvents: "{= ${/type} === 'Link' || ${/type} === 'Button'? true : false }",
 
-    buttonTypes: [
-        "Accept",
-        "Attention",
-        "Critical",
-        "Back",
-        "Default",
-        "Emphasized",
-        "Ghost",
-        "Neutral",
-        "Reject",
-        "Transparent",
-        "Unstyled",
-        "Up",
-    ],
+    buttonTypes: ["Accept", "Attention", "Critical", "Back", "Default", "Emphasized", "Ghost", "Neutral", "Reject", "Transparent", "Unstyled", "Up"],
 
     typeFixed: "{= ${/valueType} === 'Fixed' ? true : false }",
     typeLookup: "{= ${/valueType} === 'Lookup' ? true : false }",
@@ -47,8 +31,7 @@ const vb = {
     typeObjectStatus: "{= ${/type} === 'ObjectStatus' ? true : false }",
     typeObjectNumber: "{= ${/type} === 'ObjectNumber' ? true : false }",
     typeDateTimePicker: "{= ${/type} === 'DateTimePicker' ? true : false }",
-    typeDateOrDateTimePicker:
-        "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' ? true : false }",
+    typeDateOrDateTimePicker: "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' ? true : false }",
 
     typeValueHelp: "{= ${/type} === 'ValueHelp'  ? true : false }",
 
@@ -57,50 +40,30 @@ const vb = {
     typeLinkBinding: "{= ${/type} === 'Link' && ${/linkHrefType} === 'Binding' ? true : false }",
     typeLinkLookup: "{= ${/type} === 'Link' && ${/linkHrefType} === 'Lookup'  ? true : false }",
 
-    typeObjectStatusIconTypeFixed:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Fixed' ? true : false }",
-    typeObjectStatusIconTypeRule:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Rule' ? true : false }",
-    typeObjectStatusIconTypeBinding:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Binding' ? true : false }",
-    typeObjectStatusIconTypeLookup:
-        "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Lookup'  ? true : false }",
+    typeObjectStatusIconTypeFixed: "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Fixed' ? true : false }",
+    typeObjectStatusIconTypeRule: "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Rule' ? true : false }",
+    typeObjectStatusIconTypeBinding: "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Binding' ? true : false }",
+    typeObjectStatusIconTypeLookup: "{= (${/type} === 'ObjectStatus' || ${/type} === 'Button') && ${/statusIconType} === 'Lookup'  ? true : false }",
 
-    typeObjectStatusTitleTypeFixed:
-        "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Fixed'? true : false }",
-    typeObjectStatusTitleTypeRule:
-        "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Rule'? true : false }",
-    typeObjectStatusTitleTypeBinding:
-        "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Binding'? true : false }",
-    typeObjectStatusTitleTypeLookup:
-        "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Lookup'? true : false }",
+    typeObjectStatusTitleTypeFixed: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Fixed'? true : false }",
+    typeObjectStatusTitleTypeRule: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Rule'? true : false }",
+    typeObjectStatusTitleTypeBinding: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Binding'? true : false }",
+    typeObjectStatusTitleTypeLookup: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Lookup'? true : false }",
 
-    typeObjectStatusStateTypeFixed:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Fixed' ? true : false }",
-    typeObjectStatusStateTypeRule:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Rule'? true : false }",
-    typeObjectStatusStateTypeBinding:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Binding'? true : false }",
-    typeObjectStatusStateTypeLookup:
-        "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Lookup'? true : false }",
+    typeObjectStatusStateTypeFixed: "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Fixed' ? true : false }",
+    typeObjectStatusStateTypeRule: "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Rule'? true : false }",
+    typeObjectStatusStateTypeBinding: "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Binding'? true : false }",
+    typeObjectStatusStateTypeLookup: "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Lookup'? true : false }",
 
-    typeObjectStatusNumberUnitTypeFixed:
-        "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Fixed'? true : false }",
-    typeObjectStatusNumberUnitTypeRule:
-        "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Rule'? true : false }",
-    typeObjectStatusNumberUnitTypeBinding:
-        "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Binding'? true : false }",
-    typeObjectStatusNumberUnitTypeLookup:
-        "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Lookup'? true : false }",
+    typeObjectStatusNumberUnitTypeFixed: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Fixed'? true : false }",
+    typeObjectStatusNumberUnitTypeRule: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Rule'? true : false }",
+    typeObjectStatusNumberUnitTypeBinding: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Binding'? true : false }",
+    typeObjectStatusNumberUnitTypeLookup: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Lookup'? true : false }",
 
-    typeObjectStatusNumberStateTypeFixed:
-        "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Fixed'? true : false }",
-    typeObjectStatusNumberStateTypeRule:
-        "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Rule'? true : false }",
-    typeObjectStatusNumberStateTypeBinding:
-        "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Binding'? true : false }",
-    typeObjectStatusNumberStateTypeLookup:
-        "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Lookup'? true : false }",
+    typeObjectStatusNumberStateTypeFixed: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Fixed'? true : false }",
+    typeObjectStatusNumberStateTypeRule: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Rule'? true : false }",
+    typeObjectStatusNumberStateTypeBinding: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Binding'? true : false }",
+    typeObjectStatusNumberStateTypeLookup: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Lookup'? true : false }",
 
     placeholder:
         "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Input' || ${/type} === 'MultiSelectLookup' || ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectLookup' || ${/type} === 'SingleSelectScript'  ? true : false }",
@@ -129,20 +92,7 @@ const metadata = {
             avatarBackgroundColor: {
                 type: "SingleSelect",
                 label: "Icon Color",
-                items: valuesToKeyText([
-                    "",
-                    "Accent1",
-                    "Accent2",
-                    "Accent3",
-                    "Accent4",
-                    "Accent5",
-                    "Accent6",
-                    "Accent7",
-                    "Accent8",
-                    "Accent9",
-                    "Accent10",
-                    "Random",
-                ]),
+                items: valuesToKeyText(["", "Accent1", "Accent2", "Accent3", "Accent4", "Accent5", "Accent6", "Accent7", "Accent8", "Accent9", "Accent10", "Random"]),
             },
             showIcon: { type: "CheckBox", label: "Icon Visible", default: true },
             actionButtonLeft: { type: "CheckBox", label: "Action Button Left", default: false },
@@ -453,13 +403,14 @@ const metadata = {
                     { key: "<=", text: "Lesser and Equal to" },
                     { key: ">", text: "Greater than" },
                     { key: "<", text: "Lesser than" },
+                    { key: "empty", text: "No data" },
                 ],
                 visible: vb.tableEnableAction1,
             },
             action1VisibleFixedValue: {
                 type: "Input",
                 label: "Fixed Value",
-                visible: vb.tableEnableAction1,
+                visible: "{= ${appData>/settings/properties/table/enableAction1} && ${appData>/settings/properties/table/action1VisibleCondition} !== 'empty' ? true : false }",
             },
             action1VisibleSystemValue: {
                 type: "SingleSelect",
@@ -468,7 +419,7 @@ const metadata = {
                     ["", ""],
                     ["UserName", "UserName"],
                 ]),
-                visible: vb.tableEnableAction1,
+                visible: "{= ${appData>/settings/properties/table/enableAction1} && ${appData>/settings/properties/table/action1VisibleCondition} !== 'empty' ? true : false }",
             },
             action1VisibleInverse: {
                 type: "CheckBox",
@@ -521,19 +472,20 @@ const metadata = {
                     { key: "<=", text: "Lesser and Equal to" },
                     { key: ">", text: "Greater than" },
                     { key: "<", text: "Lesser than" },
+                    { key: "empty", text: "No data" },
                 ],
                 visible: vb.tableEnableAction2,
             },
             action2VisibleFixedValue: {
                 type: "Input",
                 label: "Fixed Value",
-                visible: vb.tableEnableAction2,
+                visible: "{= ${appData>/settings/properties/table/enableAction2} && ${appData>/settings/properties/table/action2VisibleCondition} !== 'empty' ? true : false }",
             },
             action2VisibleSystemValue: {
                 type: "SingleSelect",
                 label: "System Variable",
                 items: valuesToKeyText(["", "UserName"]),
-                visible: vb.tableEnableAction2,
+                visible: "{= ${appData>/settings/properties/table/enableAction2} && ${appData>/settings/properties/table/action2VisibleCondition} !== 'empty' ? true : false }",
             },
             action2VisibleInverse: {
                 type: "CheckBox",
@@ -586,19 +538,20 @@ const metadata = {
                     { key: "<=", text: "Lesser and Equal to" },
                     { key: ">", text: "Greater than" },
                     { key: "<", text: "Lesser than" },
+                    { key: "empty", text: "No data" },
                 ],
                 visible: vb.tableEnableAction3,
             },
             action3VisibleFixedValue: {
                 type: "Input",
                 label: "Fixed Value",
-                visible: vb.tableEnableAction3,
+                visible: "{= ${appData>/settings/properties/table/enableAction3} && ${appData>/settings/properties/table/action3VisibleCondition} !== 'empty' ? true : false }",
             },
             action3VisibleSystemValue: {
                 type: "SingleSelect",
                 label: "System Variable",
                 items: valuesToKeyText(["", "UserName"]),
-                visible: vb.tableEnableAction3,
+                visible: "{= ${appData>/settings/properties/table/enableAction3} && ${appData>/settings/properties/table/action3VisibleCondition} !== 'empty' ? true : false }",
             },
             action3VisibleInverse: {
                 type: "CheckBox",
@@ -651,19 +604,20 @@ const metadata = {
                     { key: "<=", text: "Lesser and Equal to" },
                     { key: ">", text: "Greater than" },
                     { key: "<", text: "Lesser than" },
+                    { key: "empty", text: "No data" },
                 ],
                 visible: vb.tableEnableAction4,
             },
             action4VisibleFixedValue: {
                 type: "Input",
                 label: "Fixed Value",
-                visible: vb.tableEnableAction4,
+                visible: "{= ${appData>/settings/properties/table/enableAction4} && ${appData>/settings/properties/table/action4VisibleCondition} !== 'empty' ? true : false }",
             },
             action4VisibleSystemValue: {
                 type: "SingleSelect",
                 label: "System Variable",
                 items: valuesToKeyText(["", "UserName"]),
-                visible: vb.tableEnableAction3,
+                visible: "{= ${appData>/settings/properties/table/enableAction4} && ${appData>/settings/properties/table/action4VisibleCondition} !== 'empty' ? true : false }",
             },
             action4VisibleInverse: {
                 type: "CheckBox",
@@ -716,19 +670,20 @@ const metadata = {
                     { key: "<=", text: "Lesser and Equal to" },
                     { key: ">", text: "Greater than" },
                     { key: "<", text: "Lesser than" },
+                    { key: "empty", text: "No data" },
                 ],
                 visible: vb.tableEnableAction5,
             },
             action5VisibleFixedValue: {
                 type: "Input",
                 label: "Fixed Value",
-                visible: vb.tableEnableAction5,
+                visible: "{= ${appData>/settings/properties/table/enableAction5} && ${appData>/settings/properties/table/action5VisibleCondition} !== 'empty' ? true : false }",
             },
             action5VisibleSystemValue: {
                 type: "SingleSelect",
                 label: "System Variable",
                 items: valuesToKeyText(["", "UserName"]),
-                visible: vb.tableEnableAction5,
+                visible: "{= ${appData>/settings/properties/table/enableAction5} && ${appData>/settings/properties/table/action5VisibleCondition} !== 'empty' ? true : false }",
             },
             action5VisibleInverse: {
                 type: "CheckBox",
@@ -756,6 +711,7 @@ const metadata = {
                 "SingleSelectScript",
                 "Switch",
                 "ValueHelp",
+                "ValueHelpOData",
             ]),
         },
 
@@ -859,6 +815,13 @@ const metadata = {
             ]),
         },
 
+        inputType: {
+            type: "SingleSelect",
+            label: "Input Type",
+            visible: "{= ${/type} === 'Input' ? true : false }",
+            items: valuesToKeyText(["", "Email", "Number", "Password", "Tel", "Text", "Url"]),
+        },
+
         statusInverted: { type: "CheckBox", label: "Inverted", visible: vb.typeObjectStatus },
 
         stepInputTextAlign: {
@@ -899,8 +862,7 @@ const metadata = {
         formatter: {
             type: "SingleSelect",
             label: "Formatter",
-            visible:
-                "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Input' ? false : true }",
+            visible: "{= ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Input' ? false : true }",
             items: distinctValuesToKeyText([
                 ["", ""],
                 ["date00", "Date Browser Format"],
@@ -973,7 +935,7 @@ const metadata = {
         // StepInput - Min
         titleStepInputMin: {
             type: "Title",
-            label: "Mix",
+            label: "Min",
             visible: "{= ${/type} === 'StepInput' ? true : false }",
         },
 
@@ -993,29 +955,25 @@ const metadata = {
         stepInputMinFixed: {
             type: "Input",
             label: "Fixed Value",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Fixed' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Fixed' ? true : false }",
         },
 
         stepInputMinRule: {
             type: "Rule",
             label: "Rules Engine",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Rule' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Rule' ? true : false }",
         },
 
         stepInputMinBinding: {
             type: "TableFieldLocal",
             label: "Binding",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Binding' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Binding' ? true : false }",
         },
 
         stepInputMinLookup: {
             type: "Lookup",
             label: "Lookup Value",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Lookup' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMinType} === 'Lookup' ? true : false }",
         },
 
         // StepInput - Max
@@ -1041,29 +999,25 @@ const metadata = {
         stepInputMaxFixed: {
             type: "Input",
             label: "Fixed Value",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Fixed' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Fixed' ? true : false }",
         },
 
         stepInputMaxRule: {
             type: "Rule",
             label: "Rules Engine",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Rule' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Rule' ? true : false }",
         },
 
         stepInputMaxBinding: {
             type: "TableFieldLocal",
             label: "Binding",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Binding' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Binding' ? true : false }",
         },
 
         stepInputMaxLookup: {
             type: "Lookup",
             label: "Lookup Value",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Lookup' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputMaxType} === 'Lookup' ? true : false }",
         },
 
         // StepInput - Step
@@ -1089,29 +1043,25 @@ const metadata = {
         stepInputStepFixed: {
             type: "Input",
             label: "Fixed Value",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Fixed' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Fixed' ? true : false }",
         },
 
         stepInputStepRule: {
             type: "Rule",
             label: "Rules Engine",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Rule' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Rule' ? true : false }",
         },
 
         stepInputStepBinding: {
             type: "TableFieldLocal",
             label: "Binding",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Binding' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Binding' ? true : false }",
         },
 
         stepInputStepLookup: {
             type: "Lookup",
             label: "Lookup Value",
-            visible:
-                "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Lookup' ? true : false }",
+            visible: "{= ${/type} === 'StepInput'  && ${/stepInputStepType} === 'Lookup' ? true : false }",
         },
 
         // Link - Href

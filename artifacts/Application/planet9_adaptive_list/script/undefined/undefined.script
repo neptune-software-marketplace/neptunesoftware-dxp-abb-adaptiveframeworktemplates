@@ -1,0 +1,53 @@
+.nepVariant {
+  padding: 0;
+  height: 1.6rem;
+}
+
+.sapUiTheme-sap_horizon .nepDynamicPage.sapFDynamicPage .sapFDynamicPageFooter .sapFDynamicPageActualFooterControl {
+  height: 2.75rem;
+}
+
+.sapUiTheme-sap_horizon_dark .nepDynamicPage.sapFDynamicPage .sapFDynamicPageFooter .sapFDynamicPageActualFooterControl {
+  height: 2.75rem;
+}
+
+.toolPagination {
+  height: 3rem;
+  width: calc(100% - 5px) !important;
+}
+
+.nepFlexWrap .sapFDynamicPageTitleMain {
+  flex-wrap: wrap !important;
+}
+
+.nepFlexLeft .sapFDynamicPageTitleMainInner {
+  width: 100% !important;
+}
+
+.sapUiTheme-sap_horizon_dark .nepDynamicPage.sapFDynamicPage .sapFDynamicPageFooter .sapFDynamicPageActualFooterControl {
+  border: 1px solid #2e3742;
+  border-radius: 0.75rem;
+}
+
+.nepDynamicPage .sapMObjStatusText {
+  line-height: 1.5rem !important;
+}
+
+/* Styling for Adaptive Designer */
+.nepContentPanelFull .sapMBarLeft {
+  margin-top: 6px;
+}
+
+.nepMTableSortCell,
+.nepMTableSortCell .sapMLabel {
+  cursor: pointer;
+}
+
+.sapMListTblHeader > .sapMTableTH.nepMTableSortCell:hover {
+  background-color: #ebf8ff;
+}
+
+.sapUiTheme-sap_horizon_dark .sapMListTblHeader > .sapMTableTH.nepMTableSortCell:hover,
+.sapUiTheme-sap_fiori_3_dark .sapMListTblHeader > .sapMTableTH.nepMTableSortCell:hover {
+  background-color: #1d2d3e;
+}

@@ -3,6 +3,7 @@ const report = {
     initId: null,
     formObject: null,
     pages: {},
+    __metadata: null,
 
     events: {
         onChildBack: function () {
@@ -34,8 +35,7 @@ const report = {
 
         // Language
         if (runtime) {
-            if (AppCache && AppCache.userInfo && AppCache.userInfo.language)
-                config.language = AppCache.userInfo.language;
+            if (AppCache && AppCache.userInfo && AppCache.userInfo.language) config.language = AppCache.userInfo.language;
         } else {
             const language = getAdaptiveEditorPreviewLanguage();
             if (language) {
@@ -49,9 +49,7 @@ const report = {
         oApp.setBusy(true);
 
         if (config.settings.properties.report.avatarBackgroundColor) {
-            oPageHeaderIcon.setBackgroundColor(
-                config.settings.properties.report.avatarBackgroundColor
-            );
+            oPageHeaderIcon.setBackgroundColor(config.settings.properties.report.avatarBackgroundColor);
         } else {
             oPageHeaderIcon.setBackgroundColor();
         }
@@ -88,23 +86,15 @@ const report = {
 
         // Translation - Properties
         if (config.settings.properties.report.dynamicTitle) {
-            oPageHeaderTitle.bindProperty(
-                "text",
-                "AppData>/" + config.settings.properties.report.dynamicTitle
-            );
+            oPageHeaderTitle.bindProperty("text", "AppData>/" + config.settings.properties.report.dynamicTitle);
         } else {
             oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
         }
 
         if (config.settings.properties.report.dynamicSubTitle) {
-            oPageHeaderSubTitle.bindProperty(
-                "text",
-                "AppData>/" + config.settings.properties.report.dynamicSubTitle
-            );
+            oPageHeaderSubTitle.bindProperty("text", "AppData>/" + config.settings.properties.report.dynamicSubTitle);
         } else {
-            oPageHeaderSubTitle.setText(
-                sap.n.Adaptive.translateProperty("report", "subTitle", config)
-            );
+            oPageHeaderSubTitle.setText(sap.n.Adaptive.translateProperty("report", "subTitle", config));
 
             if (!oPageHeaderSubTitle.getText()) {
                 oPageHeaderSubTitle.setVisible(false);
@@ -113,15 +103,9 @@ const report = {
 
         toastSaved.setText(sap.n.Adaptive.translateProperty("report", "textToastSave", config));
         toastDelete.setText(sap.n.Adaptive.translateProperty("report", "textToastDelete", config));
-        toolHeaderBack.setText(
-            sap.n.Adaptive.translateProperty("report", "textButtonClose", config)
-        );
-        toolHeaderSave.setText(
-            sap.n.Adaptive.translateProperty("report", "textButtonSave", config)
-        );
-        toolHeaderDelete.setText(
-            sap.n.Adaptive.translateProperty("report", "textButtonDelete", config)
-        );
+        toolHeaderBack.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
+        toolHeaderSave.setText(sap.n.Adaptive.translateProperty("report", "textButtonSave", config));
+        toolHeaderDelete.setText(sap.n.Adaptive.translateProperty("report", "textButtonDelete", config));
 
         barEditItemMain.setText(sap.n.Adaptive.translateProperty("report", "tab0Text", config));
         barEditItem1.setText(sap.n.Adaptive.translateProperty("report", "tab1Text", config));
@@ -146,26 +130,14 @@ const report = {
                     if (s.fieldsRun) s.fieldsRun.sort(sort_by("fieldPos"));
                 } else {
                     s.fieldsSel.forEach(function (selField) {
-                        let selFieldRun = ModelData.FindFirst(
-                            data.fieldsSelection,
-                            "name",
-                            selField.name
-                        );
+                        let selFieldRun = ModelData.FindFirst(data.fieldsSelection, "name", selField.name);
                         if (selFieldRun && selFieldRun.items) selField.items = selFieldRun.items;
-                        if (selFieldRun && selFieldRun.default)
-                            selField.default = selFieldRun.default;
+                        if (selFieldRun && selFieldRun.default) selField.default = selFieldRun.default;
                     });
                 }
 
                 // Form Fields
-                if (
-                    r.enableTab1 ||
-                    r.enableTab2 ||
-                    r.enableTab3 ||
-                    r.enableTab4 ||
-                    r.enableTab5 ||
-                    r.enableAttachment
-                ) {
+                if (r.enableTab1 || r.enableTab2 || r.enableTab3 || r.enableTab4 || r.enableTab5 || r.enableAttachment) {
                     barEdit.setSelectedItem(barEditItemMain);
                     barEdit.setVisible(true);
                     panMain.setVisible(false);
@@ -225,16 +197,10 @@ const report = {
             onClose: function (oAction) {
                 if (oAction === "YES") {
                     const { id } = data;
-                    sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (
-                        data
-                    ) {
+                    sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (data) {
                         sap.m.MessageToast.show(toastDelete.getText());
 
-                        if (
-                            oApp.getParent() &&
-                            oApp.getParent().getParent() &&
-                            oApp.getParent().getParent().close
-                        ) {
+                        if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close) {
                             oApp.getParent().getParent().close();
                         }
 
@@ -258,13 +224,24 @@ const report = {
     },
 
     afterRun: function (data) {
+        // Message from Server Script
+        if (data && data.message && data.message.text) {
+            if (data.message.type) {
+                sap.m.MessageBox[data.message.type](data.message.text);
+            } else {
+                sap.m.MessageBox.information(data.message.text);
+            }
+            return;
+        }
+
+        // Save OData Metadata Key
+        if (data && data.__metadata) report.__metadata = data.__metadata;
+
         // Get Attachment
-        if (modelAppConfig.oData.settings.properties.report.enableAttachment)
-            report.getAttachment(data);
+        if (modelAppConfig.oData.settings.properties.report.enableAttachment) report.getAttachment(data);
 
         // Open Dialog
-        if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().open)
-            oApp.getParent().getParent().open();
+        if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().open) oApp.getParent().getParent().open();
 
         // Data Preprocessing
         modelAppConfig.oData.settings.fieldsSel.forEach(function (field) {
@@ -280,12 +257,12 @@ const report = {
 
             // Default Value
             if (field.default && !data[name]) {
-                data[name] = ["Switch", "CheckBox"].includes(type) ? true : field.default;
+                if (data && data[name]) data[name] = ["Switch", "CheckBox"].includes(type) ? true : field.default;
             }
 
             // Date Format
             if (["DatePicker", "DateTimePicker"].includes(type)) {
-                if (data[name]) data[name] = sap.n.Adaptive.getDate(data[name]);
+                if (data && data[name]) data[name] = sap.n.Adaptive.getDate(data[name]);
             }
 
             // MultiSelect Parser
@@ -326,8 +303,7 @@ const report = {
                 report.checkFieldsReadOnly(
                     data[modelAppConfig.oData.settings.properties.form.field1ReadOnly],
                     modelAppConfig.oData.settings.properties.form.operator1ReadOnly,
-                    modelAppConfig.oData.settings.properties.form.value1ReadOnly ||
-                        modelAppConfig.oData.settings.properties.form.sysvar1ReadOnly
+                    modelAppConfig.oData.settings.properties.form.value1ReadOnly || modelAppConfig.oData.settings.properties.form.sysvar1ReadOnly
                 )
             ) {
                 report.setFieldsReadOnly();
@@ -347,8 +323,7 @@ const report = {
                 report.checkFieldsReadOnly(
                     data[modelAppConfig.oData.settings.properties.form.field2ReadOnly],
                     modelAppConfig.oData.settings.properties.form.operator2ReadOnly,
-                    modelAppConfig.oData.settings.properties.form.value2ReadOnly ||
-                        modelAppConfig.oData.settings.properties.form.sysvar2ReadOnly
+                    modelAppConfig.oData.settings.properties.form.value2ReadOnly || modelAppConfig.oData.settings.properties.form.sysvar2ReadOnly
                 )
             ) {
                 report.setFieldsReadOnly();
@@ -357,55 +332,45 @@ const report = {
             }
         }
 
+        // If Save is not enabled
+        if (!modelAppConfig.oData.settings.properties.report.enableSave) {
+            report.setFieldsReadOnly();
+        }
+
         modelAppData.setData(data);
         modelAppData.refresh();
 
         // Tabs
         if (modelAppConfig.oData.settings.properties.report._tab1Nav) {
-            report.openChild(
-                modelAppConfig.oData.settings.properties.report._tab1Nav,
-                barEditItem1
-            );
+            report.openChild(modelAppConfig.oData.settings.properties.report._tab1Nav, barEditItem1);
         } else {
             barEditItem1.destroyContent();
             barEditItem1.setCount(0);
         }
 
         if (modelAppConfig.oData.settings.properties.report._tab2Nav) {
-            report.openChild(
-                modelAppConfig.oData.settings.properties.report._tab2Nav,
-                barEditItem2
-            );
+            report.openChild(modelAppConfig.oData.settings.properties.report._tab2Nav, barEditItem2);
         } else {
             barEditItem2.destroyContent();
             barEditItem2.setCount(0);
         }
 
         if (modelAppConfig.oData.settings.properties.report._tab3Nav) {
-            report.openChild(
-                modelAppConfig.oData.settings.properties.report._tab3Nav,
-                barEditItem3
-            );
+            report.openChild(modelAppConfig.oData.settings.properties.report._tab3Nav, barEditItem3);
         } else {
             barEditItem3.destroyContent();
             barEditItem3.setCount(0);
         }
 
         if (modelAppConfig.oData.settings.properties.report._tab4Nav) {
-            report.openChild(
-                modelAppConfig.oData.settings.properties.report._tab4Nav,
-                barEditItem4
-            );
+            report.openChild(modelAppConfig.oData.settings.properties.report._tab4Nav, barEditItem4);
         } else {
             barEditItem4.destroyContent();
             barEditItem4.setCount(0);
         }
 
         if (modelAppConfig.oData.settings.properties.report._tab5Nav) {
-            report.openChild(
-                modelAppConfig.oData.settings.properties.report._tab5Nav,
-                barEditItem5
-            );
+            report.openChild(modelAppConfig.oData.settings.properties.report._tab5Nav, barEditItem5);
         } else {
             barEditItem5.destroyContent();
             barEditItem5.setCount(0);
@@ -418,9 +383,10 @@ const report = {
         toolHeaderSave.setEnabled(false);
 
         const s = modelAppConfig.oData.settings;
-        const saveData = {
-            id: modelAppData.oData.id,
-        };
+        
+        let saveData = {};
+
+        if (modelAppData.oData && modelAppData.oData.id) saveData.id = modelAppData.oData.id;
 
         s.fieldsSel.forEach(function (f) {
             // Format Data for Boolean
@@ -428,8 +394,8 @@ const report = {
                 if (!modelAppData.oData[f.name]) modelAppData.oData[f.name] = false;
             }
 
-            // if (f.editable) saveData[f.name] = modelAppData.oData[f.name];
-            saveData[f.name] = modelAppData.oData[f.name];
+            // saveData[f.name] = modelAppData.oData[f.name];
+            if (f.editable) saveData[f.name] = modelAppData.oData[f.name];
         });
 
         let formValid = true;
@@ -440,11 +406,7 @@ const report = {
             })
             .forEach(function (f) {
                 delete modelAppData.oData[f.name + "ValueState"];
-                if (
-                    saveData[f.name] === null ||
-                    saveData[f.name] === undefined ||
-                    saveData[f.name] === ""
-                ) {
+                if (saveData[f.name] === null || saveData[f.name] === undefined || saveData[f.name] === "") {
                     formValid = false;
                     modelAppData.oData[f.name + "ValueState"] = "Error";
                 }
@@ -456,6 +418,9 @@ const report = {
             modelAppData.refresh();
             return;
         }
+
+        // Add navigation KeyFields to Save
+        if (report.__metadata) saveData.__metadata = report.__metadata;
 
         sap.n.Adaptive.run(modelAppConfig.oData, saveData, "Save")
             .then(function (data) {
@@ -474,25 +439,18 @@ const report = {
 
                     sap.m.MessageToast.show(toastSaved.getText());
 
-                    if (
-                        oApp.getParent() &&
-                        oApp.getParent().getParent() &&
-                        oApp.getParent().getParent().close
-                    ) {
+                    if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close) {
                         oApp.getParent().getParent().close();
                     }
 
                     if (s.events && s.events.afterChildSave) s.events.afterChildSave();
 
-                    const openedAsSidepanel =
-                        modelAppConfig.oData.settings?.navigation?.openAs === "S";
+                    const openedAsSidepanel = modelAppConfig.oData.settings?.navigation?.openAs === "S";
 
                     if (openedAsSidepanel) {
                         // a new record is being created in the sidepanel tab
                         if (!saveData.id) {
-                            sap.n.Shell.closeSidepanelTab(
-                                sap.n.Shell.getTabKey("PLANET9_ADAPTIVE_EDIT", "")
-                            );
+                            sap.n.Shell.closeSidepanelTab(sap.n.Shell.getTabKey("PLANET9_ADAPTIVE_EDIT", ""));
                         }
                     } else {
                         report.close();
@@ -504,18 +462,8 @@ const report = {
             .catch(function (data) {
                 const j = data.responseJSON;
                 if (j && j.status) {
-                    if (
-                        (j.status.indexOf("UNIQUE constraint failed") > -1 ||
-                            j.status.indexOf("duplicate key value") > -1) &&
-                        s.properties.report.textUnique
-                    ) {
-                        sap.m.MessageToast.show(
-                            sap.n.Adaptive.translateProperty(
-                                "report",
-                                "textUnique",
-                                modelAppConfig.oData
-                            )
-                        );
+                    if ((j.status.indexOf("UNIQUE constraint failed") > -1 || j.status.indexOf("duplicate key value") > -1) && s.properties.report.textUnique) {
+                        sap.m.MessageToast.show(sap.n.Adaptive.translateProperty("report", "textUnique", modelAppConfig.oData));
                     } else {
                         sap.m.MessageToast.show(j.status);
                     }
@@ -529,15 +477,11 @@ const report = {
     },
 
     close: function () {
-        const isDialog =
-            oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close;
+        const isDialog = oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close;
 
         if (isDialog) {
             oApp.getParent().getParent().close();
-        } else if (
-            modelAppConfig.oData.settings.events &&
-            modelAppConfig.oData.settings.events.onChildBack
-        ) {
+        } else if (modelAppConfig.oData.settings.events && modelAppConfig.oData.settings.events.onChildBack) {
             modelAppConfig.oData.settings.events.onChildBack();
         } else if (AppCache && AppCache.Back) {
             AppCache.Back();
@@ -613,8 +557,7 @@ const report = {
                     parent.addContent(form);
 
                     form = new sap.ui.layout.form.SimpleForm({
-                        layout:
-                            config.settings.properties.form.formLayout || "ResponsiveGridLayout",
+                        layout: config.settings.properties.form.formLayout || "ResponsiveGridLayout",
                         editable: true,
                         backgroundDesign: "Transparent",
                         columnsL: parseInt(field.columnsL) || 2,
@@ -710,8 +653,7 @@ const report = {
                             dateValue: "{AppData>/" + field.name + "}",
                         });
 
-                        if (field.dateTimePickerFormat)
-                            newField.setDisplayFormat(field.dateTimePickerFormat);
+                        if (field.dateTimePickerFormat) newField.setDisplayFormat(field.dateTimePickerFormat);
 
                         if (field.description) {
                             form.addContent(report.buildInputDescription(newField, field));
@@ -977,34 +919,15 @@ const report = {
     buildVisibleProp: function (field) {
         let visibleCond = field.visible;
 
-        let visibleValue = field.visibleFixedValue
-            ? field.visibleFixedValue
-            : field.visibleSystemValue;
+        let visibleValue = field.visibleFixedValue ? field.visibleFixedValue : field.visibleSystemValue;
 
         let visibleStatement = field.visibleInverse ? "false:true" : "true:false";
 
         if (field.visibleFieldName && field.visibleCondition && visibleValue) {
             if (isNaN(visibleValue)) {
-                visibleCond =
-                    "{= ${AppData>/" +
-                    field.visibleFieldName +
-                    "}.toString() " +
-                    field.visibleCondition +
-                    " '" +
-                    visibleValue +
-                    "' ? " +
-                    visibleStatement +
-                    " }";
+                visibleCond = "{= ${AppData>/" + field.visibleFieldName + "}.toString() " + field.visibleCondition + " '" + visibleValue + "' ? " + visibleStatement + " }";
             } else {
-                visibleCond =
-                    "{= parseInt(${AppData>/" +
-                    field.visibleFieldName +
-                    "}) " +
-                    field.visibleCondition +
-                    visibleValue +
-                    " ? " +
-                    visibleStatement +
-                    " }";
+                visibleCond = "{= parseInt(${AppData>/" + field.visibleFieldName + "}) " + field.visibleCondition + visibleValue + " ? " + visibleStatement + " }";
             }
         }
 
