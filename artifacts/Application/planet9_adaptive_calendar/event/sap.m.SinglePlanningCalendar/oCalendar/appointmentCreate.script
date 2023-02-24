@@ -1,0 +1,12 @@
+const oStartDate = oEvent.getParameter("startDate");
+const oEndDate = oEvent.getParameter("endDate");
+
+if (!modelAppConfig.oData.settings.data) modelAppConfig.oData.settings.data = {};
+
+const startDateField = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, "type", "startDate");
+if (startDateField) modelAppConfig.oData.settings.data[startDateField.name] = oStartDate;
+
+const endDateField = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, "type", "endDate");
+if (endDateField) modelAppConfig.oData.settings.data[endDateField.name] = oEndDate;
+
+report.create();

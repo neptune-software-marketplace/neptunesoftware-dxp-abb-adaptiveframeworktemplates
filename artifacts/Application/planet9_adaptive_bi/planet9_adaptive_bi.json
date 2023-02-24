@@ -5682,7 +5682,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.2.1745",
+	"ver": "23.2.21.118",
 	"application": "planet9_adaptive_bi",
 	"title": "Analytic Slice&Dice",
 	"description": "Analytic Slice&Dice",
@@ -5707,7 +5707,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": null,
+	"compiledCss": "file://script/undefined/undefined.script",
 	"header": "",
 	"manifest": "",
 	"globalScript": "",

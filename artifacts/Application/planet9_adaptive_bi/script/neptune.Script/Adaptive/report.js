@@ -60,10 +60,13 @@ const report = {
 
         if (isDialog) {
             p.getParent().close();
+            return;
         } else if (evts && evts.onChildBack) {
             evts.onChildBack();
+            return;
         } else if (AppCache && AppCache.Back) {
             AppCache.Back();
+            return;
         } else if (!isDialog && sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
             sap.n.HashNavigation.deleteNavItem();
         }

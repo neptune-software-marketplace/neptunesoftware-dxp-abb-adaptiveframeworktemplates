@@ -1,0 +1,16 @@
+var appointment = oEvent.getParameter("appointment");
+var startDate = oEvent.getParameter("startDate");
+var endDate = oEvent.getParameter("endDate");
+
+if (!appointment) return;
+
+var id = appointment.getKey();
+var data = ModelData.FindFirst(modeloCalendar.oData, "id", id);
+
+appointment.setStartDate(startDate);
+appointment.setEndDate(endDate);
+
+if (report.fieldStartDate) data[report.fieldStartDate] = startDate;
+if (report.fieldEndDate) data[report.fieldEndDate] = endDate;
+
+report.save(data);

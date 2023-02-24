@@ -383,7 +383,7 @@ const report = {
         toolHeaderSave.setEnabled(false);
 
         const s = modelAppConfig.oData.settings;
-        
+
         let saveData = {};
 
         if (modelAppData.oData && modelAppData.oData.id) saveData.id = modelAppData.oData.id;
@@ -481,10 +481,13 @@ const report = {
 
         if (isDialog) {
             oApp.getParent().getParent().close();
+            return;
         } else if (modelAppConfig.oData.settings.events && modelAppConfig.oData.settings.events.onChildBack) {
             modelAppConfig.oData.settings.events.onChildBack();
+            return;
         } else if (AppCache && AppCache.Back) {
             AppCache.Back();
+            return;
         }
 
         if (sap.n.Shell && sap.n.Shell.closeAllSidepanelTabs) sap.n.Shell.closeAllSidepanelTabs();

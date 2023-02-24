@@ -577,10 +577,13 @@ const report = {
 
         if (isDialog) {
             oApp.getParent().getParent().close();
+            return;
         } else if (modelAppConfig.oData.settings.events && modelAppConfig.oData.settings.events.onChildBack) {
             modelAppConfig.oData.settings.events.onChildBack();
+            return;
         } else if (AppCache && AppCache.Back) {
             AppCache.Back();
+            return;
         }
 
         if (sap.n.Shell && sap.n.Shell.closeAllSidepanelTabs) sap.n.Shell.closeAllSidepanelTabs();
@@ -1033,6 +1036,7 @@ const report = {
                             number: getFieldBindingText(f),
                         };
 
+                        if (f.statusInverted) opts.inverted = true;
                         if (f.numberUnitType) opts.unit = `{${f.name}_unit}`;
                         if (f.numberStateType) opts.state = `{${f.name}_state}`;
 

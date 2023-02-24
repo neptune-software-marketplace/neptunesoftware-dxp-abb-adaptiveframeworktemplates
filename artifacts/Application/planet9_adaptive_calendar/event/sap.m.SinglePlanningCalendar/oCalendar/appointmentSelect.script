@@ -1,0 +1,7 @@
+if (modelAppConfig.oData.settings.properties.report._navigationItemPress) {
+    var oAppointment = oEvent.getParameter("appointment");
+    if (!oAppointment) return;
+    var id = oAppointment.getKey();
+    var data = ModelData.FindFirst(modeloCalendar.oData, "id", id);
+    sap.n.Adaptive.navigation(modelAppConfig.oData.settings.properties.report._navigationItemPress, data, report.events)
+}

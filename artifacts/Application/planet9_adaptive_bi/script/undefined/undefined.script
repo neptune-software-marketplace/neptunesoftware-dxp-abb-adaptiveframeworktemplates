@@ -1,0 +1,100 @@
+.pvtUi {
+  height: 100%;
+  width: 100%;
+  font-size: 0.875rem;
+  font-family: "72";
+  color: #fff;
+}
+
+.pvtUiCell {
+  display: none;
+}
+
+table.pvtUi tr {
+  height: 0;
+}
+
+table.pvtTable {
+  font-size: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+table.pvtTable tbody tr td {
+  padding: 8px 8px 8px 20px;
+}
+
+table.pvtTable thead tr th,
+table.pvtTable tbody tr th {
+  font-size: inherit;
+  background-color: #f7f7f7;
+  border: 1px solid #e5e5e5;
+  padding: 8px;
+  color: #32363a;
+}
+
+.pvtGrandTotal,
+.pvtTotal {
+  background-color: whitesmoke !important;
+}
+
+.sapUiTheme-sap_fiori_3_dark table.pvtTable .pvtTotalLabel,
+.sapUiTheme-sap_horizon_dark table.pvtTable .pvtTotalLabel {
+  background-color: #12171c !important;
+}
+
+.sapUiTheme-sap_horizon_dark .toolHeader.sapMTB.sapMTBStandard {
+  border-bottom: solid 0.0625rem #2e3742;
+}
+
+.sapUiTheme-sap_horizon .toolHeader.sapMTB.sapMTBStandard {
+  border-bottom: solid 0.0625rem #d9d9d9;
+}
+
+.sapUiTheme-sap_fiori_3_dark table.pvtTable tbody tr td,
+.sapUiTheme-sap_horizon_dark table.pvtTable tbody tr td {
+  background-color: #29313a;
+  border: 1px solid #3a4552;
+  color: white;
+  white-space: nowrap;
+}
+
+.sapUiTheme-sap_fiori_3_dark table.pvtTable thead tr th,
+.sapUiTheme-sap_fiori_3_dark table.pvtTable tbody tr th,
+.sapUiTheme-sap_horizon_dark table.pvtTable thead tr th,
+.sapUiTheme-sap_horizon_dark table.pvtTable tbody tr th {
+  background-color: #1d232a;
+  border: 1px solid #3a4552;
+  color: white;
+  white-space: nowrap;
+  border-top: none;
+}
+
+.sapUiTheme-sap_fiori_3_dark .pvtGrandTotal,
+.sapUiTheme-sap_fiori_3_dark .pvtTotal,
+.sapUiTheme-sap_horizon_dark .pvtGrandTotal,
+.sapUiTheme-sap_horizon_dark .pvtTotal {
+  background-color: #12171c !important;
+}
+
+.nepSplitterNoAnimation .sapUiLoSplitterContent {
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  -moz-transition: none !important;
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
+.pivotEntries .sapMObjectNumberText {
+  font-size: 18px !important;
+}
+
+.nepDropTable .sapMListTblCell.sapMListTblCellNoData {
+  background: #f0af24;
+}
+
+.nepNoRadiusTop {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

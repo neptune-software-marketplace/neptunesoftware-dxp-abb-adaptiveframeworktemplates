@@ -149,7 +149,7 @@ var report = {
         let postData = null;
         const s = modelAppConfig.oData.settings;
 
-        if (s.properties.report._navigationCreate.keyField) {
+        if (s.properties.report._navigationCreate && s.properties.report._navigationCreate.keyField) {
             postData = { _defaultData: {} };
 
             s.properties.report._navigationCreate.keyField.forEach(function (mapping) {

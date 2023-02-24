@@ -822,7 +822,7 @@ const metadata = {
             items: valuesToKeyText(["", "Email", "Number", "Password", "Tel", "Text", "Url"]),
         },
 
-        statusInverted: { type: "CheckBox", label: "Inverted", visible: vb.typeObjectStatus },
+        statusInverted: { type: "CheckBox", label: "Inverted", visible: "{= ${/type} === 'ObjectStatus' || ${/type} === 'ObjectNumber' ? true : false }" },
 
         stepInputTextAlign: {
             type: "SingleSelect",
