@@ -858,104 +858,132 @@
 							"attributes": [],
 							"data": [
 								{
-									"fieldNo": "d7e955cb-6766-4f84-baa7-64759c660ec7",
-									"fieldName": "tabData",
+									"fieldNo": "7b0a4eca-f445-4055-d9e9-2ed5e8bff7e0",
+									"fieldName": "scrollTableMain",
 									"fieldParent": "7af36c73-300e-4896-97f0-0f0d710a8214",
-									"fieldType": "sap.m.Table",
+									"fieldType": "sap.m.ScrollContainer",
 									"script": "",
 									"customComponent": false,
-									"bindingValue": "Generic Array",
-									"bindingType": "h",
-									"bindingSource": "P9",
 									"request": [],
 									"response": [],
 									"attributes": [
 										{
-											"attribute": "showSeparators",
+											"attribute": "width",
 											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/showSeparators}",
+											"value": "100%",
 											"script": "",
 											"translation": []
 										},
 										{
-											"attribute": "modeAnimationOn",
+											"attribute": "height",
 											"grouping": "Properties",
-											"value": "false",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "inset",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/inset}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growingThreshold",
-											"grouping": "Properties",
-											"value": "100",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growingScrollToLoad",
-											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "growing",
-											"grouping": "Properties",
-											"value": "true",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "fixedLayout",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/fixedLayout}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "delete",
-											"grouping": "Events",
-											"value": "Anonymous Function",
-											"script": "file://event/sap.m.Table/tabData/delete.script",
-											"translation": []
-										},
-										{
-											"attribute": "busyIndicatorDelay",
-											"grouping": "Properties",
-											"value": "250",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "alternateRowColors",
-											"grouping": "Properties",
-											"value": "{AppConfig>/settings/properties/table/alternateRowColors}",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "sticky",
-											"grouping": "Properties",
-											"value": "[\"ColumnHeaders\"]",
-											"script": "",
-											"translation": []
-										},
-										{
-											"attribute": "contextualWidth",
-											"grouping": "Properties",
-											"value": "Auto",
+											"value": "100%",
 											"script": "",
 											"translation": []
 										}
 									],
-									"data": []
+									"data": [
+										{
+											"fieldNo": "d7e955cb-6766-4f84-baa7-64759c660ec7",
+											"fieldName": "tabData",
+											"fieldParent": "7b0a4eca-f445-4055-d9e9-2ed5e8bff7e0",
+											"fieldType": "sap.m.Table",
+											"script": "",
+											"customComponent": false,
+											"bindingValue": "Generic Array",
+											"bindingType": "h",
+											"bindingSource": "P9",
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "showSeparators",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/table/showSeparators}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "modeAnimationOn",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "inset",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/table/inset}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "growingThreshold",
+													"grouping": "Properties",
+													"value": "100",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "growingScrollToLoad",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "growing",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "fixedLayout",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/table/fixedLayout}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "delete",
+													"grouping": "Events",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.m.Table/tabData/delete.script",
+													"translation": []
+												},
+												{
+													"attribute": "busyIndicatorDelay",
+													"grouping": "Properties",
+													"value": "250",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "alternateRowColors",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/table/alternateRowColors}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "sticky",
+													"grouping": "Properties",
+													"value": "[\"ColumnHeaders\"]",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "contextualWidth",
+													"grouping": "Properties",
+													"value": "Auto",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
 								}
 							]
 						},
@@ -1988,7 +2016,7 @@
 								{
 									"attribute": "horizontal",
 									"grouping": "Properties",
-									"value": "false",
+									"value": "true",
 									"script": "",
 									"translation": []
 								},
@@ -2104,22 +2132,16 @@
 											"value": "[\"ColumnHeaders\"]",
 											"script": "",
 											"translation": []
+										},
+										{
+											"attribute": "contextualWidth",
+											"grouping": "Properties",
+											"value": "Auto",
+											"script": "",
+											"translation": []
 										}
 									],
-									"data": [
-										{
-											"fieldNo": "5d2d1171-4380-4774-952f-6565dadbc4d7",
-											"fieldName": "oColumn",
-											"fieldParent": "580d43ad-f32c-426c-952e-487e88bdf937",
-											"fieldType": "sap.m.Column",
-											"script": "",
-											"customComponent": false,
-											"request": [],
-											"response": [],
-											"attributes": [],
-											"data": []
-										}
-									]
+									"data": []
 								}
 							]
 						}
@@ -4172,7 +4194,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.24.1440",
+	"ver": "23.2.26.1511",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",

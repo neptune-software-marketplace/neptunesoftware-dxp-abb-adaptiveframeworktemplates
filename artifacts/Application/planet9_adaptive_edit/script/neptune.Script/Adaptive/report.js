@@ -198,6 +198,16 @@ const report = {
                 if (oAction === "YES") {
                     const { id } = data;
                     sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (data) {
+                        // Message from Server Script
+                        if (data.message && data.message.text) {
+                            if (data.message.type) {
+                                sap.m.MessageBox[data.message.type](data.message.text);
+                            } else {
+                                sap.m.MessageBox.information(data.message.text);
+                            }
+                            return;
+                        }
+
                         sap.m.MessageToast.show(toastDelete.getText());
 
                         if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().close) {

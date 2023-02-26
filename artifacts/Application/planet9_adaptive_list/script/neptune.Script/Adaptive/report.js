@@ -356,6 +356,7 @@ const report = {
             }
 
             if (d[name] === "") delete d[name];
+            if (Array.isArray(d[name]) && !d[name].length) delete d[name];
         });
 
         report.tabObject.setBusy(true);
@@ -534,8 +535,20 @@ const report = {
                 if (oAction === "YES") {
                     const { id } = data;
                     sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (data) {
+                        
+                        // Message from Server Script
+                        if (data.message && data.message.text) {
+                            if (data.message.type) {
+                                sap.m.MessageBox[data.message.type](data.message.text);
+                            } else {
+                                sap.m.MessageBox.information(data.message.text);
+                            }
+                            return;
+                        }
+
                         report.run();
-                        sap.n.Shell.closeSidepanelTab(id);
+
+                        if (sap.n.Shell.closeSidepanelTab) sap.n.Shell.closeSidepanelTab(id);
                     });
                 }
             },
