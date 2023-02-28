@@ -404,8 +404,7 @@ const report = {
                 if (!modelAppData.oData[f.name]) modelAppData.oData[f.name] = false;
             }
 
-            // saveData[f.name] = modelAppData.oData[f.name];
-            if (f.editable) saveData[f.name] = modelAppData.oData[f.name];
+            saveData[f.name] = modelAppData.oData[f.name];
         });
 
         let formValid = true;
