@@ -29,6 +29,15 @@
   border-radius: 0.75rem;
 }
 
+.nepTitleSmall {
+  font-size: 1rem !important;
+  padding-top: 20px !important;
+}
+
+.nepCounterSmall {
+  padding-top: 20px !important;
+}
+
 .nepDynamicPage .sapMObjStatusText {
   line-height: 1.5rem !important;
 }

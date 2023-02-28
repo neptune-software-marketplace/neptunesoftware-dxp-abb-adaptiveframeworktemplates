@@ -437,6 +437,9 @@ const report = {
                     } else {
                         tabFilter.setCount(data.length);
                     }
+
+                    oPageHeaderTitle.addStyleClass("nepTitleSmall");
+                    oPageHeaderNumber.addStyleClass("nepCounterSmall");
                 }
 
                 // Sorting Client Side
@@ -535,7 +538,6 @@ const report = {
                 if (oAction === "YES") {
                     const { id } = data;
                     sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (data) {
-                        
                         // Message from Server Script
                         if (data.message && data.message.text) {
                             if (data.message.type) {

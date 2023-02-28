@@ -2014,13 +2014,6 @@
 									"translation": []
 								},
 								{
-									"attribute": "horizontal",
-									"grouping": "Properties",
-									"value": "true",
-									"script": "",
-									"translation": []
-								},
-								{
 									"attribute": "height",
 									"grouping": "Properties",
 									"value": "calc(100% - 100px)",
@@ -4194,7 +4187,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.26.1511",
+	"ver": "23.2.28.1425",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
