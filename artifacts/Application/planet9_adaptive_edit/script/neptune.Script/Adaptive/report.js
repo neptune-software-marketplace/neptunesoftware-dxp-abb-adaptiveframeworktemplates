@@ -4,6 +4,8 @@ const report = {
     formObject: null,
     pages: {},
     __metadata: null,
+    uniqueKeyValue: null,
+    uniqueKeyField: null,
 
     events: {
         onChildBack: function () {
@@ -247,6 +249,18 @@ const report = {
         // Save OData Metadata Key
         if (data && data.__metadata) report.__metadata = data.__metadata;
 
+        // Save ServiceNow Key
+        if (data && data["sys_id"]) {
+            report.uniqueKeyField = "sys_id";
+            report.uniqueKeyValue = data["sys_id"];
+        }
+
+        // Save SalesForce Key
+        if (data && data["Id"]) {
+            report.uniqueKeyField = "Id";
+            report.uniqueKeyValue = data["Id"];
+        }
+
         // Get Attachment
         if (modelAppConfig.oData.settings.properties.report.enableAttachment) report.getAttachment(data);
 
@@ -430,6 +444,11 @@ const report = {
 
         // Add navigation KeyFields to Save
         if (report.__metadata) saveData.__metadata = report.__metadata;
+
+        // Add UniqueKey
+        if (report.uniqueKeyValue && report.uniqueKeyField) {
+            saveData[report.uniqueKeyField] = report.uniqueKeyValue;
+        }
 
         sap.n.Adaptive.run(modelAppConfig.oData, saveData, "Save")
             .then(function (data) {
