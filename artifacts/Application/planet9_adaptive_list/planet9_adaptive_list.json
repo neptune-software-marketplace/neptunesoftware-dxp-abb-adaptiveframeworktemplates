@@ -81,6 +81,13 @@
 					"response": [],
 					"attributes": [
 						{
+							"attribute": "preserveHeaderStateOnScroll",
+							"grouping": "Properties",
+							"value": "{AppConfig>/settings/properties/form/headerPreserveState}",
+							"script": "",
+							"translation": []
+						},
+						{
 							"attribute": "headerExpanded",
 							"grouping": "Properties",
 							"value": "{AppConfig>/settings/properties/form/headerExpanded}",
@@ -811,7 +818,7 @@
 								{
 									"attribute": "pinnable",
 									"grouping": "Properties",
-									"value": "false",
+									"value": "true",
 									"script": "",
 									"translation": []
 								},
@@ -4166,18 +4173,6 @@
 							"data": []
 						},
 						{
-							"fieldNo": "12445fa3-3dbc-4e7a-f9f9-8e3bbe7f1514",
-							"fieldName": "Input",
-							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
-							"fieldType": "sap.m.Input",
-							"script": "",
-							"customComponent": false,
-							"request": [],
-							"response": [],
-							"attributes": [],
-							"data": []
-						},
-						{
 							"fieldNo": "ab6de925-f229-4718-b25d-83c69f386c39",
 							"fieldName": "report",
 							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
@@ -4199,7 +4194,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.5.148",
+	"ver": "23.3.5.1522",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",

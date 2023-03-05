@@ -295,6 +295,7 @@ const metadata = {
             titleProperties: { type: "Title", label: "Properties" },
             enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
             headerExpanded: { type: "CheckBox", label: "Filter Expanded", default: true },
+            headerPreserveState: { type: "CheckBox", label: "Preserve Header", default: false },
         },
 
         table: {
