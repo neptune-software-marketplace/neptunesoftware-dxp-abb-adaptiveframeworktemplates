@@ -905,6 +905,9 @@ const report = {
                                 events.valueRequestKey = field.valueRequestKey;
                                 sap.n.Adaptive.navigation(field._navigation, appdata, events);
                             },
+                            submit: function (oEvent) {
+                                if (run) run();
+                            },
                         });
 
                         if (field.description) {

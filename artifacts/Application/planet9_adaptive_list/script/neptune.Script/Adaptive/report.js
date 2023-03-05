@@ -933,7 +933,11 @@ const report = {
 
                     let fieldValue = colData[config.settings.events.valueRequestKey] || colData["id"];
                     let fieldComp = sap.ui.getCore().byId(config.settings.events.valueRequestField);
-                    if (fieldValue && fieldComp) fieldComp.setValue(fieldValue);
+
+                    if (fieldValue && fieldComp) {
+                        fieldComp.setValue(fieldValue);
+                        fieldComp.fireSubmit();
+                    }
 
                     report.close();
                 });
@@ -1832,13 +1836,15 @@ const report = {
                             value: "{AppData>/" + field.name + "}",
                             showValueHelp: true,
                             valueHelpRequest: function (oEvent) {
-                                events = {
-                                    valueRequest: true,
-                                    valueRequestField: selField.sId,
-                                    valueRequestKey: field.valueRequestKey,
-                                };
+                                let events = report.events;
+                                events.valueRequest = true;
+                                events.valueRequestField = selField.sId;
+                                events.valueRequestKey = field.valueRequestKey;
 
                                 sap.n.Adaptive.navigation(field._navigation, appdata, events);
+                            },
+                            submit: function (oEvent) {
+                                if (run) run();
                             },
                         });
                         form.addContent(selField);

@@ -15,7 +15,6 @@ const vb = {
 
     typeMultiOrSingleSelectLookup: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
     typeMultiOrSingleSelectScript: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
-    typeInput: "{= ${/type} === 'Input' || ! ${/type} ? true : false }",
     typeLink: "{= ${/type} === 'Link' ? true : false }",
     typeButton: "{= ${/type} === 'Button' ? true : false }",
 
@@ -783,7 +782,7 @@ const metadata = {
         scriptValue: { type: "Script", label: "Script Value" },
 
         titleSettings: { type: "Title", label: "Properties" },
-        selEqual: { type: "CheckBox", label: "Strict Search", visible: vb.typeInput },
+        selEqual: { type: "CheckBox", label: "Strict Search", visible: "{= ${/type} === 'Input' || ! ${/type} || ${/type} === 'ValueHelp' ? true : false }" },
         required: { type: "CheckBox", label: "Required", default: false },
         visible: { type: "CheckBox", label: "Visible", default: true },
     },
