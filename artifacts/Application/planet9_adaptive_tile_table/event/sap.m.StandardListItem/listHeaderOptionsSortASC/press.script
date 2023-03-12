@@ -12,6 +12,7 @@ if (modelAppConfig.oData.settings.properties.table.enablePagination) {
     sorters.push(new sap.ui.model.Sorter(modelpopHeader.oData.name, false, false));
 }
 
+report.handleTableSortIndicator();
 
 binding.sort(sorters);
 popHeader.close();

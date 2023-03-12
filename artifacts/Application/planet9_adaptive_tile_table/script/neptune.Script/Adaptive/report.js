@@ -5,6 +5,7 @@ var report = {
     groupOrder: null,
     sortBy: null,
     sortOrder: null,
+    colHeaders: null,
     pages: {},
     initId: null,
 
@@ -534,6 +535,7 @@ var report = {
 
     buildTableColumns: function (table, config, events) {
         try {
+            report.colHeaders = {};
             const props = config.settings.properties;
             if (props.table.enableCompact) {
                 table.addStyleClass("sapUiSizeCompact");
@@ -593,6 +595,24 @@ var report = {
                 if (f.hAlign) ColumnHeader.setHAlign(f.hAlign);
                 if (f.vAlign) ColumnHeader.setVAlign(f.vAlign);
 
+                // Sorting
+                if (f.enableSort || f.enableGroup) {
+                    var _column_delegate = {
+                        onclick: function (e) {
+                            if (events.onHeaderClick) events.onHeaderClick(f, ColumnHeader);
+                        },
+                    };
+                    ColumnHeader.addEventDelegate(_column_delegate);
+
+                    ColumnHeader.exit = function () {
+                        ColumnHeader.removeEventDelegate(_column_delegate);
+                    };
+
+                    ColumnHeader.setStyleClass("nepMTableSortCell");
+
+                    report.colHeaders[f.name] = ColumnHeader;
+                }
+
                 // Enable Sum
                 if (f.enableSum && f.type === "ObjectNumber") {
                     const prefix = "AppConfig>/settings/properties/table/_sum/";
@@ -610,17 +630,6 @@ var report = {
                         wrapping: true,
                     })
                 );
-
-                if (f.enableSort || f.enableGroup) {
-                    let ColumnButton = new sap.ui.core.Icon({
-                        src: "sap-icon://slim-arrow-down",
-                        press: function (_oEvent) {
-                            if (events.onHeaderClick) events.onHeaderClick(f, this);
-                        },
-                    });
-                    ColumnButton.addStyleClass("sapUiTinyMarginBegin");
-                    HBox.addItem(ColumnButton);
-                }
 
                 ColumnHeader.setHeader(HBox);
                 table.addColumn(ColumnHeader);
@@ -943,6 +952,22 @@ var report = {
             table.bindAggregation("items", { path: "/", template: col, templateShareable: false });
         } catch (e) {
             console.log(e);
+        }
+    },
+
+    handleTableSortIndicator: function () {
+        if (!report.sortBy) return;
+
+        // Clear All
+        const keys = Object.keys(report.colHeaders);
+
+        keys.forEach(function (key) {
+            report.colHeaders[key].setSortIndicator("None");
+        });
+
+        if (report.colHeaders[report.sortBy]) {
+            const sortIndicator = report.sortOrder === "ASC" ? "Ascending" : "Descending";
+            report.colHeaders[report.sortBy].setSortIndicator(sortIndicator);
         }
     },
 };

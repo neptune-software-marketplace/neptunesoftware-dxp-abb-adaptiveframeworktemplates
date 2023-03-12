@@ -30,47 +30,6 @@
 			],
 			"data": [
 				{
-					"fieldNo": "187e8a33-bda4-4573-c52c-5fecd1c27eea",
-					"fieldName": "oPageEmpty",
-					"fieldParent": "8db38342-83bc-4e8d-fbc9-ae83b9d85a66",
-					"fieldType": "sap.m.Page",
-					"script": "",
-					"customComponent": false,
-					"request": [],
-					"response": [],
-					"attributes": [
-						{
-							"attribute": "showHeader",
-							"grouping": "Properties",
-							"value": "false",
-							"script": "",
-							"translation": []
-						},
-						{
-							"attribute": "showFooter",
-							"grouping": "Properties",
-							"value": "false",
-							"script": "",
-							"translation": []
-						},
-						{
-							"attribute": "enableScrolling",
-							"grouping": "Properties",
-							"value": "false",
-							"script": "",
-							"translation": []
-						},
-						{
-							"attribute": "backgroundDesign",
-							"grouping": "Properties",
-							"value": "Solid",
-							"script": "",
-							"translation": []
-						}
-					],
-					"data": []
-				},
-				{
 					"fieldNo": "1009d86b-3585-42a1-dcf3-021ef4ec1f0f",
 					"fieldName": "oPageDynamic",
 					"fieldParent": "8db38342-83bc-4e8d-fbc9-ae83b9d85a66",
@@ -1580,12 +1539,55 @@
 					]
 				},
 				{
+					"fieldNo": "187e8a33-bda4-4573-c52c-5fecd1c27eea",
+					"fieldName": "oPageEmpty",
+					"fieldParent": "8db38342-83bc-4e8d-fbc9-ae83b9d85a66",
+					"fieldType": "sap.m.Page",
+					"script": "",
+					"customComponent": false,
+					"disabled": true,
+					"request": [],
+					"response": [],
+					"attributes": [
+						{
+							"attribute": "showHeader",
+							"grouping": "Properties",
+							"value": "false",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "showFooter",
+							"grouping": "Properties",
+							"value": "false",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "enableScrolling",
+							"grouping": "Properties",
+							"value": "false",
+							"script": "",
+							"translation": []
+						},
+						{
+							"attribute": "backgroundDesign",
+							"grouping": "Properties",
+							"value": "Solid",
+							"script": "",
+							"translation": []
+						}
+					],
+					"data": []
+				},
+				{
 					"fieldNo": "bc96a63a-7d07-4d04-b4b6-6374a3249a52",
 					"fieldName": "oPageChild",
 					"fieldParent": "8db38342-83bc-4e8d-fbc9-ae83b9d85a66",
 					"fieldType": "sap.m.Page",
 					"script": "",
 					"customComponent": false,
+					"disabled": true,
 					"request": [],
 					"response": [],
 					"attributes": [
@@ -1633,6 +1635,7 @@
 							"fieldType": "sap.m.Panel",
 							"script": "",
 							"customComponent": false,
+							"disabled": true,
 							"request": [],
 							"response": [],
 							"attributes": [
@@ -1673,6 +1676,7 @@
 									"fieldType": "sap.m.Toolbar",
 									"script": "",
 									"customComponent": false,
+									"disabled": true,
 									"request": [],
 									"response": [],
 									"attributes": [
@@ -1699,6 +1703,7 @@
 											"fieldType": "sap.m.Label",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -1719,6 +1724,7 @@
 											"fieldType": "sap.m.ToolbarSpacer",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [],
@@ -1731,6 +1737,7 @@
 											"fieldType": "sap.m.Button",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -1786,6 +1793,7 @@
 											"fieldType": "sap.m.Button",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -1841,6 +1849,7 @@
 											"fieldType": "sap.m.Button",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -1896,6 +1905,7 @@
 											"fieldType": "sap.m.Button",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -1951,6 +1961,7 @@
 											"fieldType": "sap.m.Button",
 											"script": "",
 											"customComponent": false,
+											"disabled": true,
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -2003,6 +2014,7 @@
 							"fieldType": "sap.m.ScrollContainer",
 							"script": "",
 							"customComponent": false,
+							"disabled": true,
 							"request": [],
 							"response": [],
 							"attributes": [
@@ -2036,6 +2048,7 @@
 									"fieldType": "sap.m.Table",
 									"script": "",
 									"customComponent": false,
+									"disabled": true,
 									"bindingValue": "Generic Array",
 									"bindingType": "h",
 									"bindingSource": "P9",
@@ -4194,7 +4207,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.5.1522",
+	"ver": "23.3.12.843",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",

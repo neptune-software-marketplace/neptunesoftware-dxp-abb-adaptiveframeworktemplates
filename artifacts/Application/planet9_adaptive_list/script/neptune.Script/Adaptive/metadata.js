@@ -270,7 +270,7 @@ const metadata = {
             enableImport: { type: "CheckBox", label: "Enable Import", default: false },
             enableMultiSelect: { type: "CheckBox", label: "Enable MultiSelect", default: false },
             enableVariant: { type: "CheckBox", label: "Enable Variant", default: false },
-            hideHeader: { type: "CheckBox", label: "Hide Header", default: false },
+            // hideHeader: { type: "CheckBox", label: "Hide Header", default: false },
             autoRun: { type: "CheckBox", label: "Run At Start", default: false },
             autoRunFocus: { type: "CheckBox", label: "Run At Focus", default: false },
 

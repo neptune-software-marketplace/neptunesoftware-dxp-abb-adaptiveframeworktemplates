@@ -537,6 +537,10 @@ const report = {
                     config.settings.data._keyField = navigation.keyField;
                 }
 
+                if (modelAppConfig.oData.settings.navigation && modelAppConfig.oData.settings.navigation.sourceTarget) {
+                    config.settings.navigation.sourceTarget = modelAppConfig.oData.settings.navigation.sourceTarget;
+                }
+
                 AppCache.Load(config.application, {
                     appGUID: ModelData.genID(),
                     startParams: config,

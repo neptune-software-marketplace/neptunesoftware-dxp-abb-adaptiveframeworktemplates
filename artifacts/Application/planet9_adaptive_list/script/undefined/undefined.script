@@ -3,6 +3,14 @@
   height: 1.6rem;
 }
 
+.nepDynamicPage .sapFDynamicPageTitle {
+  padding: 0.5rem 0.8rem !important;
+}
+
+.nepDynamicPage .sapFDynamicPageHeader.sapFDynamicPageHeaderWithContent {
+  padding: 0 !important;
+}
+
 .sapUiTheme-sap_horizon .nepDynamicPage.sapFDynamicPage .sapFDynamicPageFooter .sapFDynamicPageActualFooterControl {
   height: 2.75rem;
 }
@@ -31,15 +39,11 @@
 
 .nepTitleSmall {
   font-size: 1rem !important;
-  padding-top: 20px !important;
+  padding-top: 3px !important;
 }
 
 .nepCounterSmall {
-  padding-top: 20px !important;
-}
-
-.nepDynamicPage .sapMObjStatusText {
-  line-height: 1.5rem !important;
+  padding-top: 3px !important;
 }
 
 /* Styling for Adaptive Designer */

@@ -20,19 +20,37 @@ const report = {
 
     events: {
         afterChildLoad: function () {
-            oApp.to(report.childPage);
+            let parentApp = oApp;
+
+            if (modelAppConfig.oData.settings.navigation && modelAppConfig.oData.settings.navigation.sourceTarget) {
+                parentApp = sap.ui.getCore().byId(modelAppConfig.oData.settings.navigation.sourceTarget);
+            }
+
+            parentApp.to(report.childPage);
         },
         afterChildSave: function () {
             report.run();
         },
         onChildBack: function () {
-            oApp.back();
+            let parentApp = oApp;
+
+            if (modelAppConfig.oData.settings.navigation && modelAppConfig.oData.settings.navigation.sourceTarget) {
+                parentApp = sap.ui.getCore().byId(modelAppConfig.oData.settings.navigation.sourceTarget);
+            }
+
+            parentApp.back();
         },
         onNavigatePage: function (page) {
-            if (!report.pages[page.sId]) oApp.addPage(page);
+            let parentApp = oApp;
+
+            if (modelAppConfig.oData.settings.navigation && modelAppConfig.oData.settings.navigation.sourceTarget) {
+                parentApp = sap.ui.getCore().byId(modelAppConfig.oData.settings.navigation.sourceTarget);
+            }
+
+            if (!report.pages[page.sId]) parentApp.addPage(page);
             report.childPage = page;
             report.pages[page.sId] = true;
-            oApp.to(page);
+            parentApp.to(page);
         },
         onHeaderClick: function (field, button) {
             modelpopHeader.setData(field);
@@ -65,24 +83,27 @@ const report = {
         }
 
         // Layout
-        if (config.settings.properties.report.hideHeader) {
-            oApp.to(oPageChild);
-            oPageChild.setFooter(oPageFooter);
-            report.tabObject = tabDataChild;
-            report.filterObject = panFilterChild;
-        } else {
-            oApp.to(oPageDynamic);
-            oPageDynamic.setFooter(oPageFooter);
-            report.tabObject = tabData;
-            report.filterObject = oPanFilter;
-        }
+        // if (config.settings.properties.report.hideHeader) {
+        //     oApp.to(oPageChild);
+        //     oPageChild.setFooter(oPageFooter);
+        //     report.tabObject = tabDataChild;
+        //     report.filterObject = panFilterChild;
+        // } else {
+        //     oApp.to(oPageDynamic);
+        //     oPageDynamic.setFooter(oPageFooter);
+        //     report.tabObject = tabData;
+        //     report.filterObject = oPanFilter;
+        // }
+
+        report.tabObject = tabData;
+        report.filterObject = oPanFilter;
 
         // Set Default Values
         sap.n.Adaptive.setDefaultData(config, metadata);
 
         // Prevent Back Button in Launchpad
         sap.n.Shell.attachBeforeBack(function (oEvent) {
-            if (oApp.getCurrentPage() !== oPageDynamic && oApp.getCurrentPage() !== oPageChild) {
+            if (oApp.getCurrentPage() !== oPageDynamic) {
                 oApp.back();
                 oEvent.preventDefault();
             }
@@ -145,7 +166,7 @@ const report = {
         oPageCreate.setText(sap.n.Adaptive.translateProperty("report", "textButtonCreate", config));
         oPageUpdate.setText(sap.n.Adaptive.translateProperty("report", "textButtonRun", config));
         oPageClose.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
-        toolDataClose.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
+        // toolDataClose.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
 
         report.tabObject.setHeaderText(sap.n.Adaptive.translateProperty("table", "headerText", config));
         report.tabObject.setFooterText(sap.n.Adaptive.translateProperty("table", "footerText", config));
@@ -206,9 +227,10 @@ const report = {
                     let selFields = ModelData.Find(s.fieldsSel, "visible", true);
                     if (!selFields.length) {
                         oPageHeader.setVisible(false);
-                        panFilterChild.setVisible(false);
+                        // panFilterChild.setExpandable(false);
                     } else {
                         oPageHeader.setVisible(true);
+                        // panFilterChild.setExpandable(true);
                     }
                 } else {
                     oPageHeader.setVisible(true);
@@ -221,7 +243,7 @@ const report = {
                 });
 
                 // Build Filter
-                if (oPageHeader.getVisible()) report.buildTableFilter(report.filterObject, report.tabObject, modelAppConfig.oData, modelAppData.oData, showSearchField, report.run);
+                report.buildTableFilter(report.filterObject, report.tabObject, modelAppConfig.oData, modelAppData.oData, showSearchField, report.run);
 
                 // Build Table Columns
                 report.buildTableColumns(report.tabObject, modelAppConfig.oData, report.events);
@@ -440,6 +462,8 @@ const report = {
 
                     oPageHeaderTitle.addStyleClass("nepTitleSmall");
                     oPageHeaderNumber.addStyleClass("nepCounterSmall");
+                    oPageHeaderNumber.setVisible(false);
+                    oPageHeaderIcon.setDisplaySize("XS");
                 }
 
                 // Sorting Client Side
@@ -951,6 +975,12 @@ const report = {
 
                         if (nav.dialogTitleField) {
                             nav.dialogTitleFieldText = colData[nav.dialogTitleField + "_value"] || colData[nav.dialogTitleField];
+                        }
+
+                        if (modelAppConfig.oData.settings.navigation && modelAppConfig.oData.settings.navigation.sourceTarget) {
+                            nav.sourceTarget = modelAppConfig.oData.settings.navigation.sourceTarget;
+                        } else {
+                            nav.sourceTarget = oApp.sId;
                         }
 
                         sap.n.Adaptive.navigation(nav, colData, events, table.sId);
