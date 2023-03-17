@@ -907,8 +907,8 @@ const report = {
                                 events.valueRequest = true;
                                 events.valueRequestField = newField.sId;
                                 events.valueRequestKey = field.valueRequestKey;
-                                sap.n.Adaptive.navigation(field._navigation, appdata, events);
-                            }
+                                sap.n.Adaptive.navigation(field._navigation, modelAppData.oData, events);
+                            },
                         });
 
                         if (field.description) {
@@ -935,6 +935,30 @@ const report = {
                             placeholder: field.placeholder || "",
                             valueState: "{AppData>/" + field.name + "ValueState}",
                             value: "{AppData>/" + field.name + "}",
+                            liveChange: function (oEvent) {
+                                if (field.inputFormatter) {
+                                    let newValue = this.getValue();
+
+                                    switch (field.inputFormatter) {
+                                        case "condense":
+                                            newValue = newValue.replace(/\s+/g, "");
+                                            break;
+
+                                        case "uppercase":
+                                            newValue = newValue.toUpperCase();
+                                            break;
+
+                                        case "lowercase":
+                                            newValue = newValue.toLowerCase();
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+
+                                    this.setValue(newValue);
+                                }
+                            },
                         });
 
                         if (field.description) {

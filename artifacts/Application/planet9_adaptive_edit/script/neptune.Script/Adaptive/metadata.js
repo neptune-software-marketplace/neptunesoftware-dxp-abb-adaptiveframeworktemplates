@@ -8,26 +8,12 @@ const vb = {
     reportEnableDelete: "{= ${appData>/settings/properties/report/enableDelete} ? true : false }",
     reportEnableSave: "{= ${appData>/settings/properties/report/enableSave} ? true : false }",
     reportEnableClose: "{= ${appData>/settings/properties/report/enableClose} ? true : false }",
-    reportEnableAttachment:
-        "{= ${appData>/settings/properties/report/enableAttachment} ? true : false }",
+    reportEnableAttachment: "{= ${appData>/settings/properties/report/enableAttachment} ? true : false }",
 
     enableTab0:
         "{= ${appData>/settings/properties/report/enableTab1} || ${appData>/settings/properties/report/enableTab2} || ${appData>/settings/properties/report/enableTab3} || ${appData>/settings/properties/report/enableTab4} || ${appData>/settings/properties/report/enableTab5} ? true : false }",
 
-    buttonTypes: [
-        "Accept",
-        "Attention",
-        "Critical",
-        "Back",
-        "Default",
-        "Emphasized",
-        "Ghost",
-        "Neutral",
-        "Reject",
-        "Transparent",
-        "Unstyled",
-        "Up",
-    ],
+    buttonTypes: ["Accept", "Attention", "Critical", "Back", "Default", "Emphasized", "Ghost", "Neutral", "Reject", "Transparent", "Unstyled", "Up"],
 
     type: "{= ${/type} ? false : true }",
     editor: "{= ${/type} === 'Editor' ? true : false }",
@@ -35,8 +21,7 @@ const vb = {
     valueHelp: "{= ${/type} === 'ValueHelp' ? true : false }",
     stepInput: "{= ${/type} === 'StepInput' ? true : false }",
     dateTimePicker: "{= ${/type} === 'DateTimePicker' ? true : false }",
-    multiOrSingleSelectLookup:
-        "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
+    multiOrSingleSelectLookup: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
     placeholder:
         "{= ${/type} === 'CheckBox'  || ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Editor' || ${/type} === 'Switch' || ${/type} === 'StepInput' ? false : true }",
 };
@@ -59,20 +44,7 @@ const metadata = {
             avatarBackgroundColor: {
                 type: "SingleSelect",
                 label: "Icon Color",
-                items: valuesToKeyText([
-                    "",
-                    "Accent1",
-                    "Accent2",
-                    "Accent3",
-                    "Accent4",
-                    "Accent5",
-                    "Accent6",
-                    "Accent7",
-                    "Accent8",
-                    "Accent9",
-                    "Accent10",
-                    "Random",
-                ]),
+                items: valuesToKeyText(["", "Accent1", "Accent2", "Accent3", "Accent4", "Accent5", "Accent6", "Accent7", "Accent8", "Accent9", "Accent10", "Random"]),
             },
             showIcon: { type: "CheckBox", label: "Icon Visible", default: true },
             actionButtonLeft: { type: "CheckBox", label: "Action Button Left", default: false },
@@ -297,13 +269,7 @@ const metadata = {
             formLayout: {
                 type: "SingleSelect",
                 label: "Layout",
-                items: valuesToKeyText([
-                    "",
-                    "ColumnLayout",
-                    "GridLayout",
-                    "ResponsiveGridLayout",
-                    "ResponsiveLayout",
-                ]),
+                items: valuesToKeyText(["", "ColumnLayout", "GridLayout", "ResponsiveGridLayout", "ResponsiveLayout"]),
             },
 
             columnsL: {
@@ -321,41 +287,13 @@ const metadata = {
             labelSpanL: {
                 type: "SingleSelect",
                 label: "LabelSpan L",
-                items: valuesToKeyText([
-                    "",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12",
-                ]),
+                items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
             },
 
             labelSpanM: {
                 type: "SingleSelect",
                 label: "LabelSpan M",
-                items: valuesToKeyText([
-                    "",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12",
-                ]),
+                items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
             },
 
             titleLevel: {
@@ -446,6 +384,18 @@ const metadata = {
         },
         placeholder: { type: "Input", label: "Placeholder", visible: vb.placeholder },
         description: { type: "Input", label: "Description" },
+        inputFormatter: {
+            type: "SingleSelect",
+            label: "Formatter",
+            default: "Input",
+            visible: "{= ${/type} === 'Input' ? true : false }",
+            items: [
+                { key: "", text: "" },
+                { key: "condense", text: "No space in text" },
+                { key: "uppercase", text: "Uppercase" },
+                { key: "lowercase", text: "Lowercase" },
+            ],
+        },
 
         titleValueHelp: { type: "Title", label: "ValueHelp Source", visible: vb.valueHelp },
         valueRequestKey: { type: "Input", label: "Field to Return", visible: vb.valueHelp },
@@ -546,42 +496,14 @@ const metadata = {
             type: "SingleSelect",
             label: "LabelSpan L",
             visible: "{= ${/enableNewForm} ? true: false }",
-            items: valuesToKeyText([
-                "",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-            ]),
+            items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
         },
 
         labelSpanM: {
             type: "SingleSelect",
             label: "LabelSpan M",
             visible: "{= ${/enableNewForm} ? true: false }",
-            items: valuesToKeyText([
-                "",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-            ]),
+            items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
         },
 
         titleSettings: { type: "Title", label: "Properties" },
