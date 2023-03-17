@@ -439,7 +439,7 @@ const metadata = {
         stepInputTextAlign: {
             type: "SingleSelect",
             label: "TextAlign",
-            visible: vb.typeStepInput,
+            visible: vb.stepInput,
             items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
         },
 
