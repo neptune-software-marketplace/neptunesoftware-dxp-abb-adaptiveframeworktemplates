@@ -15,7 +15,7 @@ const vb = {
 
     buttonTypes: ["Accept", "Attention", "Critical", "Back", "Default", "Emphasized", "Ghost", "Neutral", "Reject", "Transparent", "Unstyled", "Up"],
 
-    type: "{= ${/type} ? false : true }",
+    input: "{= !${/type} || ${/type} === 'Input' ? true : false }",
     editor: "{= ${/type} === 'Editor' ? true : false }",
     textArea: "{= ${/type} === 'TextArea' ? true : false }",
     valueHelp: "{= ${/type} === 'ValueHelp' ? true : false }",
@@ -379,7 +379,7 @@ const metadata = {
         inputType: {
             type: "SingleSelect",
             label: "Input Type",
-            visible: vb.type,
+            visible: vb.input,
             items: valuesToKeyText(["Email", "Number", "Password", "Tel", "|Text", "Url"]),
         },
         placeholder: { type: "Input", label: "Placeholder", visible: vb.placeholder },
@@ -388,7 +388,7 @@ const metadata = {
             type: "SingleSelect",
             label: "Formatter",
             default: "Input",
-            visible: "{= ${/type} === 'Input' ? true : false }",
+            visible: vb.input,
             items: [
                 { key: "", text: "" },
                 { key: "condense", text: "No space in text" },
