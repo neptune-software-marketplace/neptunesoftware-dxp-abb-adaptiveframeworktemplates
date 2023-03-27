@@ -62,6 +62,9 @@ const report = {
         onTableChange: function (data) {
             report.save(data);
         },
+        refresh: function () {
+            report.run();
+        },
     },
 
     start: function () {
