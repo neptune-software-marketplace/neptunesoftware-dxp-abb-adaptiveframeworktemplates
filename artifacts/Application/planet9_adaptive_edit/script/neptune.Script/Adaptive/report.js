@@ -243,6 +243,7 @@ const report = {
             } else {
                 sap.m.MessageBox.information(data.message.text);
             }
+            oApp.setBusy(false);
             return;
         }
 

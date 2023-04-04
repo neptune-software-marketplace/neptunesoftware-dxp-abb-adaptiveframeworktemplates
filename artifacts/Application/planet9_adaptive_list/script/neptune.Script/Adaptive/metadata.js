@@ -797,13 +797,14 @@ const metadata = {
             items: valuesToKeyText([
                 "|Text",
                 "Button",
-                "Link",
                 "CheckBox",
                 "DatePicker",
                 "DateTimePicker",
+                "ExpandableText",
                 "Icon",
                 "Input",
                 "Image",
+                "Link",
                 "MultiSelectLookup",
                 "MultiSelectScript",
                 "ObjectNumber",
@@ -820,6 +821,12 @@ const metadata = {
             label: "Input Type",
             visible: "{= ${/type} === 'Input' ? true : false }",
             items: valuesToKeyText(["", "Email", "Number", "Password", "Tel", "Text", "Url"]),
+        },
+
+        expandableTextPopover: {
+            type: "CheckBox",
+            label: "Show text in popover",
+            visible: "{= ${/type} === 'ExpandableText' ? true : false }",
         },
 
         statusInverted: { type: "CheckBox", label: "Inverted", visible: "{= ${/type} === 'ObjectStatus' || ${/type} === 'ObjectNumber' ? true : false }" },

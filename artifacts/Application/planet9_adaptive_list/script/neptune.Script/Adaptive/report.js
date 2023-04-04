@@ -1181,6 +1181,15 @@ const report = {
                         });
                         break;
 
+                    case "ExpandableText":
+                        newField = new sap.m.ExpandableText({
+                            text: getFieldBindingText(f),
+                            maxCharacters: 50,
+                            // renderWhitespace: true
+                        });
+                        if (f.expandableTextPopover) newField.setOverflowMode("Popover");
+                        break;
+
                     case "StepInput":
                         opts = {
                             value: getFieldBindingText(f),
