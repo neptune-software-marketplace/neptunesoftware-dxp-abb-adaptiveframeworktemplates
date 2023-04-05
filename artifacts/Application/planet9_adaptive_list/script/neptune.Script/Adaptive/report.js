@@ -86,20 +86,9 @@ const report = {
         }
 
         // Layout
-        // if (config.settings.properties.report.hideHeader) {
-        //     oApp.to(oPageChild);
-        //     oPageChild.setFooter(oPageFooter);
-        //     report.tabObject = tabDataChild;
-        //     report.filterObject = panFilterChild;
-        // } else {
-        //     oApp.to(oPageDynamic);
-        //     oPageDynamic.setFooter(oPageFooter);
-        //     report.tabObject = tabData;
-        //     report.filterObject = oPanFilter;
-        // }
-
         report.tabObject = tabData;
         report.filterObject = oPanFilter;
+        oApp.to(oPageDynamic);
 
         // Set Default Values
         sap.n.Adaptive.setDefaultData(config, metadata);
@@ -358,7 +347,7 @@ const report = {
             const { type, name } = selField;
 
             if (["CheckBox", "Switch"].includes(type)) {
-                if (!d[name]) delete d[name];
+                if (!d[name]) d[name] = false;
             }
 
             if (["MultiSelect", "MultiSelectLookup", "MultiSelectScript"].includes(type)) {
