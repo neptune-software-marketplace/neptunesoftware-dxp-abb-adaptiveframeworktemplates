@@ -280,6 +280,7 @@ const pivotGrid = {
                     width: "100%",
                     selectedKeys: fieldName,
                     showSecondaryValues: true,
+                    showSelectAll: true,
                 });
 
                 field.items.sort(sort_by("text"));
@@ -446,10 +447,45 @@ const pivotGrid = {
         }, 500);
 
         // Script Startparameter
-        const p = modelappData.oData.properties;
-        if (p && p.report.scriptparam) modelpanSelection.oData._startparam = p.report.scriptparam;
+        if (modelappData.oData.properties && modelappData.oData.properties.report.scriptparam) {
+            modelpanSelection.oData._startparam = modelappData.oData.properties.report.scriptparam;
+        }
 
+        let d = modelpanSelection.oData;
         const url = `${AppCache.Url}/api/functions/Adaptive/RunReport?report=${modelappData.oData.id}&method=List`;
+
+        // POST Data Formatting
+        modelappData.oData.fieldsSel.forEach(function (selField) {
+            const { type, name } = selField;
+
+            if (["CheckBox", "Switch"].includes(type)) {
+                if (!d[name]) d[name] = false;
+            }
+
+            if (["MultiSelect", "MultiSelectLookup", "MultiSelectScript"].includes(type)) {
+                if (d[name] && !d[name].length) delete d[selField.name];
+            }
+
+            if (["ValueHelpOData"].includes(type)) {
+                const filter = sap.ui.getCore().byId("filter" + name);
+                const tokens = filter.getTokens();
+
+                if (tokens && tokens.length) {
+                    d[name] = [];
+                    for (let i = 0; i < tokens.length; i++) {
+                        const token = tokens[i];
+                        d[name].push(token.getKey());
+                    }
+                } else {
+                    delete d[name];
+                }
+            }
+
+            if (d[name] === "") delete d[name];
+            if (Array.isArray(d[name]) && !d[name].length) delete d[name];
+        });
+
+
         jsonRequest({
             url,
             data: JSON.stringify(modelpanSelection.oData),
