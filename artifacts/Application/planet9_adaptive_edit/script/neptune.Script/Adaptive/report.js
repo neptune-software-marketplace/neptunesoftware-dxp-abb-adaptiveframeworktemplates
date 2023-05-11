@@ -282,7 +282,7 @@ const report = {
 
             // Default Value
             if (field.default && !data[name]) {
-                if (data && data[name]) data[name] = ["Switch", "CheckBox"].includes(type) ? true : field.default;
+                data[name] = ["Switch", "CheckBox"].includes(type) ? true : field.default;
             }
 
             // Date Format
