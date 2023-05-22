@@ -166,10 +166,11 @@ const report = {
 
         // Variant
         if (config.settings.properties.report.enableVariant) report.variantList();
-
+       
         // Init
-        sap.n.Adaptive.init(modelAppConfig.oData)
+        sap.n.Adaptive.init({id:modelAppConfig.oData.id})
             .then(function (data) {
+
                 // Open Dialog
                 if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().open) {
                     oApp.getParent().getParent().open();
@@ -197,6 +198,8 @@ const report = {
                     });
                 }
 
+
+
                 // Key Fields for GET Record
                 if (s.navigation && s.navigation.keyField && s.navigation.keyField.length) {
                     s.navigation.keyField.forEach(function (mapping) {
@@ -219,10 +222,8 @@ const report = {
                     let selFields = ModelData.Find(s.fieldsSel, "visible", true);
                     if (!selFields.length) {
                         oPageHeader.setVisible(false);
-                        // panFilterChild.setExpandable(false);
                     } else {
                         oPageHeader.setVisible(true);
-                        // panFilterChild.setExpandable(true);
                     }
                 } else {
                     oPageHeader.setVisible(true);
@@ -317,8 +318,13 @@ const report = {
         const d = JSON.parse(modelAppData.getJSON());
         const { fieldsRun, properties } = modelAppConfig.oData.settings;
 
-        // Sorting
-        if (!report.sortBy && fieldsRun.length) report.sortBy = fieldsRun[0].name;
+        // Sorting, if no field is set, find first visible field
+        if (!report.sortBy && fieldsRun.length) {
+            fieldsRun.forEach(function(field) {
+                if (report.sortBy) return;
+                if (field.visible) report.sortBy = field.name;
+            })         
+        }
 
         // Apply Initial SortingIndicator
         report.handleTableSortIndicator();
