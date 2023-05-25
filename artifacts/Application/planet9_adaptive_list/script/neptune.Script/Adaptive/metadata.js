@@ -1406,8 +1406,19 @@ const metadata = {
         editable: { type: "CheckBox", label: "Editable", default: false, visible: vb.editable },
         enableGroup: { type: "CheckBox", label: "Grouping", default: false },
         enableFilter: { type: "CheckBox", label: "Search", default: true },
-        enableSort: { type: "CheckBox", label: "Sorting", default: true },
-        enableSum: { type: "CheckBox", label: "Sum", default: false, visible: vb.typeObjectNumber },
+        enableSort: { type: "CheckBox", label: "Sorting", default: true },        
         visible: { type: "CheckBox", label: "Visible", default: true },
+
+        enableSum: { type: "CheckBox", label: "Sum", default: false, visible: vb.typeObjectNumber },
+        sumCalculation: {
+            type: "SingleSelect",
+            label: "Sum Calculation",
+            default: "",
+            visible: vb.typeObjectNumber,
+            items: [
+                { key: "", text: "Sum" },
+                { key: "Average", text: "Average" },
+            ],
+        },        
     },
 };

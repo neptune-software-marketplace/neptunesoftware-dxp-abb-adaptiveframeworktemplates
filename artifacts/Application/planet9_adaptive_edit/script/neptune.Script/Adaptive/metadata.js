@@ -22,6 +22,7 @@ const vb = {
     stepInput: "{= ${/type} === 'StepInput' ? true : false }",
     dateTimePicker: "{= ${/type} === 'DateTimePicker' ? true : false }",
     multiOrSingleSelectLookup: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
+    typeMultiOrSingleSelectScript: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
     placeholder:
         "{= ${/type} === 'CheckBox'  || ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Editor' || ${/type} === 'Switch' || ${/type} === 'StepInput' ? false : true }",
 };
@@ -367,8 +368,10 @@ const metadata = {
                 "Editor",
                 "MultiSelect",
                 "MultiSelectLookup",
+                "MultiSelectScript",
                 "SingleSelect",
                 "SingleSelectLookup",
+                "SingleSelectScript",
                 "Switch",
                 "StepInput",
                 "TextArea",
@@ -446,6 +449,17 @@ const metadata = {
         textAreaRows: { type: "Input", label: "Rows", visible: vb.textArea },
 
         editorHeight: { type: "Input", label: "Height", visible: vb.editor },
+
+        titleSelectScript: {
+            type: "Title",
+            label: "Data Source",
+            visible: vb.typeMultiOrSingleSelectScript,
+        },
+        scriptSelect: {
+            type: "Script",
+            label: "Server Script",
+            visible: vb.typeMultiOrSingleSelectScript,
+        },
 
         titleLookup: { type: "Title", label: "Data Source", visible: vb.multiOrSingleSelectLookup },
         lookupTable: { type: "Table", label: "Table", visible: vb.multiOrSingleSelectLookup },

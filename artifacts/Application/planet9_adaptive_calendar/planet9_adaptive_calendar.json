@@ -775,6 +775,13 @@
 											"value": "Anonymous Function",
 											"script": "file://event/sap.m.SinglePlanningCalendar/oCalendar/appointmentCreate.script",
 											"translation": []
+										},
+										{
+											"attribute": "firstDayOfWeek",
+											"grouping": "Properties",
+											"value": "1",
+											"script": "",
+											"translation": []
 										}
 									],
 									"data": [
@@ -792,6 +799,13 @@
 													"attribute": "key",
 													"grouping": "Properties",
 													"value": "{id}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "icon",
+													"grouping": "Properties",
+													"value": "sap-icon://fa-solid/umbrella-beach",
 													"script": "",
 													"translation": []
 												}
@@ -1634,10 +1648,10 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.24.1921",
+	"ver": "23.5.25.947",
 	"application": "planet9_adaptive_calendar",
-	"title": "Adaptive Calendar for Appointments (experimental)",
-	"description": "Adaptive Calendar for Appointments (experimental)",
+	"title": "Adaptive Calendar for Appointments",
+	"description": "Adaptive Calendar for Appointments",
 	"enableFileStorage": true,
 	"enableManifest": false,
 	"enableStylesheet": true,

@@ -166,11 +166,10 @@ const report = {
 
         // Variant
         if (config.settings.properties.report.enableVariant) report.variantList();
-       
-        // Init
-        sap.n.Adaptive.init({id:modelAppConfig.oData.id})
-            .then(function (data) {
 
+        // Init
+        sap.n.Adaptive.init({ id: modelAppConfig.oData.id })
+            .then(function (data) {
                 // Open Dialog
                 if (oApp.getParent() && oApp.getParent().getParent() && oApp.getParent().getParent().open) {
                     oApp.getParent().getParent().open();
@@ -197,8 +196,6 @@ const report = {
                         if (selFieldRun && selFieldRun.default) runField.default = selFieldRun.default;
                     });
                 }
-
-
 
                 // Key Fields for GET Record
                 if (s.navigation && s.navigation.keyField && s.navigation.keyField.length) {
@@ -320,10 +317,10 @@ const report = {
 
         // Sorting, if no field is set, find first visible field
         if (!report.sortBy && fieldsRun.length) {
-            fieldsRun.forEach(function(field) {
+            fieldsRun.forEach(function (field) {
                 if (report.sortBy) return;
                 if (field.visible) report.sortBy = field.name;
-            })         
+            });
         }
 
         // Apply Initial SortingIndicator
@@ -484,13 +481,18 @@ const report = {
                         sumFields.forEach(function (sumField) {
                             const { name } = sumField;
                             props.table._sum[name] += parseFloat(data[name]);
-                            if (sumField.objectNumberUnit && !props.table._sum[`${name}_unit`]) {
-                                let unitField = sumField.objectNumberUnit;
-                                unitField = unitField.replace("{", "");
-                                unitField = unitField.replace("}", "");
-                                props.table._sum[`${name}_unit`] = data[unitField];
+
+                            if (sumField.numberUnitType) {
+                                props.table._sum[`${name}_unit`] = data[name + "_unit_value"];
                             }
                         });
+                    });
+
+                    // Calculate average
+                    sumFields.forEach(function (sumField) {
+                        if (sumField.sumCalculation === "Average") {
+                            props.table._sum[sumField.name] = props.table._sum[sumField.name] / report.tabObject.getModel().oData.length;
+                        }
                     });
 
                     // Format Number

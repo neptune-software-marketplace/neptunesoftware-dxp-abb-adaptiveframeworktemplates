@@ -190,7 +190,7 @@ var report = {
         // Views
         if (modelAppConfig.oData.settings.properties.table.enableDayView) report.calObject.addView(new sap.m.SinglePlanningCalendarDayView({ key: "day", title: "Day" }));
         if (modelAppConfig.oData.settings.properties.table.enableWeekView) report.calObject.addView(new sap.m.SinglePlanningCalendarWeekView({ key: "week", title: "Week" }));
-        if (modelAppConfig.oData.settings.properties.table.enableWorkWeekView) report.calObject.addView(new sap.m.SinglePlanningCalendarWorkWeekView({ key: "workweek", title: "Work Week" }));
+        // if (modelAppConfig.oData.settings.properties.table.enableWorkWeekView) report.calObject.addView(new sap.m.SinglePlanningCalendarWorkWeekView({ key: "workweek", title: "Work Week" }));
         if (modelAppConfig.oData.settings.properties.table.enableMonthView) report.calObject.addView(new sap.m.SinglePlanningCalendarMonthView({ key: "month", title: "Month" }));
 
         // Start Hour
@@ -205,6 +205,22 @@ var report = {
             report.calObject.setEndHour(parseInt(modelAppConfig.oData.settings.properties.table.endHour));
         } else {
             report.calObject.setEndHour();
+        }
+
+        // End View
+        if (modelAppConfig.oData.settings.properties.table.startView) {
+            const views = report.calObject.getViews();
+            let selectedView;
+
+            views.forEach(function (view) {
+                if (view.mProperties.key === modelAppConfig.oData.settings.properties.table.startView) selectedView = view;
+            });
+
+            if (selectedView) {
+                report.calObject.setSelectedView(selectedView);
+            } else {
+                report.calObject.setSelectedView();
+            }
         }
 
         // Binding
@@ -333,8 +349,13 @@ var report = {
                     modeloCalendar.refresh();
                 }
 
+                // Start Date
+                if (modelAppConfig.oData.settings.properties.table.startBegData) {
+                    const row = modeloCalendar.oData[0];
+                    if (row) report.calObject.setStartDate(row[report.fieldEndDate]);
+                }
+
                 modelAppData.refresh(true);
-                // report.tabObject.setBusy(false);
             })
             .catch(function (data) {
                 if (data.responseJSON && data.responseJSON.status) sap.m.MessageToast.show(data.responseJSON.status);

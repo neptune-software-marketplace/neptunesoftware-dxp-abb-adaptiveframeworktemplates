@@ -57,8 +57,8 @@
 		{
 			"id": "16a6d055-8ffb-4364-89b5-f0c1d5477fe1",
 			"application": "planet9_adaptive_calendar",
-			"title": "Adaptive Calendar for Appointments (experimental)",
-			"description": "Adaptive Calendar for Appointments (experimental)"
+			"title": "Adaptive Calendar for Appointments",
+			"description": "Adaptive Calendar for Appointments"
 		}
 	],
 	"api": [],

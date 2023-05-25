@@ -94,12 +94,23 @@ const metadata = {
             headerText: { type: "Input", label: "Header Text", translate: true },
             startHour: { type: "Input", label: "Start Hour" },
             endHour: { type: "Input", label: "End Hour" },
+            startBegData: { type: "CheckBox", label: "Start Date from Data", default: false },
 
             titleViews: { type: "Title", label: "Views" },
+            enableDayView: { type: "CheckBox", label: "Day", default: true },
             enableWeekView: { type: "CheckBox", label: "Week", default: true },
-            enableWorkWeekView: { type: "CheckBox", label: "Work Week", default: true },
-            enableDayView: { type: "CheckBox", label: "Day", default: false },
             enableMonthView: { type: "CheckBox", label: "Month", default: true },
+
+            startView: {
+                type: "SingleSelect",
+                label: "Default",
+                items: [
+                    { key: "", text: "" },
+                    { key: "day", text: "Day" },
+                    { key: "week", text: "Week" },
+                    { key: "month", text: "Month" },
+                ],
+            },            
 
             titleProperties: { type: "Title", label: "Properties" },
             enableDnD: { type: "CheckBox", label: "Enable Drag & Drop", default: false },
