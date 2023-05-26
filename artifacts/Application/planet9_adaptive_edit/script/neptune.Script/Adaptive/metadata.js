@@ -374,6 +374,7 @@ const metadata = {
                 "SingleSelectScript",
                 "Switch",
                 "StepInput",
+                "Text",
                 "TextArea",
                 "ValueHelp",
             ]),

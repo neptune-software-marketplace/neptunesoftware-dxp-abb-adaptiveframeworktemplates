@@ -262,6 +262,12 @@ const report = {
             report.uniqueKeyValue = data["Id"];
         }
 
+        // Delete Button - Only enabled if unique ID field data exists
+        const keysData = Object.keys(data);
+        if (modelAppConfig.oData.settings.properties.report.enableDelete && keysData.length > 0) {
+            toolHeaderDelete.setEnabled(true);
+        }
+
         // Get Attachment
         if (modelAppConfig.oData.settings.properties.report.enableAttachment) report.getAttachment(data);
 
@@ -315,7 +321,6 @@ const report = {
 
         // Switch to readOnly if requirements are met
         toolHeaderSave.setEnabled(true);
-        toolHeaderDelete.setEnabled(true);
 
         // Requirement 1
         if (
@@ -877,6 +882,28 @@ const report = {
                             valueState: "{AppData>/" + field.name + "ValueState}",
                             value: "{AppData>/" + field.name + "}",
                             width: "100%",
+                        });
+
+                        if (field.description) {
+                            form.addContent(report.buildInputDescription(newField, field));
+                        } else {
+                            form.addContent(newField);
+                        }
+
+                        break;
+
+                    case "Text":
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                                design: "Bold",
+                            })
+                        );
+
+                        var newField = new sap.m.Text({
+                            visible: report.buildVisibleProp(field),
+                            text: "{AppData>/" + field.name + "}",
                         });
 
                         if (field.description) {

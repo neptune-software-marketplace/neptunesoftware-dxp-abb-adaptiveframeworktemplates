@@ -381,7 +381,7 @@
 												{
 													"attribute": "visible",
 													"grouping": "Properties",
-													"value": "{= (${AppData>/id}) && (!!${AppConfig>/settings/properties/report/enableDelete}) ? true:false}",
+													"value": "{= ${AppConfig>/settings/properties/report/enableDelete} ? true:false}",
 													"script": "",
 													"translation": []
 												},
@@ -403,6 +403,13 @@
 													"attribute": "icon",
 													"grouping": "Properties",
 													"value": "{AppConfig>/settings/properties/report/iconButtonDelete}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enabled",
+													"grouping": "Properties",
+													"value": "false",
 													"script": "",
 													"translation": []
 												},
@@ -1491,7 +1498,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.5.25.108",
+	"ver": "23.5.26.910",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",
