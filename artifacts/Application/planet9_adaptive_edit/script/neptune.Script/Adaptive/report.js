@@ -247,6 +247,15 @@ const report = {
             return;
         }
 
+        // If no records are received -> New record with data from event config
+        if (!data && modelAppConfig.oData.settings.data && modelAppConfig.oData.settings.data._keyField) {
+            data = {};
+            modelAppConfig.oData.settings.data._keyField.forEach(function (field) {
+                if (field.key) data[field.fieldName] = modelAppConfig.oData.settings.data[field.key];
+                if (field.value) data[field.fieldName] = field.value;
+            });
+        }
+
         // Save OData Metadata Key
         if (data && data.__metadata) report.__metadata = data.__metadata;
 
@@ -606,6 +615,13 @@ const report = {
                         labelSpanL: parseInt(field.labelSpanL) || 4,
                         labelSpanM: parseInt(field.labelSpanM) || 2,
                     });
+
+                    // Compact
+                    if (config.settings.properties.form.enableCompact) {
+                        form.addStyleClass("sapUiSizeCompact");
+                    } else {
+                        form.removeStyleClass("sapUiSizeCompact");
+                    }
                 }
 
                 if (field.columnLabel)
@@ -947,6 +963,39 @@ const report = {
 
                         break;
 
+                    case "Display":
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                                design: "Bold",
+                            })
+                        );
+
+                        var newField = new sap.m.Input({
+                            visible: report.buildVisibleProp(field),
+                            editable: false,
+                            placeholder: field.placeholder || "",
+                            value: "{AppData>/" + field.name + "}",
+                        });
+
+                        if (field.description) {
+                            form.addContent(report.buildInputDescription(newField, field));
+                        } else {
+                            form.addContent(newField);
+                        }
+
+                        if (field.formatter) {
+                            newField.bindProperty("value", {
+                                parts: [{ path: "AppData>/" + field.name }],
+                                formatter: function (fieldName) {
+                                    if (typeof fieldName === "undefined" || fieldName === null) return;
+                                    return sap.n.Adaptive.formatter(fieldName, field.formatter);
+                                },
+                            });
+                        }
+                        break;
+
                     default:
                         form.addContent(
                             new sap.m.Label({
@@ -1109,6 +1158,18 @@ const report = {
         }
 
         return isReadOnly;
+    },
+
+    uploadFieldAfterRender: () => {
+        const elm = document.getElementById("_editUploader");
+        if (elm) {
+            elm.removeEventListener("change", this.uploadFileChangeEvent);
+            elm.addEventListener("change", this.uploadFileChangeEvent);
+        }
+    },
+
+    uploadFileChangeEvent: (event) => {
+        this.uploadFile(event, modelAppData.oData.id);
     },
 
     uploadFile: function (event, objectKey) {

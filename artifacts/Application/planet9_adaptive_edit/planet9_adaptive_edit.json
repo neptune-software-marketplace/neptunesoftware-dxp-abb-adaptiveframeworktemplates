@@ -1343,9 +1343,8 @@
 										{
 											"attribute": "afterRendering",
 											"grouping": "Events",
-											"value": "Anonymous Function",
-											"script": "file://event/sap.ui.core.HTML/oHTMLUpload/afterRendering.js",
-											"language": "javascript",
+											"value": "report.uploadFieldAfterRender();",
+											"script": "report.uploadFieldAfterRender();",
 											"translation": []
 										}
 									],
@@ -1498,7 +1497,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.5.26.910",
+	"ver": "23.6.17.828",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",

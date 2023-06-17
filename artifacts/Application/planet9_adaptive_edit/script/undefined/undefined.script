@@ -58,3 +58,27 @@
 .nepTitleZero .sapUiFormContainerTitle > .sapUiFormTitleH6 {
   height: 0 !important;
 }
+
+.nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH1 {
+  font-size: 3rem;
+}
+
+.nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH2 {
+  font-size: 2rem;
+}
+
+.nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH3 {
+  font-size: 1.5rem;
+}
+
+.nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH4 {
+  font-size: 1.25rem;
+}
+
+.nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH5 {
+  font-size: 1rem;
+}
+
+.nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH6 {
+  font-size: 0.875rem;
+}

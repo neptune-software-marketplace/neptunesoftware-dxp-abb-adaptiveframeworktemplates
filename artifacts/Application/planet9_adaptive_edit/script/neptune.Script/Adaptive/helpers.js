@@ -24,6 +24,12 @@ function keyToText(k) {
     return mKeyToText[k] !== undefined ? mKeyToText[k] : k;
 }
 
+function distinctValuesToKeyText(values) {
+    return values.map(function ([key, text]) {
+        return { key, text };
+    });
+}
+
 function valuesToKeyText(values) {
     return values.map(function (v) {
         if (v.includes('|')) {

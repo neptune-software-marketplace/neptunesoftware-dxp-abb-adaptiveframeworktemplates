@@ -408,34 +408,32 @@ const report = {
 
                 // AfterRun Formatting of Data
                 modelAppConfig.oData.settings.fieldsRun.forEach(function (runField) {
-                    const { type, name } = runField;
-
-                    // format data if fields are of the following type
-                    if (["MultiSelectLookup", "MultiSelectScript"].includes(type)) {
+                    if (["MultiSelectLookup", "MultiSelectScript"].includes(runField.type)) {
                         reportData.forEach(function (data) {
-                            if (data && data[name]) {
-                                const dataArray = data[name].split(",");
-                                if (dataArray.length > 0) data[name] = dataArray;
+                            if (data && data[runField.name]) {
+                                const dataArray = data[runField.name].split(",");
+                                if (dataArray.length > 0) data[runField.name] = dataArray;
+                            }
+                        });
+                    }
+
+                    // If lookup and no lookup is configured + items from setup script -> local lookup
+                    if (runField.valueType === "Lookup" && !runField.valueLookup && runField.items) {
+                        reportData.forEach(function (data) {
+                            if (data && data[runField.name]) {
+                                const lookupData = runField.items.find((obj) => obj.key === data[runField.name]);
+                                if (lookupData) {
+                                    data[runField.name + "_value"] = lookupData.text;
+                                } else {
+                                    data[runField.name + "_value"] = data[runField.name];
+                                }
                             }
                         });
                     }
                 });
 
                 // Set Table Data
-                const reportDataCopy = reportData.map(function (o) {
-                    const copy = {};
-                    for (const k in o) {
-                        if (!o.hasOwnProperty(k)) continue;
-                        copy[k] = o[k];
-
-                        if (!k.endsWith("_value")) {
-                            copy[`${k}_value`] = o[k];
-                        }
-                    }
-
-                    return copy;
-                });
-                report.tabObject.getModel().setData(reportDataCopy);
+                report.tabObject.getModel().setData(reportData);
 
                 if (data.hasOwnProperty("result")) {
                     oPageHeaderNumber.setNumber(`(${data.count})`);
