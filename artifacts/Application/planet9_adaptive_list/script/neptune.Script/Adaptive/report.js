@@ -139,6 +139,11 @@ const report = {
         modelAppConfig.setData(config);
         modelAppConfig.refresh();
 
+        // Hide Header
+        if (config.settings.properties.report.hideHeader) {
+            oPageTitle.setVisible(false);
+        }
+
         // Action Button Left
         if (config.settings.properties.report.actionButtonLeft) {
             oPageTitle.addStyleClass("nepFlexLeft");
@@ -158,7 +163,6 @@ const report = {
         oPageCreate.setText(sap.n.Adaptive.translateProperty("report", "textButtonCreate", config));
         oPageUpdate.setText(sap.n.Adaptive.translateProperty("report", "textButtonRun", config));
         oPageClose.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
-        // toolDataClose.setText(sap.n.Adaptive.translateProperty("report", "textButtonClose", config));
 
         report.tabObject.setHeaderText(sap.n.Adaptive.translateProperty("table", "headerText", config));
         report.tabObject.setFooterText(sap.n.Adaptive.translateProperty("table", "footerText", config));
@@ -1136,6 +1140,7 @@ const report = {
                         opts = {
                             text: getFieldBindingText(f),
                             type: f.buttonType,
+                            visible: "{= ${" + f.name + "} ? true:false }",
                             press: function (oEvent) {
                                 if (!f._navigation) return;
 
@@ -1157,8 +1162,10 @@ const report = {
                         };
 
                         if (f.statusIconType) opts.icon = `{${f.name}_icon}`;
+                        if (f.buttonTypeTooltip) opts.tooltip = f.buttonTypeTooltip;
 
                         newField = new sap.m.Button(opts);
+                        newField.addStyleClass("sapUiSizeCompact");
                         break;
 
                     case "Switch":
@@ -1349,7 +1356,9 @@ const report = {
                         sap.n.Adaptive.navigation(t._action1Nav, columnData, events, table.sId);
                     },
                     visible: report.buildVisibleProp("1"),
-                });
+                }).addStyleClass("sapUiSizeCompact");
+
+                if (t.action1Tooltip) newField.setTooltip(t.action1Tooltip);
 
                 col.addCell(newField);
             }
@@ -1378,7 +1387,9 @@ const report = {
                         sap.n.Adaptive.navigation(t._action2Nav, columnData, events, table.sId);
                     },
                     visible: report.buildVisibleProp("2"),
-                });
+                }).addStyleClass("sapUiSizeCompact");
+
+                if (t.action2Tooltip) newField.setTooltip(t.action2Tooltip);
 
                 col.addCell(newField);
             }
@@ -1408,7 +1419,9 @@ const report = {
                         sap.n.Adaptive.navigation(t._action3Nav, columnData, events, table.sId);
                     },
                     visible: report.buildVisibleProp("3"),
-                });
+                }).addStyleClass("sapUiSizeCompact");
+
+                if (t.action3Tooltip) newField.setTooltip(t.action3Tooltip);
 
                 col.addCell(newField);
             }
@@ -1438,7 +1451,9 @@ const report = {
                         sap.n.Adaptive.navigation(t._action4Nav, columnData, events, table.sId);
                     },
                     visible: report.buildVisibleProp("4"),
-                });
+                }).addStyleClass("sapUiSizeCompact");
+
+                if (t.action4Tooltip) newField.setTooltip(t.action4Tooltip);
 
                 col.addCell(newField);
             }
@@ -1468,7 +1483,9 @@ const report = {
                         sap.n.Adaptive.navigation(t._action5Nav, columnData, events, table.sId);
                     },
                     visible: report.buildVisibleProp("5"),
-                });
+                }).addStyleClass("sapUiSizeCompact");
+
+                if (t.action5Tooltip) newField.setTooltip(t.action5Tooltip);
 
                 col.addCell(newField);
             }
@@ -1743,17 +1760,28 @@ const report = {
                             },
                         });
 
-                        if (field.items) field.items.sort(sort_by("text"));
+                        if (field.items) {
+                            if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                sortObjects(field.items, ["additionalText", "text"]);
+                            } else {
+                                field.items.sort(sort_by("text"));
+                            }
 
-                        $.each(field.items, function (i, item) {
-                            selField.addItem(
-                                new sap.ui.core.ListItem({
-                                    key: item.key,
-                                    text: item.text,
-                                    additionalText: item.additionalText,
-                                })
-                            );
-                        });
+                            let lastGroup = "";
+
+                            $.each(field.items, function (i, item) {
+                                if ((field.lookupFieldGrouping1 || field.lookupFieldGrouping2) && lastGroup !== item.additionalText) {
+                                    selField.addItem(new sap.ui.core.SeparatorItem({ text: item.additionalText }));
+                                    lastGroup = item.additionalText;
+                                }
+
+                                if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                    selField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text }));
+                                } else {
+                                    selField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                                }
+                            });
+                        }
 
                         form.addContent(selField);
                         break;
@@ -1781,17 +1809,28 @@ const report = {
 
                         selField.addItem(new sap.ui.core.Item({ key: "", text: "" }));
 
-                        if (field.items) field.items.sort(sort_by("text"));
+                        if (field.items) {
+                            if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                sortObjects(field.items, ["additionalText", "text"]);
+                            } else {
+                                field.items.sort(sort_by("text"));
+                            }
 
-                        $.each(field.items, function (i, item) {
-                            selField.addItem(
-                                new sap.ui.core.ListItem({
-                                    key: item.key,
-                                    text: item.text,
-                                    additionalText: item.additionalText,
-                                })
-                            );
-                        });
+                            let lastGroup = "";
+
+                            $.each(field.items, function (i, item) {
+                                if ((field.lookupFieldGrouping1 || field.lookupFieldGrouping2) && lastGroup !== item.additionalText) {
+                                    selField.addItem(new sap.ui.core.SeparatorItem({ text: item.additionalText }));
+                                    lastGroup = item.additionalText;
+                                }
+
+                                if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                    selField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text }));
+                                } else {
+                                    selField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                                }
+                            });
+                        }
 
                         form.addContent(selField);
                         break;

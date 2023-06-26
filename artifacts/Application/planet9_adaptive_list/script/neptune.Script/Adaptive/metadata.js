@@ -95,6 +95,7 @@ const metadata = {
             },
             showIcon: { type: "CheckBox", label: "Icon Visible", default: true },
             actionButtonLeft: { type: "CheckBox", label: "Action Button Left", default: false },
+            hideHeader: { type: "CheckBox", label: "Hide Header", default: false },
 
             titleNavigation: { type: "Title", label: "Event" },
             navigationCreate: {
@@ -380,6 +381,7 @@ const metadata = {
                 visible: vb.tableEnableAction1,
                 items: valuesToKeyText(vb.buttonTypes),
             },
+            action1Tooltip: { type: "Input", label: "Tooltip", visible: vb.tableEnableAction1, translate: true },
             action1Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction1 },
 
             action1VisibleCond: {
@@ -449,6 +451,7 @@ const metadata = {
                 visible: vb.tableEnableAction2,
                 items: valuesToKeyText(vb.buttonTypes),
             },
+            action2Tooltip: { type: "Input", label: "Tooltip", visible: vb.tableEnableAction2, translate: true },
             action2Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction2 },
 
             action2VisibleCond: {
@@ -515,6 +518,7 @@ const metadata = {
                 visible: vb.tableEnableAction3,
                 items: valuesToKeyText(vb.buttonTypes),
             },
+            action3Tooltip: { type: "Input", label: "Tooltip", visible: vb.tableEnableAction3, translate: true },
             action3Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction3 },
 
             action3VisibleCond: {
@@ -581,6 +585,7 @@ const metadata = {
                 visible: vb.tableEnableAction4,
                 items: valuesToKeyText(vb.buttonTypes),
             },
+            action4Tooltip: { type: "Input", label: "Tooltip", visible: vb.tableEnableAction4, translate: true },
             action4Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction4 },
 
             action4VisibleCond: {
@@ -647,6 +652,7 @@ const metadata = {
                 visible: vb.tableEnableAction5,
                 items: valuesToKeyText(vb.buttonTypes),
             },
+            action5Tooltip: { type: "Input", label: "Tooltip", visible: vb.tableEnableAction5, translate: true },
             action5Nav: { type: "Navigation", label: "Press", visible: vb.tableEnableAction5 },
 
             action5VisibleCond: {
@@ -733,7 +739,12 @@ const metadata = {
         },
         lookupFieldAdditional: {
             type: "TableField",
-            label: "Additional Text Field",
+            label: "Additional Field",
+            visible: vb.typeMultiOrSingleSelectLookup,
+        },
+        lookupFieldGrouping1: {
+            type: "CheckBox",
+            label: "Group by Add. Field",
             visible: vb.typeMultiOrSingleSelectLookup,
         },
         lookupShowOnlyText: {
@@ -754,6 +765,11 @@ const metadata = {
         scriptSelect: {
             type: "Script",
             label: "Server Script",
+            visible: vb.typeMultiOrSingleSelectScript,
+        },
+        lookupFieldGrouping2: {
+            type: "CheckBox",
+            label: "Group by Add. Field",
             visible: vb.typeMultiOrSingleSelectScript,
         },
 
@@ -845,6 +861,8 @@ const metadata = {
             visible: vb.typeButton,
             items: valuesToKeyText(vb.buttonTypes),
         },
+
+        buttonTypeTooltip: { type: "Input", label: "Tooltip", visible: vb.typeButton, translate: true },
 
         titleNavigation: { type: "Title", label: "Event", visible: vb.typeEvents },
         navigation: { type: "Navigation", label: "Press", visible: vb.typeEvents },
@@ -1406,7 +1424,7 @@ const metadata = {
         editable: { type: "CheckBox", label: "Editable", default: false, visible: vb.editable },
         enableGroup: { type: "CheckBox", label: "Grouping", default: false },
         enableFilter: { type: "CheckBox", label: "Search", default: true },
-        enableSort: { type: "CheckBox", label: "Sorting", default: true },        
+        enableSort: { type: "CheckBox", label: "Sorting", default: true },
         visible: { type: "CheckBox", label: "Visible", default: true },
 
         enableSum: { type: "CheckBox", label: "Sum", default: false, visible: vb.typeObjectNumber },
@@ -1419,6 +1437,6 @@ const metadata = {
                 { key: "", text: "Sum" },
                 { key: "Average", text: "Average" },
             ],
-        },        
+        },
     },
 };

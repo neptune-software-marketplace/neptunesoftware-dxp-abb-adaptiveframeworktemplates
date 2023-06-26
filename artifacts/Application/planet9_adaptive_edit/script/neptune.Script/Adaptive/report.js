@@ -814,21 +814,33 @@ const report = {
                             visible: report.buildVisibleProp(field),
                             selectedKeys: "{AppData>/" + field.name + "}",
                             placeholder: field.placeholder || "",
+                            showSelectAll: true,
                             valueState: "{AppData>/" + field.name + "ValueState}",
                             showSecondaryValues: true,
                         });
 
-                        if (field.items) field.items.sort(sort_by("text"));
+                        if (field.items) {
+                            if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                sortObjects(field.items, ["additionalText", "text"]);
+                            } else {
+                                field.items.sort(sort_by("text"));
+                            }
 
-                        $.each(field.items, function (i, item) {
-                            newField.addItem(
-                                new sap.ui.core.ListItem({
-                                    key: item.key,
-                                    text: item.text,
-                                    additionalText: item.additionalText,
-                                })
-                            );
-                        });
+                            let lastGroup = "";
+
+                            $.each(field.items, function (i, item) {
+                                if ((field.lookupFieldGrouping1 || field.lookupFieldGrouping2) && lastGroup !== item.additionalText) {
+                                    newField.addItem(new sap.ui.core.SeparatorItem({ text: item.additionalText }));
+                                    lastGroup = item.additionalText;
+                                }
+
+                                if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                    newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text }));
+                                } else {
+                                    newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                                }
+                            });
+                        }
 
                         if (field.description) {
                             form.addContent(report.buildInputDescription(newField, field));
@@ -868,17 +880,28 @@ const report = {
                         // Items
                         newField.addItem(new sap.ui.core.Item({ key: "", text: "" }));
 
-                        if (field.items) field.items.sort(sort_by("text"));
+                        if (field.items) {
+                            if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                sortObjects(field.items, ["additionalText", "text"]);
+                            } else {
+                                field.items.sort(sort_by("text"));
+                            }
 
-                        $.each(field.items, function (i, item) {
-                            newField.addItem(
-                                new sap.ui.core.ListItem({
-                                    key: item.key,
-                                    text: item.text,
-                                    additionalText: item.additionalText,
-                                })
-                            );
-                        });
+                            let lastGroup = "";
+
+                            $.each(field.items, function (i, item) {
+                                if ((field.lookupFieldGrouping1 || field.lookupFieldGrouping2) && lastGroup !== item.additionalText) {
+                                    newField.addItem(new sap.ui.core.SeparatorItem({ text: item.additionalText }));
+                                    lastGroup = item.additionalText;
+                                }
+
+                                if (field.lookupFieldGrouping1 || field.lookupFieldGrouping2) {
+                                    newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text }));
+                                } else {
+                                    newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.text, additionalText: item.additionalText }));
+                                }
+                            });
+                        }
                         break;
 
                     case "TextArea":

@@ -365,7 +365,7 @@ const metadata = {
                 "CheckBox",
                 "DatePicker",
                 "DateTimePicker",
-                "Display",                
+                "Display",
                 "Editor",
                 "MultiSelect",
                 "MultiSelectLookup",
@@ -492,6 +492,12 @@ const metadata = {
             visible: vb.typeMultiOrSingleSelectScript,
         },
 
+        lookupFieldGrouping2: {
+            type: "CheckBox",
+            label: "Group by Add. Field",
+            visible: vb.typeMultiOrSingleSelectScript,
+        },
+
         titleLookup: { type: "Title", label: "Data Source", visible: vb.multiOrSingleSelectLookup },
         lookupTable: { type: "Table", label: "Table", visible: vb.multiOrSingleSelectLookup },
         lookupFieldKey: {
@@ -507,6 +513,11 @@ const metadata = {
         lookupFieldAdditional: {
             type: "TableField",
             label: "Additional Text Field",
+            visible: vb.multiOrSingleSelectLookup,
+        },
+        lookupFieldGrouping1: {
+            type: "CheckBox",
+            label: "Group by Add. Field",
             visible: vb.multiOrSingleSelectLookup,
         },
         lookupShowOnlyText: {
