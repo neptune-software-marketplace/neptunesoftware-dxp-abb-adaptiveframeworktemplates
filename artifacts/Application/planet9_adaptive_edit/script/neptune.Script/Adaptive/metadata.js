@@ -387,8 +387,10 @@ const metadata = {
             visible: vb.input,
             items: valuesToKeyText(["Email", "Number", "Password", "Tel", "|Text", "Url"]),
         },
+        mask: { type: "Input", label: "Input Mask", placeholder: "999-999 or ***-*** or 999-***", visible: vb.placeholder },
         placeholder: { type: "Input", label: "Placeholder", visible: vb.placeholder },
         description: { type: "Input", label: "Description" },
+
         inputFormatter: {
             type: "SingleSelect",
             label: "Formatter",

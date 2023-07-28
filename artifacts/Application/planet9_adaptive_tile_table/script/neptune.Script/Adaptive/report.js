@@ -115,6 +115,12 @@ var report = {
                     if (!searchFields.length) showSearchField = false;
                 }
 
+                if (modelAppConfig.oData.settings.properties.table.enableAutoPopin) {
+                    tabData.setAutoPopinMode(true);
+                } else {
+                    tabData.setAutoPopinMode(false);
+                }
+
                 // Parent Padding
                 if (panMain.getParent().getParent().getParent().getParent().getApplyContentPadding) {
                     const padding = panMain.getParent().getParent().getParent().getParent().getApplyContentPadding();
@@ -594,6 +600,8 @@ var report = {
 
                 if (f.hAlign) ColumnHeader.setHAlign(f.hAlign);
                 if (f.vAlign) ColumnHeader.setVAlign(f.vAlign);
+                if (f.demandPopin) ColumnHeader.setDemandPopin(f.demandPopin);
+                if (f.popinDisplay) ColumnHeader.setPopinDisplay(f.popinDisplay);
 
                 // Sorting
                 if (f.enableSort || f.enableGroup) {

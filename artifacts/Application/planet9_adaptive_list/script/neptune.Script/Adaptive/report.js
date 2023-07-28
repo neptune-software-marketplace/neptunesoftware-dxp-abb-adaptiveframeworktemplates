@@ -120,6 +120,12 @@ const report = {
         if (config.settings.properties.report.enableDelete && !config.settings.properties.report.enableMultiSelect) report.tabObject.setMode("Delete");
         if (config.settings.properties.report.enableMultiSelect) report.tabObject.setMode("MultiSelect");
 
+        if (config.settings.properties.table.enableAutoPopin) {
+            report.tabObject.setAutoPopinMode(true);
+        } else {
+            report.tabObject.setAutoPopinMode(false);
+        }
+
         report.sortBy = t.initialSortField || null;
         report.sortOrder = t.initialSortOrder || "ASC";
         report.groupBy = t.initialGroupField || null;

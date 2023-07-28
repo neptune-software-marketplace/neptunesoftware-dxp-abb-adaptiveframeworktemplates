@@ -1,18 +1,15 @@
 const metadata = {
-
     properties: {
-
         enableForm: true,
-        formUsage: 'INPUT',
+        formUsage: "INPUT",
         enableTable: true,
-        tableUsage: 'OUTPUT',
+        tableUsage: "OUTPUT",
         titleForm: "Filter",
         titleTable: "Table",
         iconForm: "/public/icons/s_b_filt.gif",
         iconTable: "/public/icons/s_wdvtlc.gif",
 
         report: {
-
             titleGeneral: { type: "Title", label: "General" },
             title: { type: "Input", label: "Title" },
 
@@ -40,8 +37,8 @@ const metadata = {
                     { key: "Reject", text: "Reject" },
                     { key: "Transparent", text: "Transparent" },
                     { key: "Unstyled", text: "Unstyled" },
-                    { key: "Up", text: "Up" }
-                ]
+                    { key: "Up", text: "Up" },
+                ],
             },
 
             titleButtonRun: { type: "Title", label: "Button Run", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
@@ -60,8 +57,8 @@ const metadata = {
                     { key: "Reject", text: "Reject" },
                     { key: "Transparent", text: "Transparent" },
                     { key: "Unstyled", text: "Unstyled" },
-                    { key: "Up", text: "Up" }
-                ]
+                    { key: "Up", text: "Up" },
+                ],
             },
 
             // Translation Fields
@@ -72,21 +69,17 @@ const metadata = {
             enableRun: { type: "CheckBox", label: "Enable Run", default: false },
             enableCreate: { type: "CheckBox", label: "Enable Create", default: false },
             enableDelete: { type: "CheckBox", label: "Enable Delete", default: false },
-
         },
 
         form: {
-
             titleSettings: { type: "Title", label: "Properties" },
             enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
             filterExpandable: { type: "CheckBox", label: "Filter Expandable", default: true },
             headerExpanded: { type: "CheckBox", label: "Filter Expanded", default: true },
             showFilter: { type: "CheckBox", label: "Show Filter", default: false },
-
         },
 
         table: {
-
             titleGeneral: { type: "Title", label: "General" },
             headerText: { type: "Input", label: "Header Text" },
             footerText: { type: "Input", label: "Footer Text" },
@@ -99,8 +92,8 @@ const metadata = {
                 items: [
                     { key: "", text: "" },
                     { key: "ASC", text: "Ascending" },
-                    { key: "DESC", text: "Descending" }
-                ]
+                    { key: "DESC", text: "Descending" },
+                ],
             },
 
             titleTableSort: { type: "Title", label: "Initial Sorting" },
@@ -111,8 +104,8 @@ const metadata = {
                 items: [
                     { key: "", text: "" },
                     { key: "ASC", text: "Ascending" },
-                    { key: "DESC", text: "Descending" }
-                ]
+                    { key: "DESC", text: "Descending" },
+                ],
             },
 
             titlePostProcessingScript: { type: "Title", label: "Post Processing" },
@@ -120,27 +113,25 @@ const metadata = {
 
             titleTable: { type: "Title", label: "Properties" },
             showSeparators: {
-                type: 'SingleSelect',
-                label: 'Show Separators',
-                default: 'All',
+                type: "SingleSelect",
+                label: "Show Separators",
+                default: "All",
                 items: [
                     { key: "", text: "" },
                     { key: "All", text: "All" },
                     { key: "Inner", text: "Inner" },
-                    { key: "None", text: "None" }
-                ]
+                    { key: "None", text: "None" },
+                ],
             },
             alternateRowColors: { type: "CheckBox", label: "Alternate Row Colors", default: false },
             enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
             fixedLayout: { type: "CheckBox", label: "Fixed Layout", default: true },
             inset: { type: "CheckBox", label: "Inset", default: false },
-
-        }
-
+            enableAutoPopin: { type: "CheckBox", label: "Enable Autopopin", default: false },
+        },
     },
 
     fieldsSel: {
-
         titleGeneral: { type: "Title", label: "General" },
         text: { type: "Input", label: "Label" },
         type: {
@@ -157,7 +148,7 @@ const metadata = {
                 { key: "SingleSelectLookup", text: "SingleSelect Lookup" },
                 { key: "SingleSelectScript", text: "SingleSelect Script" },
                 { key: "Switch", text: "Switch" },
-            ]
+            ],
         },
 
         titleLookup: { type: "Title", label: "Data Source", visible: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true: false }" },
@@ -173,22 +164,21 @@ const metadata = {
         titleDefault: { type: "Title", label: "Default Value" },
         default: { type: "Input", label: "Fixed Value" },
         sysvarValue: {
-            type: 'SingleSelect', label: 'System Variable', items: [
+            type: "SingleSelect",
+            label: "System Variable",
+            items: [
                 { key: "", text: "" },
-                { key: "UserName", text: "UserName" }
-            ]
+                { key: "UserName", text: "UserName" },
+            ],
         },
         scriptValue: { type: "Script", label: "Script Value" },
 
         titleSettings: { type: "Title", label: "Properties" },
         required: { type: "CheckBox", label: "Required", default: false },
-        visible: { type: "CheckBox", label: "Visible", default: true }
-
-
+        visible: { type: "CheckBox", label: "Visible", default: true },
     },
 
     fieldsRun: {
-
         titleGeneral: { type: "Title", label: "General" },
         text: { type: "Input", label: "Label" },
         type: {
@@ -203,7 +193,7 @@ const metadata = {
                 { key: "ObjectNumber", text: "Number" },
                 { key: "ObjectStatus", text: "Status" },
                 { key: "Switch", text: "Switch" },
-            ]
+            ],
         },
         titleNavigation: { type: "Title", label: "Event", visible: "{= ${/type} === 'Link' ? true: false }" },
         navigation: { type: "Navigation", label: "Press", visible: "{= ${/type} === 'Link' ? true: false }" },
@@ -219,7 +209,7 @@ const metadata = {
                 { key: "Lookup", text: "Lookup" },
                 { key: "Rule", text: "Rules Engine" },
                 { key: "Script", text: "Script (from post processing)" },
-            ]
+            ],
         },
         valueFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/valueType} === 'Fixed' ? true: false }" },
         valueLookup: { type: "Lookup", label: "Lookup", visible: "{= ${/valueType} === 'Lookup' ? true: false }" },
@@ -249,7 +239,7 @@ const metadata = {
                 { key: "number05", text: "Number Decimals 1 Point" },
                 { key: "number06", text: "Number Decimals 2 Point" },
                 { key: "number07", text: "Number Decimals 3 Point" },
-            ]
+            ],
         },
 
         // ObjectStatus - Icon
@@ -265,7 +255,7 @@ const metadata = {
                 { key: "Lookup", text: "Lookup" },
                 { key: "Rule", text: "Rules Engine" },
                 { key: "Script", text: "Script (from post processing)" },
-            ]
+            ],
         },
         statusIconFixed: { type: "Icon", label: "Fixed Value", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusIconType} === 'Fixed' ? true: false }" },
         statusIconRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusIconType} === 'Rule' ? true: false }" },
@@ -285,7 +275,7 @@ const metadata = {
                 { key: "Lookup", text: "Lookup" },
                 { key: "Rule", text: "Rules Engine" },
                 { key: "Script", text: "Script (from post processing)" },
-            ]
+            ],
         },
         statusTitleFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Fixed'? true: false }" },
         statusTitleRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectStatus' && ${/statusTitleType} === 'Rule'? true: false }" },
@@ -305,13 +295,12 @@ const metadata = {
                 { key: "Lookup", text: "Lookup" },
                 { key: "Rule", text: "Rules Engine" },
                 { key: "Script", text: "Script (from post processing)" },
-            ]
+            ],
         },
         statusStateFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectStatus' && ${/statusStateType} === 'Fixed' ? true: false }" },
         statusStateRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusStateType} === 'Rule'? true: false }" },
         statusStateBinding: { type: "TableFieldLocal", label: "Binding", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusStateType} === 'Binding'? true: false }" },
         statusStateLookup: { type: "Lookup", label: "Lookup Value", visible: "{= ${/type} === 'ObjectStatus'  && ${/statusStateType} === 'Lookup'? true: false }" },
-
 
         // ObjectNumber - Unit
         titleNumberUnit: { type: "Title", label: "Value: Unit", visible: "{= ${/type} === 'ObjectNumber' ? true: false }" },
@@ -326,7 +315,7 @@ const metadata = {
                 { key: "Lookup", text: "Lookup" },
                 { key: "Rule", text: "Rules Engine" },
                 { key: "Script", text: "Script (from post processing)" },
-            ]
+            ],
         },
         numberUnitFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Fixed'? true: false }" },
         numberUnitRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectNumber' && ${/numberUnitType} === 'Rule'? true: false }" },
@@ -357,7 +346,7 @@ const metadata = {
                 { key: "number06", text: "Number Decimals 2 Point" },
                 { key: "number07", text: "Number Decimals 3 Point" },
                 { key: "file", text: "File Size" },
-            ]
+            ],
         },
 
         // ObjectNumber - State
@@ -373,7 +362,7 @@ const metadata = {
                 { key: "Lookup", text: "Lookup" },
                 { key: "Rule", text: "Rules Engine" },
                 { key: "Script", text: "Script (from post processing)" },
-            ]
+            ],
         },
         numberStateFixed: { type: "Input", label: "Fixed Value", visible: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Fixed'? true: false }" },
         numberStateRule: { type: "Rule", label: "Rules Engine", visible: "{= ${/type} === 'ObjectNumber' && ${/numberStateType} === 'Rule'? true: false }" },
@@ -383,33 +372,49 @@ const metadata = {
         titleLayout: { type: "Title", label: "Layout" },
         hAlign: {
             type: "SingleSelect",
-            label: "Align",
-            items: [
-                { key: "", text: "" },
-                { key: "Begin", text: "Begin" },
-                { key: "Center", text: "Center" },
-                { key: "End", text: "End" },
-                { key: "Initial", text: "Initial" },
-                { key: "Left", text: "Left" },
-                { key: "Right", text: "Right" }
-            ]
+            label: "Horizontal Align",
+            items: valuesToKeyText(["", "Begin", "Center", "End", "Initial", "Left", "Right"]),
+        },
+        vAlign: {
+            type: "SingleSelect",
+            label: "Vertical Align",
+            items: valuesToKeyText(["", "Bottom", "Inherit", "Middle", "Top"]),
         },
         minScreenWidth: {
             type: "SingleSelect",
             label: "MinScreenSize",
             items: [
                 { key: "", text: "" },
-                { key: "Desktop", text: "Desktop" },
-                { key: "Large", text: "Large" },
-                { key: "Medium", text: "Medium" },
-                { key: "Phone", text: "Phone" },
-                { key: "Small", text: "Small" },
-                { key: "Tablet", text: "Tablet" },
-                { key: "XLarge", text: "XLarge" },
-                { key: "XSmall", text: "XSmall" },
-                { key: "XXLarge", text: "XXLarge" },
-                { key: "XXSmall", text: "XXSmall" },
-            ]
+                { key: "2560px", text: "2560px" },
+                { key: "2240px", text: "2240px" },
+                { key: "1920px", text: "1920px" },
+                { key: "1680px", text: "1680px" },
+                { key: "1536px", text: "1536px" },
+                { key: "1440px", text: "1440px" },
+                { key: "1280px", text: "1280px" },
+                { key: "XXLarge", text: "1120px" },
+                { key: "Desktop", text: "1024px" },
+                { key: "XLarge", text: "960px" },
+                { key: "Tablet", text: "600px" },
+                { key: "Medium", text: "560px" },
+                { key: "Small", text: "480px" },
+                { key: "XSmall", text: "320px" },
+                { key: "Phone", text: "240px" },
+                { key: "XXSmall", text: "240px" },
+            ],
+        },
+
+        demandPopin: { type: "CheckBox", label: "Demand Popin", visible: "{= ${appData>/settings/properties/table/enableAutoPopin} ? false : true }" },
+
+        popinDisplay: {
+            type: "SingleSelect",
+            label: "Popin Display",
+            default: "Inline",
+            items: [
+                { key: "Block", text: "Block" },
+                { key: "Inline", text: "Inline" },
+                { key: "WithoutHeader", text: "WithoutHeader" },
+            ],
         },
         width: { type: "Input", label: "Width", placeholder: "Example 100px or 50%" },
         wrapping: { type: "CheckBox", label: "Wrapping", default: false },
@@ -418,7 +423,6 @@ const metadata = {
         enableGroup: { type: "CheckBox", label: "Grouping", default: false },
         enableFilter: { type: "CheckBox", label: "Search", default: false },
         enableSort: { type: "CheckBox", label: "Sorting", default: false },
-        visible: { type: "CheckBox", label: "Visible", default: true }
-
-    }
-}
+        visible: { type: "CheckBox", label: "Visible", default: true },
+    },
+};

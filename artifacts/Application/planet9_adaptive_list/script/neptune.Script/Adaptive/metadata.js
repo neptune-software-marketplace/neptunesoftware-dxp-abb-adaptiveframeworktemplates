@@ -353,6 +353,7 @@ const metadata = {
             fixedLayout: { type: "CheckBox", label: "Fixed Layout", default: false },
             inset: { type: "CheckBox", label: "Inset", default: false },
             enableCompact: { type: "CheckBox", label: "Compact Mode", default: false },
+            enableAutoPopin: { type: "CheckBox", label: "Enable Autopopin", default: false },
             enableAction1: { type: "CheckBox", label: "Enable Row Action 1", default: false },
             enableAction2: { type: "CheckBox", label: "Enable Row Action 2", default: false },
             enableAction3: { type: "CheckBox", label: "Enable Row Action 3", default: false },
@@ -1395,15 +1396,17 @@ const metadata = {
             ],
         },
 
-        demandPopin: { type: "CheckBox", label: "Demand Popin" },
+        demandPopin: { type: "CheckBox", label: "Demand Popin", visible: "{= ${appData>/settings/properties/table/enableAutoPopin} ? false : true }" },
+
         popinDisplay: {
             type: "SingleSelect",
             label: "Popin Display",
-            default: "Block",
+            default: "Inline",
             items: [
                 { key: "Block", text: "Block" },
                 { key: "Inline", text: "Inline" },
-            ],
+                { key: "WithoutHeader", text: "WithoutHeader" },
+            ]
         },
 
         placeholder: { type: "Input", label: "Placeholder", visible: vb.placeholder },

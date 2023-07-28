@@ -1497,7 +1497,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.6.26.722",
+	"ver": "23.7.28.916",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",
@@ -1536,6 +1536,8 @@
 	"compilerTarget": 3,
 	"tabWidth": null,
 	"printWidth": 200,
+	"generateVersionOnActivation": false,
+	"activationHistoryCount": 0,
 	"apis": [],
 	"package": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
 }

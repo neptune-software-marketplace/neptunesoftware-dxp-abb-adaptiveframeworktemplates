@@ -1028,43 +1028,94 @@ const report = {
                             })
                         );
 
-                        var newField = new sap.m.Input({
-                            visible: report.buildVisibleProp(field),
-                            editable: field.editable,
-                            type: field.inputType || "Text",
-                            placeholder: field.placeholder || "",
-                            valueState: "{AppData>/" + field.name + "ValueState}",
-                            value: "{AppData>/" + field.name + "}",
-                            liveChange: function (oEvent) {
-                                if (field.inputFormatter) {
-                                    let newValue = this.getValue();
+                        if (field.mask) {
+                            var newField = new sap.m.MaskInput({
+                                visible: report.buildVisibleProp(field),
+                                editable: field.editable,
+                                mask: field.mask,
+                                type: field.inputType || "Text",
+                                placeholder: field.placeholder || "",
+                                valueState: "{AppData>/" + field.name + "ValueState}",
+                                value: "{AppData>/" + field.name + "}",
+                                liveChange: function (oEvent) {
+                                    if (field.inputFormatter) {
+                                        let newValue = this.getValue();
 
-                                    switch (field.inputFormatter) {
-                                        case "condense":
-                                            newValue = newValue.replace(/\s+/g, "");
-                                            break;
+                                        switch (field.inputFormatter) {
+                                            case "condense":
+                                                newValue = newValue.replace(/\s+/g, "");
+                                                break;
 
-                                        case "uppercase":
-                                            newValue = newValue.toUpperCase();
-                                            break;
+                                            case "uppercase":
+                                                newValue = newValue.toUpperCase();
+                                                break;
 
-                                        case "lowercase":
-                                            newValue = newValue.toLowerCase();
-                                            break;
+                                            case "lowercase":
+                                                newValue = newValue.toLowerCase();
+                                                break;
 
-                                        default:
-                                            break;
+                                            default:
+                                                break;
+                                        }
+
+                                        this.setValue(newValue);
                                     }
+                                },
+                            });
 
-                                    this.setValue(newValue);
-                                }
-                            },
-                        });
+                            // Mask Rule if Not only Numbers
+                            if (field.mask.indexOf("*") > -1) {
+                                newField.addRule(
+                                    new sap.m.MaskInputRule({
+                                        regex: "[a-zA-Z0-9]",
+                                    })
+                                );
+                            }
 
-                        if (field.description) {
-                            form.addContent(report.buildInputDescription(newField, field));
+                            if (field.description) {
+                                form.addContent(report.buildInputDescription(newField, field));
+                            } else {
+                                form.addContent(newField);
+                            }
                         } else {
-                            form.addContent(newField);
+                            var newField = new sap.m.Input({
+                                visible: report.buildVisibleProp(field),
+                                editable: field.editable,
+                                type: field.inputType || "Text",
+                                placeholder: field.placeholder || "",
+                                valueState: "{AppData>/" + field.name + "ValueState}",
+                                value: "{AppData>/" + field.name + "}",
+                                liveChange: function (oEvent) {
+                                    if (field.inputFormatter) {
+                                        let newValue = this.getValue();
+
+                                        switch (field.inputFormatter) {
+                                            case "condense":
+                                                newValue = newValue.replace(/\s+/g, "");
+                                                break;
+
+                                            case "uppercase":
+                                                newValue = newValue.toUpperCase();
+                                                break;
+
+                                            case "lowercase":
+                                                newValue = newValue.toLowerCase();
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
+
+                                        this.setValue(newValue);
+                                    }
+                                },
+                            });
+
+                            if (field.description) {
+                                form.addContent(report.buildInputDescription(newField, field));
+                            } else {
+                                form.addContent(newField);
+                            }
                         }
                 }
             });
