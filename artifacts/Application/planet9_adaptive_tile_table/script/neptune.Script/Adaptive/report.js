@@ -115,10 +115,12 @@ var report = {
                     if (!searchFields.length) showSearchField = false;
                 }
 
-                if (modelAppConfig.oData.settings.properties.table.enableAutoPopin) {
-                    tabData.setAutoPopinMode(true);
-                } else {
-                    tabData.setAutoPopinMode(false);
+                if (tabData.setAutoPopinMode) {
+                    if (modelAppConfig.oData.settings.properties.table.enableAutoPopin) {
+                        tabData.setAutoPopinMode(true);
+                    } else {
+                        tabData.setAutoPopinMode(false);
+                    }
                 }
 
                 // Parent Padding
