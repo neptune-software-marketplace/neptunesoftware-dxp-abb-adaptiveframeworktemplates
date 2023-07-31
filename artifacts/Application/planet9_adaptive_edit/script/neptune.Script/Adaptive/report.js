@@ -423,6 +423,9 @@ const report = {
 
         const s = modelAppConfig.oData.settings;
 
+        let formUnique = true;
+        let formValues = {};
+        let formValid = true;
         let saveData = {};
 
         if (modelAppData.oData && modelAppData.oData.id) saveData.id = modelAppData.oData.id;
@@ -434,16 +437,16 @@ const report = {
             }
 
             saveData[f.name] = modelAppData.oData[f.name];
+
+            delete modelAppData.oData[f.name + "ValueState"];
         });
 
-        let formValid = true;
+        // Required Validatation, if it's required, editable and visible
         s.fieldsSel
-            // only validate a form field, if it's required, editable and visible
             .filter(function (f) {
                 return f.required && f.editable && f.visible;
             })
             .forEach(function (f) {
-                delete modelAppData.oData[f.name + "ValueState"];
                 if (saveData[f.name] === null || saveData[f.name] === undefined || saveData[f.name] === "") {
                     formValid = false;
                     modelAppData.oData[f.name + "ValueState"] = "Error";
@@ -452,6 +455,36 @@ const report = {
 
         if (!formValid) {
             sap.m.MessageToast.show("Please fill in all the required fields");
+            toolHeaderSave.setEnabled(true);
+            modelAppData.refresh();
+            return;
+        }
+
+        // Unique Validatation, if it's editable and visible
+        s.fieldsSel
+            .filter(function (f) {
+                return f.unique && f.editable && f.visible && saveData[f.name];
+            })
+            .forEach(function (f) {
+                const value = saveData[f.name];
+
+                if (formValues[value]) {
+                    formUnique = false;
+                } else {
+                    formValues[value] = 1;
+                }
+            });
+
+        if (!formUnique) {
+            s.fieldsSel
+                .filter(function (f) {
+                    return f.unique && f.editable && f.visible && saveData[f.name];
+                })
+                .forEach(function (f) {
+                    modelAppData.oData[f.name + "ValueState"] = "Error";
+                });
+
+            sap.m.MessageToast.show("Please use unique values");
             toolHeaderSave.setEnabled(true);
             modelAppData.refresh();
             return;

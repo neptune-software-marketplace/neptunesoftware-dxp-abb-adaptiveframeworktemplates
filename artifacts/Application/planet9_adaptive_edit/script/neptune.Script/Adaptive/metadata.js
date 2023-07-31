@@ -568,6 +568,7 @@ const metadata = {
         editable: { type: "CheckBox", label: "Editable", default: true },
         required: { type: "CheckBox", label: "Required", default: false },
         visible: { type: "CheckBox", label: "Visible", default: true },
+        unique: { type: "CheckBox", label: "Unique Value", default: false },
 
         titleVisibleCond: { type: "Title", label: "Conditional Edit" },
         visibleFieldName: { type: "TableFieldLocal", label: "Field" },
