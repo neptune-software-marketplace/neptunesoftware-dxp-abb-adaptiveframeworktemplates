@@ -1066,7 +1066,6 @@ const report = {
                                 visible: report.buildVisibleProp(field),
                                 editable: field.editable,
                                 mask: field.mask,
-                                type: field.inputType || "Text",
                                 placeholder: field.placeholder || "",
                                 valueState: "{AppData>/" + field.name + "ValueState}",
                                 value: "{AppData>/" + field.name + "}",
@@ -1270,13 +1269,13 @@ const report = {
     uploadFieldAfterRender: () => {
         const elm = document.getElementById("_editUploader");
         if (elm) {
-            elm.removeEventListener("change", this.uploadFileChangeEvent);
-            elm.addEventListener("change", this.uploadFileChangeEvent);
+            elm.removeEventListener("change", report.uploadFileChangeEvent);
+            elm.addEventListener("change", report.uploadFileChangeEvent);
         }
     },
 
     uploadFileChangeEvent: (event) => {
-        this.uploadFile(event, modelAppData.oData.id);
+        report.uploadFile(event, modelAppData.oData.id);
     },
 
     uploadFile: function (event, objectKey) {

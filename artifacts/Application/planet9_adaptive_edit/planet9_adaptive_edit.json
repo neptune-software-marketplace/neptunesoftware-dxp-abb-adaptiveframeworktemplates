@@ -891,8 +891,9 @@
 																		{
 																			"attribute": "press",
 																			"grouping": "Events",
-																			"value": "$(\"#_editUploader\").click();",
-																			"script": "$(\"#_editUploader\").click();",
+																			"value": "Anonymous Function",
+																			"script": "file://event/sap.m.Button/toolAttachmentAdd/press.js",
+																			"language": "javascript",
 																			"translation": []
 																		}
 																	],
@@ -1497,7 +1498,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.7.31.1211",
+	"ver": "23.8.6.736",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",

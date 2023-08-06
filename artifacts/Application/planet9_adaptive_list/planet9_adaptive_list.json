@@ -813,20 +813,42 @@
 							]
 						},
 						{
-							"fieldNo": "7af36c73-300e-4896-97f0-0f0d710a8214",
-							"fieldName": "oPageContent",
+							"fieldNo": "8296c227-ba75-47b9-808d-0f21a835df53",
+							"fieldName": "scrollTab",
 							"fieldParent": "1009d86b-3585-42a1-dcf3-021ef4ec1f0f",
-							"fieldType": "sap.m.VBox",
+							"fieldType": "sap.m.ScrollContainer",
 							"script": "",
 							"customComponent": false,
 							"request": [],
 							"response": [],
-							"attributes": [],
+							"attributes": [
+								{
+									"attribute": "width",
+									"grouping": "Properties",
+									"value": "100%",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "vertical",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "height",
+									"grouping": "Properties",
+									"value": "100%",
+									"script": "",
+									"translation": []
+								}
+							],
 							"data": [
 								{
 									"fieldNo": "d7e955cb-6766-4f84-baa7-64759c660ec7",
 									"fieldName": "tabData",
-									"fieldParent": "7af36c73-300e-4896-97f0-0f0d710a8214",
+									"fieldParent": "8296c227-ba75-47b9-808d-0f21a835df53",
 									"fieldType": "sap.m.Table",
 									"script": "",
 									"customComponent": false,
@@ -924,6 +946,19 @@
 									"data": []
 								}
 							]
+						},
+						{
+							"fieldNo": "7af36c73-300e-4896-97f0-0f0d710a8214",
+							"fieldName": "oPageContent",
+							"fieldParent": "1009d86b-3585-42a1-dcf3-021ef4ec1f0f",
+							"fieldType": "sap.m.VBox",
+							"script": "",
+							"customComponent": false,
+							"disabled": true,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
 						},
 						{
 							"fieldNo": "f515e0d1-caed-4415-a0b7-5789427a1c46",
@@ -3557,7 +3592,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.7.31.210",
+	"ver": "23.8.6.946",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
