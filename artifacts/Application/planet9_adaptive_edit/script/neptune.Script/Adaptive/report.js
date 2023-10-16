@@ -87,21 +87,48 @@ const report = {
         }
 
         // Translation - Properties
-        if (config.settings.properties.report.dynamicTitle) {
-            oPageHeaderTitle.bindProperty("text", "AppData>/" + config.settings.properties.report.dynamicTitle);
-        } else {
-            oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
-        }
-
-        if (config.settings.properties.report.dynamicSubTitle) {
-            oPageHeaderSubTitle.bindProperty("text", "AppData>/" + config.settings.properties.report.dynamicSubTitle);
-        } else {
-            oPageHeaderSubTitle.setText(sap.n.Adaptive.translateProperty("report", "subTitle", config));
-
-            if (!oPageHeaderSubTitle.getText()) {
-                oPageHeaderSubTitle.setVisible(false);
+        function syncTitle(targetModel) {
+            const config = targetModel.getData();
+            if (config.settings.properties.report.dynamicTitle) {
+                oPageHeaderTitle.bindProperty("text", "AppData>/" + config.settings.properties.report.dynamicTitle);
+            } else {
+                oPageHeaderTitle.unbindProperty('text')
+                oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
             }
         }
+
+        function syncSubTitle(targetModel) {
+            const config = targetModel.getData();
+            if (config.settings.properties.report.dynamicSubTitle) {
+                oPageHeaderSubTitle.bindProperty("text", `AppData>/${config.settings.properties.report.dynamicSubTitle}`);
+            } else {
+                oPageHeaderSubTitle.unbindProperty('text')
+                const text = sap.n.Adaptive.translateProperty("report", "subTitle", config);
+                if (!text) {
+                    oPageHeaderSubTitle.setVisible(false);
+                } else {
+                    oPageHeaderSubTitle.setText(text);
+                    oPageHeaderSubTitle.setVisible(true);
+                }
+            }
+        }
+
+        // Adaptive Designer: modelappData, Launchpad: modelAppConfig
+        const targetModel = typeof modelappData !== 'undefined' ? modelappData : modelAppConfig;
+        syncTitle(targetModel);
+        syncSubTitle(targetModel);
+
+        targetModel.attachPropertyChange(function (prop) {
+            const path = prop.mParameters.path;
+            if (['/settings/properties/report/title', '/settings/properties/report/dynamicTitle'].includes(path)) {
+                syncTitle(targetModel);
+            }
+
+            if (['/settings/properties/report/subTitle', '/settings/properties/report/dynamicSubTitle'].includes(path)) {
+                syncSubTitle(targetModel);
+            }
+        });
+
 
         toastSaved.setText(sap.n.Adaptive.translateProperty("report", "textToastSave", config));
         toastDelete.setText(sap.n.Adaptive.translateProperty("report", "textToastDelete", config));

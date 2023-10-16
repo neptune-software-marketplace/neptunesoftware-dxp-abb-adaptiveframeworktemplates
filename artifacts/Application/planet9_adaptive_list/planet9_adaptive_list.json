@@ -936,6 +936,13 @@
 											"translation": []
 										},
 										{
+											"attribute": "setSizeLimit",
+											"grouping": "Model",
+											"value": "10000",
+											"script": "",
+											"translation": []
+										},
+										{
 											"attribute": "contextualWidth",
 											"grouping": "Properties",
 											"value": "Auto",
@@ -3592,7 +3599,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.8.6.946",
+	"ver": "23.10.4.81",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",

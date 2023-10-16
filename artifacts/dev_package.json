@@ -9,56 +9,80 @@
 	},
 	"name": "neptunesoftware-dxp-abb-adaptiveframeworktemplates",
 	"description": "Neptune Adaptive Templates",
-	"ver": "22.12.7.627",
+	"ver": "23.10.16.135",
 	"enableCICD": true,
 	"apps": [
 		{
 			"id": "e05cbe5a-57dd-4bce-bc4b-5c113decb1c6",
 			"application": "planet9_adaptive_grid",
 			"title": "Adaptive Grid List",
-			"description": "Adaptive Grid List (experimental)"
+			"description": "Adaptive Grid List (experimental)",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "d29e149b-2716-4c77-b026-4451881e54cd",
 			"application": "planet9_adaptive_bi",
 			"title": "Analytic Slice&Dice",
-			"description": "Analytic Slice&Dice"
+			"description": "Analytic Slice&Dice",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "c68e1624-ec29-48bc-a7e0-109f9b54fd66",
 			"application": "planet9_adaptive_edit",
 			"title": "Adaptive Edit",
-			"description": "Adaptive Edit"
+			"description": "Adaptive Edit",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "b2082507-49ab-4d0a-acba-60668cae952b",
 			"application": "planet9_adaptive_tile_table",
 			"title": "Adaptive Tile Table",
-			"description": "Adaptive Tile Table"
+			"description": "Adaptive Tile Table",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "77d5d812-f861-4044-ba75-3e7a268a4d14",
 			"application": "planet9_adaptive_list",
 			"title": "Adaptive List ",
-			"description": "Adaptive List "
+			"description": "Adaptive List ",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "61a60e73-95f5-458b-9259-41f2c10659b2",
 			"application": "planet9_adaptive_tile_chart",
 			"title": "Adaptive Tile Chart",
-			"description": "Adaptive Tile Chart"
+			"description": "Adaptive Tile Chart",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "3348b476-8705-4885-9d69-5dbac3e0bf37",
 			"application": "planet9_adaptive_splitter",
 			"title": "Adaptive Splitter/Layout",
-			"description": "Adaptive Splitter/Layout"
+			"description": "Adaptive Splitter/Layout",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		},
 		{
 			"id": "16a6d055-8ffb-4364-89b5-f0c1d5477fe1",
 			"application": "planet9_adaptive_calendar",
 			"title": "Adaptive Calendar for Appointments",
-			"description": "Adaptive Calendar for Appointments"
+			"description": "Adaptive Calendar for Appointments",
+			"package": {
+				"id": "9a22f09f-1c13-ed11-bd6e-000d3ab1d9ff"
+			}
 		}
 	],
 	"api": [],
@@ -86,7 +110,6 @@
 	"wf_definition": [],
 	"connector": [],
 	"events": [],
-	"media_library": [],
 	"code_snippets": [],
 	"wf_determination": [],
 	"wf_taskaction": []
