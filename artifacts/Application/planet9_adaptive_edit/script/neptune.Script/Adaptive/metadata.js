@@ -262,6 +262,10 @@ const metadata = {
             enableTab5: { type: "CheckBox", label: "Enable Tab 5", default: false },
             enableUppercase: { type: "CheckBox", label: "Enable Uppercase", default: false },
             enablePadding: { type: "CheckBox", label: "Enable Padding", default: true },
+
+            textConfirmDelete: { default: "Do you want to delete this entry ? ", translate: true, visible: false },
+            titleConfirmDelete: { default: "Delete ", translate: true, visible: false },
+            requiredFieldsToast: { default: "Please fill in all the required fields", translate: true, visible: false },
         },
 
         form: {

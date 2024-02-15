@@ -61,6 +61,16 @@ var report = {
 
         report.initId = config.id;
 
+        // Language
+        if (runtime) {
+            if (AppCache && AppCache.userInfo && AppCache.userInfo.language) config.language = AppCache.userInfo.language;
+        } else {
+            const language = getAdaptiveEditorPreviewLanguage();
+            if (language) {
+                config.language = language;
+            }
+        }
+
         // Set Default Values
         sap.n.Adaptive.setDefaultData(config, metadata);
 
@@ -72,6 +82,12 @@ var report = {
         } else {
             tabData.setMode("None");
         }
+
+        toolDataTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config))
+        tabData.setHeaderText(sap.n.Adaptive.translateProperty("table", "headerText", config));
+        tabData.setFooterText(sap.n.Adaptive.translateProperty("table", "footerText", config));
+        toolDataCreate.setText(sap.n.Adaptive.translateProperty("report", "textButtonCreate", config));
+        toolDataUpdate.setText(sap.n.Adaptive.translateProperty("report", "textButtonRun", config));
 
         report.sortBy = config.settings.properties.table.initialSortField || null;
         report.sortOrder = config.settings.properties.table.initialSortOrder || "ASC";
@@ -140,13 +156,17 @@ var report = {
     },
 
     delete: function (data) {
-        sap.m.MessageBox.show("Do you want to delete this entry ? ", {
-            title: "Delete",
+        const config = modelAppConfig.getData()
+        const deleteMessage = sap.n.Adaptive.translateProperty('report', 'textConfirmDelete', config);
+        const deleteTitle = sap.n.Adaptive.translateProperty('report', 'titleConfirmDelete', config);
+
+        sap.m.MessageBox.show(deleteMessage, {
+            title: deleteTitle,
             icon: sap.m.MessageBox.Icon.ERROR,
             actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.CANCEL],
             onClose: function (oAction) {
                 if (oAction === "YES") {
-                    sap.n.Adaptive.run(modelAppConfig.oData, { id: data.id }, "Delete").then(function (data) {
+                    sap.n.Adaptive.run(config, { id: data.id }, "Delete").then(function (data) {
                         report.run();
                     });
                 }

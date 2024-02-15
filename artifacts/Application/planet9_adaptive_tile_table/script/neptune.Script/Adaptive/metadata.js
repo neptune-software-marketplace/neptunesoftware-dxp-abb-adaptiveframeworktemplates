@@ -11,7 +11,7 @@ const metadata = {
 
         report: {
             titleGeneral: { type: "Title", label: "General" },
-            title: { type: "Input", label: "Title" },
+            title: { type: "Input", label: "Title", translate: true },
 
             titleNavigation: { type: "Title", label: "Event" },
             navigationCreate: { type: "Navigation", label: "Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
@@ -23,7 +23,7 @@ const metadata = {
 
             titleButtonCreate: { type: "Title", label: "Button Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
             iconButtonCreate: { type: "Icon", label: "Icon", default: "", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
-            textButtonCreate: { type: "Input", label: "Text", default: "Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }" },
+            textButtonCreate: { type: "Input", label: "Text", default: "Create", visible: "{= ${appData>/settings/properties/report/enableCreate} ? true:false }", translate: true },
             typeButtonCreate: {
                 type: "SingleSelect",
                 label: "Type",
@@ -43,7 +43,7 @@ const metadata = {
 
             titleButtonRun: { type: "Title", label: "Button Run", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
             iconButtonRun: { type: "Icon", label: "Icon", default: "", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
-            textButtonRun: { type: "Input", label: "Text", default: "Update", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }" },
+            textButtonRun: { type: "Input", label: "Text", default: "Update", visible: "{= ${appData>/settings/properties/report/enableRun} ? true:false }", translate: true },
             typeButtonRun: {
                 type: "SingleSelect",
                 label: "Type",
@@ -69,6 +69,9 @@ const metadata = {
             enableRun: { type: "CheckBox", label: "Enable Run", default: false },
             enableCreate: { type: "CheckBox", label: "Enable Create", default: false },
             enableDelete: { type: "CheckBox", label: "Enable Delete", default: false },
+
+            textConfirmDelete: { default: "Do you want to delete this entry? ", translate: true, visible: false },
+            titleConfirmDelete: { default: "Delete ", translate: true, visible: false },
         },
 
         form: {
@@ -81,8 +84,8 @@ const metadata = {
 
         table: {
             titleGeneral: { type: "Title", label: "General" },
-            headerText: { type: "Input", label: "Header Text" },
-            footerText: { type: "Input", label: "Footer Text" },
+            headerText: { type: "Input", label: "Header Text", translate: true },
+            footerText: { type: "Input", label: "Footer Text", translate: true },
 
             titleTableGroup: { type: "Title", label: "Initial Grouping" },
             initialGroupField: { type: "TableFieldLocal", label: "Field" },

@@ -394,7 +394,8 @@ const report = {
             .then(function (data) {
                 // Required
                 if (data.status && data.status === "required") {
-                    sap.m.MessageToast.show("Please fill in all required fields");
+                    const requiredFieldsMsg = sap.n.Adaptive.translateProperty('report', 'requiredFieldsToast', modelAppConfig.getData())
+                    sap.m.MessageToast.show(requiredFieldsMsg);
                     return;
                 }
 
@@ -564,14 +565,17 @@ const report = {
     },
 
     delete: function (data) {
-        sap.m.MessageBox.show("Do you want to delete this entry ? ", {
-            title: "Delete",
+        const config = modelAppConfig.getData();
+        const deleteMessage = sap.n.Adaptive.translateProperty("report", "textConfirmDelete", config);
+        const deleteTitle = sap.n.Adaptive.translateProperty("report", "titleConfirmDelete", config);
+        sap.m.MessageBox.show(deleteMessage, {
+            title: deleteTitle,
             icon: sap.m.MessageBox.Icon.ERROR,
             actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.CANCEL],
             onClose: function (oAction) {
                 if (oAction === "YES") {
                     const { id } = data;
-                    sap.n.Adaptive.run(modelAppConfig.oData, { id, data }, "Delete").then(function (data) {
+                    sap.n.Adaptive.run(config, { id, data }, "Delete").then(function (data) {
                         // Message from Server Script
                         if (data.message && data.message.text) {
                             if (data.message.type) {
@@ -1962,7 +1966,8 @@ const report = {
                                 };
 
                                 if (!reqBody._valueListTarget) {
-                                    sap.m.MessageToast.show("Field does not have any OData ValueList reference");
+                                    const valueRefMissing = sap.n.Adaptive.translateProperty("report", "odataValueList", config);
+                                    sap.m.MessageToast.show(valueRefMissing);
                                     return;
                                 }
 
@@ -2144,7 +2149,8 @@ const report = {
                         };
 
                         if (!reqBody._valueListTarget) {
-                            sap.m.MessageToast.show("Field does not have any OData ValueList reference");
+                            const valueRefMissing = sap.n.Adaptive.translateProperty("report", "odataValueList", modelAppConfig.getData());
+                            sap.m.MessageToast.show(valueRefMissing);
                             return;
                         }
 

@@ -219,8 +219,11 @@ const report = {
         const s = modelAppConfig.oData.settings;
         const data = modelAppData.oData;
 
-        sap.m.MessageBox.show("Do you want to delete this entry ? ", {
-            title: "Delete",
+        const deleteMessage = sap.n.Adaptive.translateProperty('report', 'textConfirmDelete', modelAppConfig.getData());
+        const deleteTitle = sap.n.Adaptive.translateProperty('report', 'titleConfirmDelete', modelAppConfig.getData());
+
+        sap.m.MessageBox.show(deleteMessage, {
+            title: deleteTitle,
             icon: sap.m.MessageBox.Icon.ERROR,
             actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.CANCEL],
             onClose: function (oAction) {
@@ -481,7 +484,8 @@ const report = {
             });
 
         if (!formValid) {
-            sap.m.MessageToast.show("Please fill in all the required fields");
+            const textRequiredFields = sap.n.Adaptive.translateProperty("report", "requiredFieldsToast", modelAppConfig.getData());
+            sap.m.MessageToast.show(textRequiredFields);
             toolHeaderSave.setEnabled(true);
             modelAppData.refresh();
             return;
@@ -511,7 +515,8 @@ const report = {
                     modelAppData.oData[f.name + "ValueState"] = "Error";
                 });
 
-            sap.m.MessageToast.show("Please use unique values");
+            const textUniqueValues = sap.n.Adaptive.translateProperty("report", "textUnique", modelAppConfig.getData());
+            sap.m.MessageToast.show(textUniqueValues);
             toolHeaderSave.setEnabled(true);
             modelAppData.refresh();
             return;
@@ -528,7 +533,8 @@ const report = {
         sap.n.Adaptive.run(modelAppConfig.oData, saveData, "Save")
             .then(function (data) {
                 if (data.status && data.status === "required") {
-                    sap.m.MessageToast.show("Please fill in all the required fields");
+                    const textRequiredFields = sap.n.Adaptive.translateProperty("report", "requiredFieldsToast", modelAppConfig.getData());
+                    sap.m.MessageToast.show(textRequiredFields);
                 } else {
                     // Message from Server Script
                     if (data.message && data.message.text) {

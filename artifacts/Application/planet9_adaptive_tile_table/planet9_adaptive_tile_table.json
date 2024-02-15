@@ -167,13 +167,6 @@
 											"response": [],
 											"attributes": [
 												{
-													"attribute": "text",
-													"grouping": "Properties",
-													"value": "{AppConfig>/settings/properties/report/title}",
-													"script": "",
-													"translation": []
-												},
-												{
 													"attribute": "design",
 													"grouping": "Properties",
 													"value": "Bold",
@@ -257,6 +250,7 @@
 											"fieldType": "sap.m.Button",
 											"script": "",
 											"customComponent": false,
+											"bindingType": "h",
 											"request": [],
 											"response": [],
 											"attributes": [
@@ -271,13 +265,6 @@
 													"attribute": "type",
 													"grouping": "Properties",
 													"value": "{AppConfig>/settings/properties/report/typeButtonCreate}",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "text",
-													"grouping": "Properties",
-													"value": "{AppConfig>/settings/properties/report/textButtonCreate}",
 													"script": "",
 													"translation": []
 												},
@@ -326,13 +313,6 @@
 													"attribute": "type",
 													"grouping": "Properties",
 													"value": "{AppConfig>/settings/properties/report/typeButtonRun}",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "text",
-													"grouping": "Properties",
-													"value": "{AppConfig>/settings/properties/report/textButtonRun}",
 													"script": "",
 													"translation": []
 												},
@@ -399,13 +379,6 @@
 									"translation": []
 								},
 								{
-									"attribute": "headerText",
-									"grouping": "Properties",
-									"value": "{AppConfig>/settings/properties/table/headerText}",
-									"script": "",
-									"translation": []
-								},
-								{
 									"attribute": "growingThreshold",
 									"grouping": "Properties",
 									"value": "100",
@@ -423,13 +396,6 @@
 									"attribute": "growing",
 									"grouping": "Properties",
 									"value": "true",
-									"script": "",
-									"translation": []
-								},
-								{
-									"attribute": "footerText",
-									"grouping": "Properties",
-									"value": "{AppConfig>/settings/properties/table/footerText}",
 									"script": "",
 									"translation": []
 								},
@@ -933,7 +899,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.7.31.211",
+	"ver": "24.02.15.0903",
 	"application": "planet9_adaptive_tile_table",
 	"title": "Adaptive Tile Table",
 	"description": "Adaptive Tile Table",

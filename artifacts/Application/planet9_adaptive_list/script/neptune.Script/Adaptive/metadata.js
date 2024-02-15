@@ -290,6 +290,26 @@ const metadata = {
                 visible: false,
                 translate: true,
             },
+            requiredFieldsToast: {
+                default: "Please fill in all required fields",
+                translate: true,
+                visible: false
+            },
+            textConfirmDelete: {
+                default: "Do you want to delete this entry ? ",
+                translate: true,
+                visible: false
+            },
+            titleConfirmDelete: {
+                default: "Delete",
+                translate: true,
+                visible: false
+            },
+            odataValueList: {
+                default: "Field does not have any OData ValueList reference",
+                translate: true,
+                visible: false
+            },
         },
 
         form: {
