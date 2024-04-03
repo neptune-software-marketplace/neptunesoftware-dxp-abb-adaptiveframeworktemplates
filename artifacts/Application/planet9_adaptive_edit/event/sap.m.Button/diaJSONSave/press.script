@@ -1,0 +1,10 @@
+try {
+    const newValue = editorJSON.getValue().trim();
+    const newJson = !newValue.length ? "" : JSON.parse(newValue);
+    modelAppData.getData()[editorData.fieldName] = newJson;
+    modelAppData.refresh(true);
+    diaJSON.close();
+} catch (e) {
+    sap.m.MessageToast.show("Error: Not valid json. " + e.message);
+    return;
+}

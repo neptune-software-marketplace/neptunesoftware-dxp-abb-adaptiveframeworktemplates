@@ -478,7 +478,7 @@
 												{
 													"attribute": "tooltip",
 													"grouping": "Properties",
-													"value": " ",
+													"value": "Export",
 													"script": "",
 													"translation": []
 												},
@@ -499,8 +499,9 @@
 												{
 													"attribute": "press",
 													"grouping": "Events",
-													"value": "report.export();",
-													"script": "report.export();",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.m.Button/oPageExport/press.ts",
+													"language": "typescript",
 													"translation": []
 												}
 											],
@@ -533,7 +534,7 @@
 												{
 													"attribute": "tooltip",
 													"grouping": "Properties",
-													"value": " ",
+													"value": "Import",
 													"script": "",
 													"translation": []
 												},
@@ -554,8 +555,9 @@
 												{
 													"attribute": "press",
 													"grouping": "Events",
-													"value": "$(\"#adaptiveListImport\").click();",
-													"script": "$(\"#adaptiveListImport\").click();",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.m.Button/oPageImport/press.js",
+													"language": "javascript",
 													"translation": []
 												}
 											],
@@ -1593,6 +1595,271 @@
 					"response": [],
 					"attributes": [],
 					"data": [
+						{
+							"fieldNo": "68d6ac51-325d-40e7-a50f-6d53358b7552",
+							"fieldName": "diaJSON",
+							"fieldParent": "40e42cca-5e2c-4f66-d405-ebc7fabab603",
+							"fieldType": "sap.m.Dialog",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "verticalScrolling",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "styleClassPadding",
+									"grouping": "Properties",
+									"value": "sapUiNoContentPadding",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "draggable",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentWidth",
+									"grouping": "Properties",
+									"value": "1280px",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentHeight",
+									"grouping": "Properties",
+									"value": "880px",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "afterOpen",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Dialog/diaJSON/afterOpen.script",
+									"translation": []
+								},
+								{
+									"attribute": "afterClose",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Dialog/diaJSON/afterClose.ts",
+									"language": "typescript",
+									"translation": []
+								}
+							],
+							"data": [
+								{
+									"fieldNo": "0917004c-d6db-4c07-df7d-d1f47eb16370",
+									"fieldName": "subHeader",
+									"fieldParent": "68d6ac51-325d-40e7-a50f-6d53358b7552",
+									"fieldType": "sap.m.Bar",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "styleClass",
+											"grouping": "Properties",
+											"value": "sapContrast sapContrastPlus",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "design",
+											"grouping": "Properties",
+											"value": "Footer",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "position",
+											"grouping": "Parent",
+											"value": "setCustomHeader",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "5150e2e8-02e9-42b2-eaeb-3fb507f21a62",
+											"fieldName": "Right",
+											"fieldParent": "0917004c-d6db-4c07-df7d-d1f47eb16370",
+											"fieldType": "neptune.BarContent",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "position",
+													"grouping": "Parent",
+													"value": "ContentRight",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": [
+												{
+													"fieldNo": "ffbb33cf-a359-4b96-e1bd-f902ef4f8ef7",
+													"fieldName": "diaJSONClose",
+													"fieldParent": "5150e2e8-02e9-42b2-eaeb-3fb507f21a62",
+													"fieldType": "sap.m.Button",
+													"script": "",
+													"customComponent": false,
+													"onlyDeclare": true,
+													"request": [],
+													"response": [],
+													"attributes": [
+														{
+															"attribute": "styleClass",
+															"grouping": "Properties",
+															"value": "nepCloseBtn",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "icon",
+															"grouping": "Properties",
+															"value": "sap-icon://decline",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "press",
+															"grouping": "Events",
+															"value": "diaJSON.close();",
+															"script": "diaJSON.close();",
+															"translation": []
+														}
+													],
+													"data": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"fieldNo": "80e7e504-3f71-44c2-ea9f-9691ed3c13d2",
+									"fieldName": "diaJSONScroller",
+									"fieldParent": "68d6ac51-325d-40e7-a50f-6d53358b7552",
+									"fieldType": "sap.m.ScrollContainer",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "width",
+											"grouping": "Properties",
+											"value": "100%",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "styleClass",
+											"grouping": "Properties",
+											"value": "wholeHeight",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "horizontal",
+											"grouping": "Properties",
+											"value": "false",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "height",
+											"grouping": "Properties",
+											"value": "100%",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "ee5250d7-ceef-497f-ac82-7bdcfd3e48c2",
+											"fieldName": "textAreaJSON",
+											"fieldParent": "80e7e504-3f71-44c2-ea9f-9691ed3c13d2",
+											"fieldType": "sap.m.TextArea",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "width",
+													"grouping": "Properties",
+													"value": "100%",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "height",
+													"grouping": "Properties",
+													"value": "100%",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "editable",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
+											"fieldNo": "f5734002-2940-4447-deb5-77ba37c958fd",
+											"fieldName": "htmlContentJSON",
+											"fieldParent": "80e7e504-3f71-44c2-ea9f-9691ed3c13d2",
+											"fieldType": "sap.ui.core.HTML",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "content",
+													"grouping": "Properties",
+													"value": "<div id='editorAdaptiveEdit' style='height:calc(100% - 25px);width:100%;'></div>",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "afterRendering",
+													"grouping": "Events",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.ui.core.HTML/htmlContentJSON/afterRendering.script",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
+								}
+							]
+						},
 						{
 							"fieldNo": "96c14769-0ab6-4677-ebb4-068220e74123",
 							"fieldName": "diaVariant",
@@ -3480,6 +3747,477 @@
 									]
 								}
 							]
+						},
+						{
+							"fieldNo": "8628f985-ce92-442a-e6ee-a451c94f258d",
+							"fieldName": "btnExportData",
+							"fieldParent": "40e42cca-5e2c-4f66-d405-ebc7fabab603",
+							"fieldType": "sap.m.Button",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Export",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "press",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Button/btnExportData/press.ts",
+									"language": "typescript",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "e657fe08-4fae-4e8a-eae9-9a9d0544170c",
+							"fieldName": "btnImportData",
+							"fieldParent": "40e42cca-5e2c-4f66-d405-ebc7fabab603",
+							"fieldType": "sap.m.Button",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Import",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "press",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Button/btnImportData/press.ts",
+									"language": "typescript",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "6b092ca0-7029-4643-9d95-69270675f85f",
+							"fieldName": "diaExportImportData",
+							"fieldParent": "40e42cca-5e2c-4f66-d405-ebc7fabab603",
+							"fieldType": "sap.m.Dialog",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "verticalScrolling",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "styleClassPadding",
+									"grouping": "Properties",
+									"value": "sapUiNoContentPadding",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "showHeader",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "horizontalScrolling",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "draggable",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": [
+								{
+									"fieldNo": "bb113076-d915-4f9c-f1c1-17a0295f85ab",
+									"fieldName": "subHeaderExport",
+									"fieldParent": "6b092ca0-7029-4643-9d95-69270675f85f",
+									"fieldType": "sap.m.Bar",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "styleClass",
+											"grouping": "Properties",
+											"value": "sapContrast sapContrastPlus",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "design",
+											"grouping": "Properties",
+											"value": "Footer",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "position",
+											"grouping": "Parent",
+											"value": "setCustomHeader",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "3e6598a4-2a4f-4f56-c167-10dda3cc0d25",
+											"fieldName": "Right",
+											"fieldParent": "bb113076-d915-4f9c-f1c1-17a0295f85ab",
+											"fieldType": "neptune.BarContent",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "position",
+													"grouping": "Parent",
+													"value": "ContentRight",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": [
+												{
+													"fieldNo": "56955e4c-a6a3-4f23-a576-4a2b25fa6e74",
+													"fieldName": "diaExportClose",
+													"fieldParent": "3e6598a4-2a4f-4f56-c167-10dda3cc0d25",
+													"fieldType": "sap.m.Button",
+													"script": "",
+													"customComponent": false,
+													"onlyDeclare": true,
+													"request": [],
+													"response": [],
+													"attributes": [
+														{
+															"attribute": "styleClass",
+															"grouping": "Properties",
+															"value": "nepCloseBtn",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "icon",
+															"grouping": "Properties",
+															"value": "sap-icon://decline",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "press",
+															"grouping": "Events",
+															"value": "diaExportImportData.close();",
+															"script": "diaExportImportData.close();",
+															"translation": []
+														}
+													],
+													"data": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"fieldNo": "9b74f381-5183-40c8-e5ba-496b2ea54676",
+									"fieldName": "panelExportData",
+									"fieldParent": "6b092ca0-7029-4643-9d95-69270675f85f",
+									"fieldType": "sap.m.Panel",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "styleClassPadding",
+											"grouping": "Properties",
+											"value": "sapUiNoContentPadding",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "a9c59b50-953e-41f3-9b62-6d22e60858ff",
+											"fieldName": "flexExportForm",
+											"fieldParent": "9b74f381-5183-40c8-e5ba-496b2ea54676",
+											"fieldType": "sap.m.FlexBox",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "direction",
+													"grouping": "Properties",
+													"value": "Column",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "alignItems",
+													"grouping": "Properties",
+													"value": "Center",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": [
+												{
+													"fieldNo": "e9557901-fb00-4fac-b682-8d08e75a654c",
+													"fieldName": "formExportImport",
+													"fieldParent": "a9c59b50-953e-41f3-9b62-6d22e60858ff",
+													"fieldType": "sap.ui.layout.form.SimpleForm",
+													"script": "",
+													"customComponent": false,
+													"bindingValue": "Generic Object",
+													"bindingType": "u",
+													"bindingSource": "P9",
+													"request": [],
+													"response": [],
+													"attributes": [
+														{
+															"attribute": "styleClassMargin",
+															"grouping": "Properties",
+															"value": "sapUiTinyMargin",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "maxContainerCols",
+															"grouping": "Properties",
+															"value": "1",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "width",
+															"grouping": "Properties",
+															"value": "90%",
+															"script": "",
+															"translation": []
+														}
+													],
+													"data": [
+														{
+															"fieldNo": "bd66c6e6-2387-4ac8-d1fe-fa9e08fe89b1",
+															"fieldName": "titleValues",
+															"fieldParent": "e9557901-fb00-4fac-b682-8d08e75a654c",
+															"fieldType": "sap.ui.core.Title",
+															"script": "",
+															"customComponent": false,
+															"bindingType": "h",
+															"request": [],
+															"response": [],
+															"attributes": [
+																{
+																	"attribute": "text",
+																	"grouping": "Properties",
+																	"value": "{/title}",
+																	"script": "",
+																	"translation": []
+																}
+															],
+															"data": []
+														},
+														{
+															"fieldNo": "61a93a76-adfe-47cf-b593-6e20d3c22ce2",
+															"fieldName": "radioGroupValues",
+															"fieldParent": "e9557901-fb00-4fac-b682-8d08e75a654c",
+															"fieldType": "sap.m.RadioButtonGroup",
+															"script": "",
+															"customComponent": false,
+															"bindingType": "h",
+															"request": [],
+															"response": [],
+															"attributes": [
+																{
+																	"attribute": "selectedIndex",
+																	"grouping": "Properties",
+																	"value": "{/valuesIndex}",
+																	"script": "",
+																	"translation": []
+																}
+															],
+															"data": [
+																{
+																	"fieldNo": "cc0874e6-8e81-4408-dedf-e0bfa4b0c45b",
+																	"fieldName": "radioRaw",
+																	"fieldParent": "61a93a76-adfe-47cf-b593-6e20d3c22ce2",
+																	"fieldType": "sap.m.RadioButton",
+																	"script": "",
+																	"customComponent": false,
+																	"bindingType": "h",
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "text",
+																			"grouping": "Properties",
+																			"value": "Raw values (recommended)",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "a4d1b023-d371-4d5a-e162-ebc93060d420",
+																	"fieldName": "radioFormatted",
+																	"fieldParent": "61a93a76-adfe-47cf-b593-6e20d3c22ce2",
+																	"fieldType": "sap.m.RadioButton",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "text",
+																			"grouping": "Properties",
+																			"value": "Formatted values",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																}
+															]
+														},
+														{
+															"fieldNo": "c2dcea1f-7b18-4268-eb7d-853e113e55f6",
+															"fieldName": "titleDelimiter",
+															"fieldParent": "e9557901-fb00-4fac-b682-8d08e75a654c",
+															"fieldType": "sap.ui.core.Title",
+															"script": "",
+															"customComponent": false,
+															"request": [],
+															"response": [],
+															"attributes": [
+																{
+																	"attribute": "text",
+																	"grouping": "Properties",
+																	"value": "CSV delimiter",
+																	"script": "",
+																	"translation": []
+																}
+															],
+															"data": []
+														},
+														{
+															"fieldNo": "510acbdc-1ff3-49f8-b14b-4e8761475244",
+															"fieldName": "radioGroupDelimiter",
+															"fieldParent": "e9557901-fb00-4fac-b682-8d08e75a654c",
+															"fieldType": "sap.m.RadioButtonGroup",
+															"script": "",
+															"customComponent": false,
+															"bindingType": "h",
+															"request": [],
+															"response": [],
+															"attributes": [
+																{
+																	"attribute": "selectedIndex",
+																	"grouping": "Properties",
+																	"value": "{/csvDelimiterIndex}",
+																	"script": "",
+																	"translation": []
+																},
+																{
+																	"attribute": "editable",
+																	"grouping": "Properties",
+																	"value": "{/export}",
+																	"script": "",
+																	"translation": []
+																}
+															],
+															"data": [
+																{
+																	"fieldNo": "54327b53-b984-46c1-a018-6bb2887c6a3b",
+																	"fieldName": "radioSemicolon",
+																	"fieldParent": "510acbdc-1ff3-49f8-b14b-4e8761475244",
+																	"fieldType": "sap.m.RadioButton",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "text",
+																			"grouping": "Properties",
+																			"value": "Semicolon (recommended)",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "26c1b53a-b376-4fb4-f912-b5129008015e",
+																	"fieldName": "radioComma",
+																	"fieldParent": "510acbdc-1ff3-49f8-b14b-4e8761475244",
+																	"fieldType": "sap.m.RadioButton",
+																	"script": "",
+																	"customComponent": false,
+																	"bindingType": "h",
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "visible",
+																			"grouping": "Properties",
+																			"value": "{/export}",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "text",
+																			"grouping": "Properties",
+																			"value": "Comma",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
 						}
 					]
 				},
@@ -3588,6 +4326,18 @@
 							"response": [],
 							"attributes": [],
 							"data": []
+						},
+						{
+							"fieldNo": "9c23dfd8-4acd-44e2-d725-179a40448fa0",
+							"fieldName": "editor",
+							"fieldParent": "30dbc543-06c3-426f-cb39-6eeb0da3f348",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/editor.js",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
 						}
 					]
 				}
@@ -3599,7 +4349,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.02.15.0903",
+	"ver": "24.04.03.0841",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",

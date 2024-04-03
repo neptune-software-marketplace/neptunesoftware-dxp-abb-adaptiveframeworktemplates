@@ -15,6 +15,8 @@ const vb = {
 
     buttonTypes: ["Accept", "Attention", "Critical", "Back", "Default", "Emphasized", "Ghost", "Neutral", "Reject", "Transparent", "Unstyled", "Up"],
 
+    typeCustomNumberFormat: "{= ${/formatter} === 'numberCustom' ? true : false }",
+
     input: "{= !${/type} || ${/type} === 'Input' ? true : false }",
     editor: "{= ${/type} === 'Editor' ? true : false }",
     textArea: "{= ${/type} === 'TextArea' ? true : false }",
@@ -24,7 +26,7 @@ const vb = {
     multiOrSingleSelectLookup: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
     typeMultiOrSingleSelectScript: "{= ${/type} === 'MultiSelectScript' || ${/type} === 'SingleSelectScript' ? true : false }",
     placeholder:
-        "{= ${/type} === 'CheckBox'  || ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Editor' || ${/type} === 'Switch' || ${/type} === 'StepInput' ? false : true }",
+        "{= ${/type} === 'CheckBox'  || ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Editor' || ${/type} === 'Switch' || ${/type} === 'StepInput' || ${/type} === 'JSON' ? false : true }",
 };
 
 const metadata = {
@@ -382,6 +384,7 @@ const metadata = {
                 "Text",
                 "TextArea",
                 "ValueHelp",
+                "JSON"
             ]),
         },
 
@@ -433,7 +436,25 @@ const metadata = {
                 ["number05", "Number Decimals 1 Point"],
                 ["number06", "Number Decimals 2 Point"],
                 ["number07", "Number Decimals 3 Point"],
+                ["numberCustom", "Number Custom Decimals"],
                 ["file", "File Size"],
+            ]),
+        },
+        formatNumberDecimals: {
+            type: "Input",
+            label: "Decimals",
+            visible: vb.typeCustomNumberFormat,
+            placeholder: '0',
+        },
+
+        formatNumberSeparator: {
+            type: "SingleSelect",
+            label: "Decimal separator",
+            visible: vb.typeCustomNumberFormat,
+            items: distinctValuesToKeyText([
+                ["browserDefault", "Browser Default"],
+                ["comma", "Comma"],
+                ["point", "Point"],
             ]),
         },
 

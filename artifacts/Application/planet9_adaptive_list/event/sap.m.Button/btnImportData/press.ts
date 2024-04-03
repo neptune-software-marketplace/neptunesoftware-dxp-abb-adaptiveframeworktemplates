@@ -1,0 +1,3 @@
+$("#adaptiveListImport").click();
+
+diaExportImportData.close();

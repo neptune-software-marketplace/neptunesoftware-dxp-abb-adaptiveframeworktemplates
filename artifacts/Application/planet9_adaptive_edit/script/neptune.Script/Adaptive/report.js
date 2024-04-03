@@ -50,6 +50,11 @@ const report = {
 
         oApp.setBusy(true);
 
+        if (typeof monaco !== 'undefined') {
+            textAreaJSON.setVisible(false);
+            htmlContentJSON.setVisible(true);
+        }
+
         if (config.settings.properties.report.avatarBackgroundColor) {
             oPageHeaderIcon.setBackgroundColor(config.settings.properties.report.avatarBackgroundColor);
         } else {
@@ -145,7 +150,7 @@ const report = {
         barEditItemA.setText(sap.n.Adaptive.translateProperty("report", "tabAText", config));
 
         // Init
-        sap.n.Adaptive.init(modelAppConfig.oData)
+        sap.n.Adaptive.init(modelAppConfig.oData) 
             .then(function (data) {
                 const s = modelAppConfig.oData.settings;
                 const r = s.properties.report;
@@ -698,6 +703,7 @@ const report = {
                         })
                     );
 
+
                 // Create Fields
                 switch (field.type) {
                     case "Editor":
@@ -732,6 +738,52 @@ const report = {
                         }
 
                         if (field.default) newField.setState(field.default);
+                        break;
+
+                    case "JSON":
+                        form.addContent(
+                            new sap.m.Label({
+                                text: sap.n.Adaptive.translateFieldLabel(field, config),
+                                required: field.required,
+                                design: "Bold"
+                            })
+                        );
+
+                        var newField = new sap.m.Input({
+                            value: "{AppData>/" + field.name + "}",
+                            visible: report.buildVisibleProp(field),
+                            editable: true,
+                            valueState: "{AppData>/" + field.name + "ValueState}",
+                            showValueHelp: true,
+                            valueHelpOnly: true,
+                            valueHelpRequest: function () {
+                                const inputData = modelAppData.getData()[field.name];
+                                editorData = { fieldName: field.name, content: inputData, readOnly: !field.editable }
+                                diaJSON.open();
+                            }
+                        })
+
+                        newField.bindProperty("value", {
+                            parts: [{ path: "AppData>/" + field.name }],
+                            formatter: function (value) {
+                                if (!value) return;
+                                if (typeof value === 'object') {
+                                    try {
+                                        return JSON.stringify(value);
+                                    } catch (e) {
+                                        return 'Error parsing json data: ' + e.message;
+                                    }
+                                }
+                                return value;
+                            }
+                        })
+
+                        if (field.description) {
+                            form.addContent(report.buildInputDescription(newField, field));
+                        } else {
+                            form.addContent(newField);
+                        }
+
                         break;
 
                     case "DatePicker":
@@ -1079,7 +1131,7 @@ const report = {
                                 parts: [{ path: "AppData>/" + field.name }],
                                 formatter: function (fieldName) {
                                     if (typeof fieldName === "undefined" || fieldName === null) return;
-                                    return sap.n.Adaptive.formatter(fieldName, field.formatter);
+                                    return sap.n.Adaptive.formatter(fieldName, field.formatter, field.formatNumberDecimals, field.formatNumberSeparator);
                                 },
                             });
                         }

@@ -1374,6 +1374,368 @@
 			"fieldNo": 99999,
 			"data": [
 				{
+					"fieldNo": "51058dd9-2a76-4053-f6d2-c761840765a5",
+					"fieldName": "Dialogs",
+					"fieldParent": 99999,
+					"fieldType": "neptune.folder",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "96e5a2d4-aed3-4535-ccd3-c0d26b0a4ec6",
+							"fieldName": "diaJSONSave",
+							"fieldParent": "51058dd9-2a76-4053-f6d2-c761840765a5",
+							"fieldType": "sap.m.Button",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "visible",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "type",
+									"grouping": "Properties",
+									"value": "Emphasized",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "OK",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "press",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Button/diaJSONSave/press.script",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "c96c9e13-f715-4fa3-bc67-590179999567",
+							"fieldName": "diaJSON",
+							"fieldParent": "51058dd9-2a76-4053-f6d2-c761840765a5",
+							"fieldType": "sap.m.Dialog",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "verticalScrolling",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "styleClassPadding",
+									"grouping": "Properties",
+									"value": "sapUiNoContentPadding",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "draggable",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentWidth",
+									"grouping": "Properties",
+									"value": "1280px",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentHeight",
+									"grouping": "Properties",
+									"value": "880px",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "beforeOpen",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Dialog/diaJSON/beforeOpen.js",
+									"language": "javascript",
+									"translation": []
+								},
+								{
+									"attribute": "afterOpen",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Dialog/diaJSON/afterOpen.ts",
+									"language": "typescript",
+									"translation": []
+								},
+								{
+									"attribute": "afterClose",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Dialog/diaJSON/afterClose.js",
+									"language": "javascript",
+									"translation": []
+								},
+								{
+									"attribute": "beginButton",
+									"grouping": "Associations",
+									"value": "diaJSONSave",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": [
+								{
+									"fieldNo": "a8631606-8ec5-4e4b-9a01-7fd719b93cfd",
+									"fieldName": "subHeader",
+									"fieldParent": "c96c9e13-f715-4fa3-bc67-590179999567",
+									"fieldType": "sap.m.Bar",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "styleClass",
+											"grouping": "Properties",
+											"value": "sapContrast sapContrastPlus",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "design",
+											"grouping": "Properties",
+											"value": "Footer",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "position",
+											"grouping": "Parent",
+											"value": "setCustomHeader",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "2cd4c26b-268e-4b69-8fb3-c0b8cb57fcae",
+											"fieldName": "Right",
+											"fieldParent": "a8631606-8ec5-4e4b-9a01-7fd719b93cfd",
+											"fieldType": "neptune.BarContent",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "position",
+													"grouping": "Parent",
+													"value": "ContentRight",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": [
+												{
+													"fieldNo": "9e92c85b-e4af-42b8-f974-5b218a259adc",
+													"fieldName": "diaJSONClose",
+													"fieldParent": "2cd4c26b-268e-4b69-8fb3-c0b8cb57fcae",
+													"fieldType": "sap.m.Button",
+													"script": "",
+													"customComponent": false,
+													"onlyDeclare": true,
+													"request": [],
+													"response": [],
+													"attributes": [
+														{
+															"attribute": "styleClass",
+															"grouping": "Properties",
+															"value": "nepCloseBtn",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "icon",
+															"grouping": "Properties",
+															"value": "sap-icon://decline",
+															"script": "",
+															"translation": []
+														},
+														{
+															"attribute": "press",
+															"grouping": "Events",
+															"value": "diaJSON.close();",
+															"script": "diaJSON.close();",
+															"translation": []
+														}
+													],
+													"data": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"fieldNo": "3c1f17f7-d9b1-4ab4-c045-013bacab88c0",
+									"fieldName": "diaJSONScroller",
+									"fieldParent": "c96c9e13-f715-4fa3-bc67-590179999567",
+									"fieldType": "sap.m.ScrollContainer",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "width",
+											"grouping": "Properties",
+											"value": "100%",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "styleClass",
+											"grouping": "Properties",
+											"value": "wholeHeight",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "horizontal",
+											"grouping": "Properties",
+											"value": "false",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "height",
+											"grouping": "Properties",
+											"value": "100%",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "b4eea8d8-00e8-4b66-9ef2-5c581be49d04",
+											"fieldName": "messageJSON",
+											"fieldParent": "3c1f17f7-d9b1-4ab4-c045-013bacab88c0",
+											"fieldType": "sap.m.MessageStrip",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Information",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
+											"fieldNo": "c4041811-6505-46c5-9c43-5ba932abd3f4",
+											"fieldName": "textAreaJSON",
+											"fieldParent": "3c1f17f7-d9b1-4ab4-c045-013bacab88c0",
+											"fieldType": "sap.m.TextArea",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "width",
+													"grouping": "Properties",
+													"value": "100%",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "height",
+													"grouping": "Properties",
+													"value": "calc(100% - 35px)",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "editable",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
+											"fieldNo": "f85f9c71-3ce5-4fa3-f7f0-1edc2129e8b9",
+											"fieldName": "htmlContentJSON",
+											"fieldParent": "3c1f17f7-d9b1-4ab4-c045-013bacab88c0",
+											"fieldType": "sap.ui.core.HTML",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "content",
+													"grouping": "Properties",
+													"value": "<div id='editorAdaptiveEdit' style='height:calc(100% - 25px);width:100%;'></div>",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "afterRendering",
+													"grouping": "Events",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.ui.core.HTML/htmlContentJSON/afterRendering.script",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
 					"fieldNo": "af5567ee-6a2b-47d1-e75b-f786d1f63ed4",
 					"fieldName": "Texts",
 					"fieldParent": 99999,
@@ -1487,6 +1849,18 @@
 							"response": [],
 							"attributes": [],
 							"data": []
+						},
+						{
+							"fieldNo": "022e25d0-6e32-4fec-b468-002a5b3a4fe6",
+							"fieldName": "editor",
+							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Adaptive/editor.js",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
 						}
 					]
 				}
@@ -1498,7 +1872,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.02.15.0903",
+	"ver": "24.02.28.1323",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",

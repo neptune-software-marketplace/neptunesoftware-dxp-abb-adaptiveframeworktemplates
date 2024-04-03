@@ -1,0 +1,17 @@
+if (!editorData.content) editorData.content = "";
+
+const editorContent = typeof editorData.content === "object" ? JSON.stringify(editorData.content, null, 4) : editorData.content;
+
+if (sap.ui.getCore().getConfiguration().getTheme() === "sap_horizon_dark") {
+    monaco.editor.setTheme("vs-dark-ui5");
+} else {
+    monaco.editor.setTheme();
+}
+
+editorJSON = monaco.editor.create(document.getElementById('editorAdaptiveEdit'), {
+    value: editorContent,
+    readOnly: editorData.readOnly,
+    language: "json",
+});
+
+editorJSON.revealLineInCenter(1);

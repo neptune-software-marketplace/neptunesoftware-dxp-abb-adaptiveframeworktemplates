@@ -26,6 +26,8 @@ const vb = {
     typeLookup: "{= ${/valueType} === 'Lookup' ? true : false }",
     typeRule: "{= ${/valueType} === 'Rule' ? true : false }",
 
+    typeCustomNumberFormat: "{= ${/formatter} === 'numberCustom' ? true : false }",
+
     typeObjectAllowIcon: "{= ${/type} === 'ObjectStatus' || ${/type} === 'Button'? true : false }",
     typeObjectStatus: "{= ${/type} === 'ObjectStatus' ? true : false }",
     typeObjectNumber: "{= ${/type} === 'ObjectNumber' ? true : false }",
@@ -850,6 +852,7 @@ const metadata = {
                 "SingleSelectScript",
                 "Switch",
                 "StepInput",
+                "JSON"
             ]),
         },
 
@@ -930,7 +933,25 @@ const metadata = {
                 ["number05", "Number Decimals 1 Point"],
                 ["number06", "Number Decimals 2 Point"],
                 ["number07", "Number Decimals 3 Point"],
+                ["numberCustom", "Number Custom Decimals"],
                 ["file", "File Size"],
+            ]),
+        },
+        formatNumberDecimals: {
+            type: "Input",
+            label: "Decimals",
+            visible: vb.typeCustomNumberFormat,
+            placeholder: '0',
+        },
+
+        formatNumberSeparator: {
+            type: "SingleSelect",
+            label: "Decimal separator",
+            visible: vb.typeCustomNumberFormat,
+            items: distinctValuesToKeyText([
+                ["browserDefault", "Browser Default"],
+                ["comma", "Comma"],
+                ["point", "Point"],
             ]),
         },
 

@@ -101,6 +101,11 @@ const report = {
             }
         });
 
+        if (typeof monaco !== 'undefined') {
+            textAreaJSON.setVisible(false);
+            htmlContentJSON.setVisible(true);
+        }
+
         const t = config.settings.properties.table;
 
         if (t.paginationRows) {
@@ -509,7 +514,7 @@ const report = {
                     // Format Number
                     sumFields.forEach(function (sumField) {
                         if (sumField.formatter) {
-                            props.table._sum[sumField.name] = sap.n.Adaptive.formatter(props.table._sum[sumField.name], sumField.formatter);
+                            props.table._sum[sumField.name] = sap.n.Adaptive.formatter(props.table._sum[sumField.name], sumField.formatter, sumField.formatNumberDecimals, sumField.formatNumberSeparator);
                         }
                     });
 
@@ -655,7 +660,7 @@ const report = {
         sap.n.Adaptive.navigation(modelAppConfig.oData.settings.properties.report._navigationMultiSelect, dataSelected, report.events);
     },
 
-    export: function () {
+    export: function (delimiter = ";", exportFormatted) {
         report.tabObject.setBusy(true);
 
         // Pagination
@@ -670,7 +675,7 @@ const report = {
                         modelExportData.setData(data);
                     }
 
-                    report.exportDownload();
+                    report.exportDownload(delimiter, exportFormatted);
                 })
                 .catch(function (data) {
                     if (data.responseJSON && data.responseJSON.status) sap.m.MessageToast.show(data.responseJSON.status);
@@ -678,19 +683,20 @@ const report = {
                 });
         } else {
             modelExportData.setData(report.tabObject.getModel().oData);
-            report.exportDownload();
+            report.exportDownload(delimiter, exportFormatted);
         }
     },
 
-    exportDownload: function () {
+    exportDownload: function (delimiter, exportFormatted) {
         let columns = [];
         const s = modelAppConfig.oData.settings;
 
         columns.push({ name: "id", template: { content: { path: "id" } } });
         s.fieldsRun.forEach(function (field) {
             let fieldName = field.valueType ? field.name + "_value" : field.name;
+            const colType = s.fieldCatalog.find(item => item.name === field.name)?.type;
 
-            if (field.formatter) {
+            if (colType === 'json') {
                 columns.push({
                     name: field.text,
                     template: {
@@ -698,7 +704,31 @@ const report = {
                             parts: [fieldName],
                             formatter: function (fieldName) {
                                 if (typeof fieldName === "undefined" || fieldName === null) return;
-                                return sap.n.Adaptive.formatter(fieldName, field.formatter);
+                                if (typeof fieldName === 'object') {
+                                    try {
+                                        return JSON.stringify(fieldName)
+                                    } catch (e) {
+                                        return fieldName;
+                                    }
+                                }
+                                return fieldName;
+                            },
+                        },
+                    },
+                });
+            } else if (field.formatter && exportFormatted) {
+                columns.push({
+                    name: field.text,
+                    template: {
+                        content: {
+                            parts: [fieldName],
+                            formatter: function (fieldName) {
+                                if (typeof fieldName === "undefined" || fieldName === null) return;
+                                const formattedField = sap.n.Adaptive.formatter(fieldName, field.formatter, field.formatNumberDecimals, field.formatNumberSeparator, false);
+                                if (["decimal", "integer", "smallInt", "bigInt"].includes(colType)) {
+                                    return formattedField.replace(/\s/g, '');
+                                }
+                                return formattedField;
                             },
                         },
                     },
@@ -716,7 +746,7 @@ const report = {
         });
 
         let oExport = new sap.ui.core.util.Export({
-            exportType: new sap.ui.core.util.ExportTypeCSV({ separatorChar: ";" }),
+            exportType: new sap.ui.core.util.ExportTypeCSV({ separatorChar: delimiter }),
             models: modelExportData,
             rows: { path: "/" },
             columns: columns,
@@ -740,7 +770,7 @@ const report = {
         try {
             function importData(data) {
                 if (data.length === 0) {
-                    sap.m.MessageToast.show("Imported Successfully");
+                    sap.m.MessageToast.show("Import completed");
                     oApp.setBusy(false);
                     report.run();
 
@@ -810,18 +840,21 @@ const report = {
 
     convertCSVtoJSON: function (csv) {
         try {
+            const importSettings = modelformExportImport.getData();
+            const importFormatted = radioGroupValues.getButtons()[importSettings.valuesIndex]?.getText() === "Formatted values";
+            const csvDelimiter = radioGroupDelimiter.getButtons()[importSettings.csvDelimiterIndex]?.getText() === "Comma" ? "," : ";";
+
             let result = [];
             let lines = csv.split("\n");
-            let headersRaw = lines[0].split(";");
+            let headersRaw = lines[0].split(csvDelimiter);
             let headers = ["id"];
             let exclude = [];
 
             // Convert from Name to fieldName
             for (let i = 1; i < headersRaw.length; i++) {
-                let headerLabel = headersRaw[i];
-                headerLabel = headerLabel.replace(/(\r\n|\n|\r)/gm, "");
+                const headerLabel = headersRaw[i]?.replace(/(\r\n|\n|\r)/gm, "");
 
-                let fieldRun = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, "text", headerLabel);
+                const fieldRun = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, "text", headerLabel);
                 if (fieldRun) {
                     if (fieldRun.valueType) exclude.push(i);
                     headers.push(fieldRun.name);
@@ -832,18 +865,40 @@ const report = {
 
             // Convert Data
             for (let i = 1; i < lines.length; i++) {
-                if (lines[i].length) {
-                    let obj = {};
-                    let currentline = lines[i].split(";");
-
-                    for (let j = 0; j < currentline.length; j++) {
-                        if (!exclude.includes(j)) {
-                            let currentField = currentline[j];
-                            if (currentField) obj[headers[j]] = currentField.replace(/(\r\n|\n|\r)/gm, "");
-                        }
-                    }
-                    result.push(obj);
+                if (!lines[i].length) {
+                    continue;
                 }
+                let obj = {};
+                let currentline = lines[i].split(csvDelimiter);
+
+                for (let j = 0; j < currentline.length; j++) {
+                    if (exclude.includes(j)) {
+                        continue;
+                    }
+                    let currentField = currentline[j]?.replace(/(\r\n|\n|\r)/gm, "");
+                    if (!currentField) {
+                        continue;
+                    }
+                    const column = modelAppConfig.getData().settings.fieldCatalog.find(col => col.name === headers[j]);
+
+                    if (column?.type === 'json') {
+                        const cleanedJSON = currentField.toString().replaceAll('""', '"').replace(/^"|"$/g, '');
+                        try {
+                            obj[headers[j]] = JSON.parse(cleanedJSON);
+                        } catch (e) {
+                            obj[headers[j]] = cleanedJSON;
+                        }
+                        continue;
+                    }
+
+                    if (importFormatted && typeof sap.n.Adaptive.parseFormatting !== 'undefined') {
+                        const fieldString = currentField.toString().replace(/^"|"$/g, '');
+                        obj[headers[j]] = sap.n.Adaptive.parseFormatting(fieldString, column?.type);
+                    } else {
+                        obj[headers[j]] = currentField;
+                    }
+                }
+                result.push(obj);
             }
 
             return result;
@@ -1094,6 +1149,40 @@ const report = {
                         newField = new sap.m.Link(opts);
                         break;
 
+                    case "JSON":
+                        newField = new sap.m.Input({
+                            value: `{${f.name}}`,
+                            editable: true,
+                            placeholder: getFieldPlaceholder(f),
+                            textAlign: f.hAlign,
+                            change: onChange,
+                            type: f.inputType,
+                            showValueHelp: true,
+                            valueHelpOnly: true,
+                            valueHelpRequest: function (oEvent) {
+                                const context = oEvent.oSource.getBindingContext()
+                                currentData = context.getObject()
+                                editorData = { fieldName: f.name, content: currentData[f.name] }
+                                diaJSON.open()
+                            }
+                        });
+
+                        newField.bindProperty("value", {
+                            parts: [f.name],
+                            formatter: function (value) {
+                                if (!value) return;
+                                if (typeof value === 'object') {
+                                    try {
+                                        return JSON.stringify(value)
+                                    } catch (e) {
+                                        return 'Error parsing json data: ' + e.message
+                                    }
+                                }
+                                return value;
+                            }
+                        })
+                        break;
+
                     case "ObjectNumber":
                         opts = {
                             number: getFieldBindingText(f),
@@ -1133,7 +1222,7 @@ const report = {
                                 parts: [`${f.name}_title`],
                                 formatter: function (name) {
                                     if (typeof name === "undefined" || name === null) return;
-                                    return sap.n.Adaptive.formatter(name, f.statusTitleFormatter);
+                                    return sap.n.Adaptive.formatter(name, f.statusTitleFormatter, f.formatNumberDecimals, f.formatNumberSeparator);
                                 },
                             });
                         }
@@ -1337,7 +1426,7 @@ const report = {
                         parts: [fieldName],
                         formatter: function (fieldName) {
                             if (typeof fieldName === "undefined" || fieldName === null) return;
-                            return sap.n.Adaptive.formatter(fieldName, f.formatter);
+                            return sap.n.Adaptive.formatter(fieldName, f.formatter, f.formatNumberDecimals, f.formatNumberSeparator);
                         },
                     });
                 }

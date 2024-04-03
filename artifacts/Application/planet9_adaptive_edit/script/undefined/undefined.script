@@ -82,3 +82,7 @@
 .nepDynamicPage .sapUiFormContainerTitle > .sapUiFormTitleH6 {
   font-size: 0.875rem;
 }
+
+.wholeHeight > * {
+  height: 100%;
+}
