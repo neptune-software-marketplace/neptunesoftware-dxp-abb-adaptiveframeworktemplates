@@ -844,64 +844,51 @@ const report = {
             const importFormatted = radioGroupValues.getButtons()[importSettings.valuesIndex]?.getText() === "Formatted values";
             const csvDelimiter = radioGroupDelimiter.getButtons()[importSettings.csvDelimiterIndex]?.getText() === "Comma" ? "," : ";";
 
-            let result = [];
-            let lines = csv.split("\n");
-            let headersRaw = lines[0].split(csvDelimiter);
-            let headers = ["id"];
-            let exclude = [];
+            const rows = csv.split("\n");
 
-            // Convert from Name to fieldName
-            for (let i = 1; i < headersRaw.length; i++) {
-                const headerLabel = headersRaw[i]?.replace(/(\r\n|\n|\r)/gm, "");
-
-                const fieldRun = ModelData.FindFirst(modelAppConfig.oData.settings.fieldsRun, "text", headerLabel);
+            const exclude = [];
+            const headers = rows[0].split(csvDelimiter).map(field => {
+                const label = field.replace(/(\r\n|\n|\r)/gm, "");
+                const fieldRun = modelAppConfig.getData().settings.fieldsRun.find(item => item.text === label);
                 if (fieldRun) {
-                    if (fieldRun.valueType) exclude.push(i);
-                    headers.push(fieldRun.name);
-                } else {
-                    headers.push(report.mapCSVHeaderLabelToFieldName(headerLabel));
+                    if (fieldRun.valueType) {
+                        exclude.push(fieldRun.name);
+                    }
+                    return fieldRun.name;
                 }
-            }
+                return report.mapCSVHeaderLabelToFieldName(label);
+            });
 
-            // Convert Data
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].length) {
-                    continue;
-                }
-                let obj = {};
-                let currentline = lines[i].split(csvDelimiter);
+            return rows.slice(1)
+                .filter(row => !!row.length)
+                .map(row => {
+                    const obj = {};
+                    row.split(csvDelimiter)
+                        .filter(field => !exclude.includes(field))
+                        .forEach((field, i) => {
+                            const fieldCleaned = field.replace(/(\r\n|\n|\r)/gm, "");
+                            const column = modelAppConfig.getData().settings.fieldCatalog.find(col => col.name === headers[i]);
 
-                for (let j = 0; j < currentline.length; j++) {
-                    if (exclude.includes(j)) {
-                        continue;
-                    }
-                    let currentField = currentline[j]?.replace(/(\r\n|\n|\r)/gm, "");
-                    if (!currentField) {
-                        continue;
-                    }
-                    const column = modelAppConfig.getData().settings.fieldCatalog.find(col => col.name === headers[j]);
+                            if (column?.type === 'json') {
+                                const cleanedJSON = fieldCleaned.toString().replaceAll('""', '"').replace(/^"|"$/g, '');
+                                try {
+                                    obj[headers[i]] = JSON.parse(cleanedJSON);
+                                } catch (error) {
+                                    obj[headers[i]] = cleanedJSON;
+                                }
+                                return;
+                            }
 
-                    if (column?.type === 'json') {
-                        const cleanedJSON = currentField.toString().replaceAll('""', '"').replace(/^"|"$/g, '');
-                        try {
-                            obj[headers[j]] = JSON.parse(cleanedJSON);
-                        } catch (e) {
-                            obj[headers[j]] = cleanedJSON;
-                        }
-                        continue;
-                    }
+                            if (importFormatted && typeof sap.n.Adaptive.parseFormatting !== 'undefined') {
+                                const fieldString = fieldCleaned.toString().replace(/^"|"$/g, '');
+                                obj[headers[i]] = sap.n.Adaptive.parseFormatting(fieldString, column?.type);
+                            } else {
+                                obj[headers[i]] = fieldCleaned;
+                            }
+                        })
+                    return obj;
+                })
 
-                    if (importFormatted && typeof sap.n.Adaptive.parseFormatting !== 'undefined') {
-                        const fieldString = currentField.toString().replace(/^"|"$/g, '');
-                        obj[headers[j]] = sap.n.Adaptive.parseFormatting(fieldString, column?.type);
-                    } else {
-                        obj[headers[j]] = currentField;
-                    }
-                }
-                result.push(obj);
-            }
-
-            return result;
         } catch (e) {
             console.log(e);
             document.getElementById("adaptiveListImport").value = "";

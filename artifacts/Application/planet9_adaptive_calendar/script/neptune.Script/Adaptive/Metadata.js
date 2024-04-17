@@ -9,8 +9,8 @@ const metadata = {
         enableTable: true,
         titleForm: "Filter",
         titleTable: "Appointments",
-        iconForm: "/public/icons/s_b_filt.gif",
-        iconTable: "/public/icons/s_t_date.gif",
+        iconForm: typeof getIconURL !== 'undefined' ? 'filter.svg' : '/public/icons/s_b_filt.gif',
+        iconTable: typeof getIconURL !== 'undefined' ? 'calendar.svg' : '/public/icons/s_t_date.gif',
 
         report: {
             titleGeneral: { type: "Title", label: "General" },

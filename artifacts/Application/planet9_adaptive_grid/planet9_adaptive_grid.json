@@ -2314,12 +2314,7 @@
 																							"grouping": "Properties",
 																							"value": "Variants",
 																							"script": "",
-																							"translation": [
-																								{
-																									"language": "DE",
-																									"value": "Seitentitel"
-																								}
-																							]
+																							"translation": []
 																						},
 																						{
 																							"attribute": "styleClassMargin",
@@ -3099,12 +3094,7 @@
 																							"grouping": "Properties",
 																							"value": "Variants",
 																							"script": "",
-																							"translation": [
-																								{
-																									"language": "DE",
-																									"value": "Seitentitel"
-																								}
-																							]
+																							"translation": []
 																						},
 																						{
 																							"attribute": "styleClassMargin",
@@ -4083,7 +4073,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.2.1433",
+	"ver": "24.04.17.0945",
 	"application": "planet9_adaptive_grid",
 	"title": "Adaptive Grid List",
 	"description": "Adaptive Grid List (experimental)",
@@ -4108,7 +4098,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": null,
+	"compiledCss": "file:///compiledCss.css",
 	"header": "",
 	"manifest": "",
 	"globalScript": null,

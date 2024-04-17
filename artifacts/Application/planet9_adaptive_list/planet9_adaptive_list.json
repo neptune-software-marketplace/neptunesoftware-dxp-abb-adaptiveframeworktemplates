@@ -2090,12 +2090,7 @@
 																							"grouping": "Properties",
 																							"value": "Variants",
 																							"script": "",
-																							"translation": [
-																								{
-																									"language": "DE",
-																									"value": "Seitentitel"
-																								}
-																							]
+																							"translation": []
 																						},
 																						{
 																							"attribute": "styleClassMargin",
@@ -2875,12 +2870,7 @@
 																							"grouping": "Properties",
 																							"value": "Variants",
 																							"script": "",
-																							"translation": [
-																								{
-																									"language": "DE",
-																									"value": "Seitentitel"
-																								}
-																							]
+																							"translation": []
 																						},
 																						{
 																							"attribute": "styleClassMargin",
@@ -4349,7 +4339,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.04.03.0841",
+	"ver": "24.04.17.0928",
 	"application": "planet9_adaptive_list",
 	"title": "Adaptive List ",
 	"description": "Adaptive List ",
@@ -4374,7 +4364,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": "file://script/undefined/undefined.script",
+	"compiledCss": "file:///compiledCss.css",
 	"header": "",
 	"manifest": "",
 	"globalScript": "",

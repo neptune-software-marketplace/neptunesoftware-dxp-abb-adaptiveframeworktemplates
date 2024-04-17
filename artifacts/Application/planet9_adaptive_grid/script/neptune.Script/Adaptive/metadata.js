@@ -113,8 +113,8 @@ const metadata = {
         tableUsage: "OUTPUT",
         titleForm: "Filter",
         titleTable: "Grid",
-        iconForm: "/public/icons/s_b_filt.gif",
-        iconTable: "/public/icons/s_b_list.gif",
+        iconForm: typeof getIconURL !== 'undefined' ? 'filter.svg' : '/public/icons/s_b_filt.gif',
+        iconTable: typeof getIconURL !== 'undefined' ? 'list.svg' : '/public/icons/s_b_list.gif',
 
         report: {
             titleGeneral: { type: "Title", label: "General" },

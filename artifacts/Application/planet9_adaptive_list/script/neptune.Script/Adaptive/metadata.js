@@ -81,8 +81,8 @@ const metadata = {
         tableUsage: "OUTPUT",
         titleForm: "Filter",
         titleTable: "Table",
-        iconForm: "/public/icons/s_b_filt.gif",
-        iconTable: "/public/icons/s_wdvtlc.gif",
+        iconForm: typeof getIconURL !== 'undefined' ? 'filter.svg' : '/public/icons/s_b_filt.gif',
+        iconTable: typeof getIconURL !== 'undefined' ? 'table.svg' : '/public/icons/s_wdvtlc.gif',
 
         report: {
             titleGeneral: { type: "Title", label: "General" },

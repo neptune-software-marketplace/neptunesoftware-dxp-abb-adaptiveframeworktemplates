@@ -1648,7 +1648,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.5.25.947",
+	"ver": "24.04.17.1010",
 	"application": "planet9_adaptive_calendar",
 	"title": "Adaptive Calendar for Appointments",
 	"description": "Adaptive Calendar for Appointments",
@@ -1673,7 +1673,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": "file://script/undefined/undefined.script",
+	"compiledCss": "file:///compiledCss.css",
 	"header": "",
 	"manifest": "",
 	"globalScript": "",

@@ -8,8 +8,8 @@ const metadata = {
         tableUsage: 'OUTPUT',
         titleForm: "Filter",
         titleTable: "Chart",
-        iconForm: "/public/icons/s_b_filt.gif",
-        iconTable: "/public/icons/s_gisbar.gif",
+        iconForm: typeof getIconURL !== 'undefined' ? 'filter.svg' : '/public/icons/s_b_filt.gif',
+        iconTable: typeof getIconURL !== 'undefined' ? 'chartcolumn.svg' : '/public/icons/s_gisbar.gif',
 
         report: {
 

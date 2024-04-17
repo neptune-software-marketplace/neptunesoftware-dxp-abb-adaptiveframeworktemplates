@@ -36,8 +36,8 @@ const metadata = {
         enableTable: true,
         titleForm: "Form",
         titleTable: "Field Mapping",
-        iconForm: "/public/icons/s_vwform.gif",
-        iconTable: "/public/icons/s_psrela.gif",
+        iconForm: typeof getIconURL !== 'undefined' ? 'form.svg' : '/public/icons/s_vwform.gif',
+        iconTable: typeof getIconURL !== 'undefined' ? 'link.svg' : '/public/icons/s_psrela.gif',
 
         report: {
             titleGeneral: { type: "Title", label: "General" },
