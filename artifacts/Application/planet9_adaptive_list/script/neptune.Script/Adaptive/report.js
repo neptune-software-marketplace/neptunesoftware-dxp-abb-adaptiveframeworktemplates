@@ -153,9 +153,8 @@ const report = {
         modelAppConfig.refresh();
 
         // Hide Header
-        if (config.settings.properties.report.hideHeader) {
-            oPageTitle.setVisible(false);
-        }
+        const hideHeader = config.settings.properties.report.hideHeader;
+        oPageTitle.setVisible(!hideHeader);
 
         // Action Button Left
         if (config.settings.properties.report.actionButtonLeft) {
