@@ -884,6 +884,13 @@ const report = {
                             } else {
                                 obj[headers[i]] = fieldCleaned;
                             }
+
+                            if (column?.type === 'uuid' || headers[i] == 'id') {
+                                if (typeof obj[headers[i]] !== 'string' || obj[headers[i]].trim() === "") {
+                                    delete obj[headers[i]];
+                                }
+                            }
+
                         })
                     return obj;
                 })
