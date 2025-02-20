@@ -50,7 +50,7 @@ const report = {
 
         oApp.setBusy(true);
 
-        if (typeof monaco !== 'undefined') {
+        if (typeof monaco !== "undefined") {
             textAreaJSON.setVisible(false);
             htmlContentJSON.setVisible(true);
         }
@@ -97,7 +97,7 @@ const report = {
             if (config.settings.properties.report.dynamicTitle) {
                 oPageHeaderTitle.bindProperty("text", "AppData>/" + config.settings.properties.report.dynamicTitle);
             } else {
-                oPageHeaderTitle.unbindProperty('text')
+                oPageHeaderTitle.unbindProperty("text");
                 oPageHeaderTitle.setText(sap.n.Adaptive.translateProperty("report", "title", config));
             }
         }
@@ -107,7 +107,7 @@ const report = {
             if (config.settings.properties.report.dynamicSubTitle) {
                 oPageHeaderSubTitle.bindProperty("text", `AppData>/${config.settings.properties.report.dynamicSubTitle}`);
             } else {
-                oPageHeaderSubTitle.unbindProperty('text')
+                oPageHeaderSubTitle.unbindProperty("text");
                 const text = sap.n.Adaptive.translateProperty("report", "subTitle", config);
                 if (!text) {
                     oPageHeaderSubTitle.setVisible(false);
@@ -119,21 +119,20 @@ const report = {
         }
 
         // Adaptive Designer: modelappData, Launchpad: modelAppConfig
-        const targetModel = typeof modelappData !== 'undefined' ? modelappData : modelAppConfig;
+        const targetModel = typeof modelappData !== "undefined" ? modelappData : modelAppConfig;
         syncTitle(targetModel);
         syncSubTitle(targetModel);
 
         targetModel.attachPropertyChange(function (prop) {
             const path = prop.mParameters.path;
-            if (['/settings/properties/report/title', '/settings/properties/report/dynamicTitle'].includes(path)) {
+            if (["/settings/properties/report/title", "/settings/properties/report/dynamicTitle"].includes(path)) {
                 syncTitle(targetModel);
             }
 
-            if (['/settings/properties/report/subTitle', '/settings/properties/report/dynamicSubTitle'].includes(path)) {
+            if (["/settings/properties/report/subTitle", "/settings/properties/report/dynamicSubTitle"].includes(path)) {
                 syncSubTitle(targetModel);
             }
         });
-
 
         toastSaved.setText(sap.n.Adaptive.translateProperty("report", "textToastSave", config));
         toastDelete.setText(sap.n.Adaptive.translateProperty("report", "textToastDelete", config));
@@ -150,7 +149,7 @@ const report = {
         barEditItemA.setText(sap.n.Adaptive.translateProperty("report", "tabAText", config));
 
         // Init
-        sap.n.Adaptive.init(modelAppConfig.oData) 
+        sap.n.Adaptive.init(modelAppConfig.oData)
             .then(function (data) {
                 const s = modelAppConfig.oData.settings;
                 const r = s.properties.report;
@@ -224,8 +223,8 @@ const report = {
         const s = modelAppConfig.oData.settings;
         const data = modelAppData.oData;
 
-        const deleteMessage = sap.n.Adaptive.translateProperty('report', 'textConfirmDelete', modelAppConfig.getData());
-        const deleteTitle = sap.n.Adaptive.translateProperty('report', 'titleConfirmDelete', modelAppConfig.getData());
+        const deleteMessage = sap.n.Adaptive.translateProperty("report", "textConfirmDelete", modelAppConfig.getData());
+        const deleteTitle = sap.n.Adaptive.translateProperty("report", "titleConfirmDelete", modelAppConfig.getData());
 
         sap.m.MessageBox.show(deleteMessage, {
             title: deleteTitle,
@@ -337,7 +336,9 @@ const report = {
 
             // Date Format
             if (["DatePicker", "DateTimePicker"].includes(type)) {
-                if (data && data[name]) data[name] = sap.n.Adaptive.getDate(data[name]);
+                if (data && data[name]) {
+                    data[name] = sap.n.Adaptive.getDate(data[name]);
+                }
             }
 
             // MultiSelect Parser
@@ -345,17 +346,18 @@ const report = {
                 try {
                     let keyString = data[name];
 
-                    // CASTANA Contribution
-                    if (keyString) {
-                        if (keyString.length > 0 && keyString.substr(0, 1) === "{") {
+                    if (typeof keyString === "string") {
+                        if (keyString.startsWith("{")) {
                             const keyValues = keyString.substr(1, keyString.length - 2);
                             const keyJSON = `[${keyValues}]`;
                             const keyArray = JSON.parse(keyJSON);
                             data[name] = keyArray;
+                        } else if (keyString.startsWith("[")) {
+                            data[name] = JSON.parse(keyString);
+                        } else {
+                            const dataArray = data[name].split(",");
+                            data[name] = dataArray;
                         }
-
-                        let dataArray = data[name].split(",");
-                        if (dataArray.length > 0) data[name] = dataArray;
                     }
                 } catch (e) {
                     console.error(e);
@@ -703,7 +705,6 @@ const report = {
                         })
                     );
 
-
                 // Create Fields
                 switch (field.type) {
                     case "Editor":
@@ -745,7 +746,7 @@ const report = {
                             new sap.m.Label({
                                 text: sap.n.Adaptive.translateFieldLabel(field, config),
                                 required: field.required,
-                                design: "Bold"
+                                design: "Bold",
                             })
                         );
 
@@ -758,25 +759,25 @@ const report = {
                             valueHelpOnly: true,
                             valueHelpRequest: function () {
                                 const inputData = modelAppData.getData()[field.name];
-                                editorData = { fieldName: field.name, content: inputData, readOnly: !field.editable }
+                                editorData = { fieldName: field.name, content: inputData, readOnly: !field.editable };
                                 diaJSON.open();
-                            }
-                        })
+                            },
+                        });
 
                         newField.bindProperty("value", {
                             parts: [{ path: "AppData>/" + field.name }],
                             formatter: function (value) {
                                 if (!value) return;
-                                if (typeof value === 'object') {
+                                if (typeof value === "object") {
                                     try {
                                         return JSON.stringify(value);
                                     } catch (e) {
-                                        return 'Error parsing json data: ' + e.message;
+                                        return "Error parsing json data: " + e.message;
                                     }
                                 }
                                 return value;
-                            }
-                        })
+                            },
+                        });
 
                         if (field.description) {
                             form.addContent(report.buildInputDescription(newField, field));

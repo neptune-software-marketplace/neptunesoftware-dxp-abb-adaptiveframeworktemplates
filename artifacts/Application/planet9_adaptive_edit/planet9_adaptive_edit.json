@@ -1650,13 +1650,6 @@
 													"value": "false",
 													"script": "",
 													"translation": []
-												},
-												{
-													"attribute": "type",
-													"grouping": "Properties",
-													"value": "Information",
-													"script": "",
-													"translation": []
 												}
 											],
 											"data": []
@@ -1872,7 +1865,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.04.17.0935",
+	"ver": "25.02.20.1103",
 	"application": "planet9_adaptive_edit",
 	"title": "Adaptive Edit",
 	"description": "Adaptive Edit",
