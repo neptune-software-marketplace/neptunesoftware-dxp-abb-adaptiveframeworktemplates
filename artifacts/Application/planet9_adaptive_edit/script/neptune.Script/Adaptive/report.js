@@ -1352,8 +1352,7 @@ const report = {
         return isReadOnly;
     },
 
-    uploadFieldAfterRender: () => {
-        const elm = document.getElementById("_editUploader");
+    uploadFieldAfterRender: (elm) => {
         if (elm) {
             elm.removeEventListener("change", report.uploadFileChangeEvent);
             elm.addEventListener("change", report.uploadFileChangeEvent);
